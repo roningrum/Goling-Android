@@ -6,4 +6,9 @@
     </style>
 
     <style name="Theme.GolingAndroid" parent="Base.Theme.GolingAndroid" />
+
+    <style name="Theme.GolingAndroid.AppTitle" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">24sp</item>
+        <item name="lineHeight">20dp</item>
+    </style>
 </resources>

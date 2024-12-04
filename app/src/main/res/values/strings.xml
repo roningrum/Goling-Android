@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Goling-Android</string>
+    <string name="login_button_text">Masuk</string>
+    <string name="tagline_Goling">Kirim Cepat, Aman dan Selamat</string>
+    <string name="username_hint_input">username</string>
+    <string name="password_hint_text">password</string>
+    <string name="forgot_pass_button_text">Lupa Kata Sandi</string>
+    <string name="email_hint_text">email</string>
+    <string name="register_button_text">Daftar</string>
+    <string name="title_activity_login_screen">LoginScreenActivity</string>
 </resources>
