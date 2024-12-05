@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    kotlin("kapt")
+//    alias("kotlin-kapt")
 }
 
 android {
@@ -42,6 +44,24 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
+//    retrofit
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+    implementation(platform(libs.okhttp.bom))
+
+    // define any required OkHttp artifacts without version
+    implementation(libs.okhttp)
+    implementation(libs.okhttp3.logging.interceptor)
+    implementation (libs.logging.interceptor)
+
+    implementation(libs.kotlinx.coroutines.android)
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
+//    implementation("androidx.lifecycle:activity-activity-ktx:2.8.7")
+//    kapt ("androidx.lifecycle:lifecycle-compiler:2.8.7")
+
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
