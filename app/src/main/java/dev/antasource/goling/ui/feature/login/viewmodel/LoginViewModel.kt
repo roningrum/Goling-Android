@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.antasource.goling.data.networksource.model.LoginRequest
-import dev.antasource.goling.data.repositoty.LoginRepository
+import dev.antasource.goling.data.repositoty.AuthenticationRepository
 import kotlinx.coroutines.launch
 
-class LoginViewModel(private val loginRepo : LoginRepository) : ViewModel()  {
+class LoginViewModel(private val loginRepo : AuthenticationRepository) : ViewModel()  {
     private val _accessToken = MutableLiveData<String>()
     val accessToken : LiveData<String> = _accessToken
 

@@ -7,17 +7,16 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.ViewModelProvider
 import dev.antasource.goling.R
 import dev.antasource.goling.data.networksource.AuthenticationRemoteSource
-import dev.antasource.goling.data.repositoty.LoginRepository
+import dev.antasource.goling.data.repositoty.AuthenticationRepository
 import dev.antasource.goling.ui.factory.AuthViewModelFactory
 import dev.antasource.goling.ui.feature.login.viewmodel.LoginViewModel
 
 class LoginActivity : AppCompatActivity() {
     private val loginViewModel: LoginViewModel by viewModels {
         val authDataSource = AuthenticationRemoteSource()
-        val repo = LoginRepository(authDataSource)
+        val repo = AuthenticationRepository(authDataSource)
         AuthViewModelFactory(repo)
     }
     override fun onCreate(savedInstanceState: Bundle?) {

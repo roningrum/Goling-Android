@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Goling-Android</string>
+    <string name="app_title">Goling</string>
     <string name="login_button_text">Masuk</string>
     <string name="tagline_Goling">Kirim Cepat, Aman dan Selamat</string>
     <string name="username_hint_input">username</string>
@@ -8,4 +9,9 @@
     <string name="email_hint_text">email</string>
     <string name="register_button_text">Daftar</string>
     <string name="title_activity_login_screen">LoginScreenActivity</string>
+    <string name="onboarding_activity_source">onboarding1</string>
+    <string name="login_title_page">Login</string>
+    <string name="login_subtitle_text">Masukkan akun Goling Anda</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

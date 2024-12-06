@@ -2,12 +2,18 @@ package dev.antasource.goling.ui.feature.register
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import dev.antasource.goling.R
+import dev.antasource.goling.data.networksource.AuthenticationRemoteSource
+import dev.antasource.goling.data.repositoty.AuthenticationRepository
+import dev.antasource.goling.ui.factory.AuthViewModelFactory
+import dev.antasource.goling.ui.feature.register.viewmodel.RegisterViewModel
 
 class RegisterActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
