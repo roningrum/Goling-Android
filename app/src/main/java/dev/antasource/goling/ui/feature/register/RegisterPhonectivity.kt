@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.button.MaterialButton
 import dev.antasource.goling.R
 import dev.antasource.goling.data.networksource.AuthenticationRemoteSource
 import dev.antasource.goling.data.repositoty.AuthenticationRepository
@@ -14,6 +15,7 @@ import dev.antasource.goling.ui.feature.register.viewmodel.RegisterViewModel
 import kotlin.getValue
 
 class RegisterPhonectivity : AppCompatActivity() {
+    private lateinit var btnRegister : MaterialButton
     private val registrasiViewModel : RegisterViewModel by viewModels{
         val authDataSource = AuthenticationRemoteSource()
         val repo = AuthenticationRepository(authDataSource)
@@ -28,5 +30,7 @@ class RegisterPhonectivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+
     }
 }

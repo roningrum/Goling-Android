@@ -1,18 +1,17 @@
 package dev.antasource.goling.ui.feature.register
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.button.MaterialButton
 import dev.antasource.goling.R
-import dev.antasource.goling.data.networksource.AuthenticationRemoteSource
-import dev.antasource.goling.data.repositoty.AuthenticationRepository
-import dev.antasource.goling.ui.factory.AuthViewModelFactory
-import dev.antasource.goling.ui.feature.register.viewmodel.RegisterViewModel
 
 class RegisterActivity : AppCompatActivity() {
+
+    private lateinit var btnNextRegister : MaterialButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +21,14 @@ class RegisterActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        btnNextRegister = findViewById(R.id.register_button)
+        btnNextRegister.text = "Next"
+        btnNextRegister.setOnClickListener{
+            val intent = Intent(this, RegisterPhonectivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 }
