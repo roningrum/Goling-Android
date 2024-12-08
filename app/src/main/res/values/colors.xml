@@ -8,4 +8,6 @@
     <color name="orange">#E45826</color>
     <color name="disableColor">#E4E0E1</color>
     <color name="grayColor">#424242</color>
+    <color name="greenColor">#02B96A</color>
+    <color name="redColor">#EE4E4E</color>
 </resources>

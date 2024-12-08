@@ -56,7 +56,8 @@ dependencies {
     implementation (libs.logging.interceptor)
 
     implementation(libs.kotlinx.coroutines.android)
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
+    implementation("androidx.security:security-crypto:1.0.0")
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
 //    implementation("androidx.lifecycle:activity-activity-ktx:2.8.7")
 //    kapt ("androidx.lifecycle:lifecycle-compiler:2.8.7")

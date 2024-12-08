@@ -9,14 +9,20 @@ import dev.antasource.goling.data.repositoty.AuthenticationRepository
 import kotlinx.coroutines.launch
 
 class RegisterViewModel(private val regisRepo: AuthenticationRepository): ViewModel() {
-    private val _successMessage = MutableLiveData<String>()
-    val successMessage : LiveData<String> = _successMessage
+    private val _message = MutableLiveData<String>()
+    val message : LiveData<String> = _message
+
+    private var registerData : RegisterRequest ? = null
+
+    fun setRegisterData(username: String, email:String, password: String, phone: String){
+        registerData = RegisterRequest(username, password, email, "")
+    }
 
     fun register(username:String, email:String, pass:String, phone:String){
        viewModelScope.launch{
            val registrasiRequest = RegisterRequest(username, email, pass, phone)
            val response = regisRepo.regisProcess(registrasiRequest)
-           _successMessage.value = response.message
+           _message.value = response.message
        }
     }
 }
