@@ -22,6 +22,7 @@ import dev.antasource.goling.data.networksource.AuthenticationRemoteSource
 import dev.antasource.goling.data.repositoty.AuthenticationRepository
 import dev.antasource.goling.ui.SharedPrefUtil
 import dev.antasource.goling.ui.factory.AuthViewModelFactory
+import dev.antasource.goling.ui.feature.home.HomeActivity
 import dev.antasource.goling.ui.feature.login.viewmodel.LoginViewModel
 import java.util.regex.Pattern
 
@@ -68,6 +69,7 @@ class LoginActivity : AppCompatActivity() {
                 val snackbarMsg = Snackbar.make(rootView, "Sukses Login", Snackbar.LENGTH_SHORT)
                 snackbarMsg.setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.greenColor))
                 snackbarMsg.show()
+
                 SharedPrefUtil.saveAccessToken(this, response)
             }
         }

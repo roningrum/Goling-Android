@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.feature.register.RegisterPhonectivity">
 
     <LinearLayout
@@ -48,7 +49,7 @@
         app:layout_constraintTop_toBottomOf="@id/layout_title_app">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/username_input_login"
+            android:id="@+id/phone_input_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="phone"/>
