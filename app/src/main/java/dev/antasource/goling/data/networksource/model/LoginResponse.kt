@@ -1,7 +1,14 @@
 package dev.antasource.goling.data.networksource.model
 
+import com.google.gson.annotations.SerializedName
+
 data class LoginResponse(
-    val message:String? = null,
-    val token: String?= null
+    @SerializedName("status")
+    val status: Int,
+    @SerializedName("message")
+    val message:String,
+    @SerializedName("token")
+    val token: String
+
 
 )

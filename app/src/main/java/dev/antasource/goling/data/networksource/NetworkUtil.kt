@@ -12,24 +12,9 @@ object NetworkUtil {
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
-//    private val responseInterceptor = object : Interceptor{
-//        override fun intercept(chain: Interceptor.Chain): Response {
-//            val response = chain.proceed(chain.request())
-//            val statusCode = response.code
-//
-//            when(statusCode){
-//                201 -> "Register Sukses"
-//                200 -> "Request Sukses"
-//                400 -> "Invalid Credential"
-//                else -> "Unknown Response"
-//            }
-//            return response
-//        }
-//
-//    }
+
     private val client =OkHttpClient
         .Builder()
-//        .addInterceptor(responseInterceptor)
         .addInterceptor(loggingInterceptor)
         .build()
 

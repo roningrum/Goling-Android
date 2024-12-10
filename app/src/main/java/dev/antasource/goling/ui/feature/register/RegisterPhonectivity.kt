@@ -1,5 +1,6 @@
 package dev.antasource.goling.ui.feature.register
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -58,22 +59,21 @@ class RegisterPhonectivity : AppCompatActivity() {
         btnRegister = findViewById(R.id.register_button)
         btnRegister.setOnClickListener{
             val phoneNumber = phoneNumberEditText.text.toString().trim()
-            Log.d("Username", "username $phoneNumber")
             registrasiViewModel.register(username, email, password, phoneNumber)
         }
         registrasiViewModel.message.observe(this){message ->
-//            Log.d("Pesan Register", "Register $message")
-            val rootView = findViewById<View>(android.R.id.content)
-            val snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_SHORT)
-            snackbar.setBackgroundTint(ContextCompat.getColor(this, R.color.greenColor))
-            snackbar.show()
+            val intent = Intent(this, RegisterActivity::class.java)
+            intent.putExtra("Pesan Sukses", message)
+            startActivity(intent)
+            finish()
         }
 
         registrasiViewModel.errorMessage.observe(this){ error ->
-            val rootView = findViewById<View>(android.R.id.content)
-            val snackbar = Snackbar.make(rootView, error, Snackbar.LENGTH_SHORT)
-            snackbar.setBackgroundTint(ContextCompat.getColor(this, R.color.redColor))
-            snackbar.show()
+            val intent = Intent(this, RegisterActivity::class.java)
+            intent.putExtra("Pesan Error", error)
+            startActivity(intent)
+            finish()
+
         }
 
 

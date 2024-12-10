@@ -63,26 +63,28 @@ class LoginActivity : AppCompatActivity() {
 
         handleLoginButton(usernameAuthentication, passAuthentication)
 
+        SharedPrefUtil.clear(this)
+
         loginViewModel.accessToken.observe(this){ response ->
             response?.let {
-                val rootView = findViewById<View>(android.R.id.content)
-                val snackbarMsg = Snackbar.make(rootView, "Sukses Login", Snackbar.LENGTH_SHORT)
-                snackbarMsg.setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.greenColor))
-                snackbarMsg.show()
-
                 SharedPrefUtil.saveAccessToken(this, response)
             }
         }
-        loginViewModel.errorMsg.observe(this){errorMessage ->
-            errorMessage.let {
-                val rootView = findViewById<View>(android.R.id.content)
-                val snackbarMsg = Snackbar.make(rootView, "$errorMessage", Snackbar.LENGTH_SHORT)
-                snackbarMsg.setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.redColor))
-                snackbarMsg.show()
-            }
-        }
-        Log.d("Token Gue", "Token ${SharedPrefUtil.getAccessToken(this)}")
+        loginViewModel.message.observe(this){message ->
+            val rootView = findViewById<View>(android.R.id.content)
+            val snackbarMsg = Snackbar.make(rootView, "$message", Snackbar.LENGTH_SHORT)
+            snackbarMsg.setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.greenColor))
+            snackbarMsg.show()
 
+        }
+
+        loginViewModel.errorMsg.observe(this){errorMessage ->
+            Log.d("Pesan Error", "$errorMessage")
+            val rootView = findViewById<View>(android.R.id.content)
+            val snackbarMsg = Snackbar.make(rootView, "$errorMessage", Snackbar.LENGTH_SHORT)
+            snackbarMsg.setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.redColor))
+            snackbarMsg.show()
+        }
     }
 
     private fun checkField(
