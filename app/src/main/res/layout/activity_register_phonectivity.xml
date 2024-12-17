@@ -25,24 +25,41 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:textColor="@color/gold"
-            android:text="Tinggal sedikit lagi" />
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:text="@string/welcome_register_page_text" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="250dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/illust_registration"
+            android:contentDescription="@string/illustration_registration_content"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
             style="@style/Theme.GolingAndroid.AppSubtitle"
-            android:text="Masukkan nomor handphon untuk verifikasi\nakun anda " />
+            android:text="@string/copywriting_register_page" />
+
+
     </LinearLayout>
+
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/phone_input_layout_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-        android:hint="Nomor Handphone"
-        android:layout_marginTop="32dp"
+        android:hint="@string/phone_input_field"
+        android:layout_marginTop="24dp"
+        app:boxCornerRadiusBottomEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusTopStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
         android:layout_marginHorizontal="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,9 +77,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
        layout="@layout/ui_button_register_goling"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/phone_input_layout_login"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="24dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
         />
 

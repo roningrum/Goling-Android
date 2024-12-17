@@ -9,6 +9,7 @@
         android:id="@+id/button_login"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:textColor="@color/white"
         android:layout_marginHorizontal="32dp"
         style="@style/Widget.Material3.Button"
         android:text="@string/login_button_text"

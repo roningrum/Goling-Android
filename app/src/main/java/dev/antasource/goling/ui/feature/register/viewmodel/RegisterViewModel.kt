@@ -22,6 +22,8 @@ class RegisterViewModel(private val regisRepo: AuthenticationRepository): ViewMo
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage : LiveData<String> = _errorMessage
 
+    var phone_number : String = ""
+
 
     var job: Job? = null
     val exceptionHandler = CoroutineExceptionHandler { _, throwable ->   }

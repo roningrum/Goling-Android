@@ -6,4 +6,12 @@
     <string name="home_menu_txt">Home\n</string>
     <string name="history_menu_txt">History</string>
     <string name="profile">Profile</string>
+    <string name="version_goling_app">Version 1.0.1</string>
+    <string name="content_desc_logo_img">logo</string>
+    <string name="tab_indicator_slider">Tab Indicator</string>
+    <string name="illustration_registration_content">illustration</string>
+    <string name="phone_input_field">Nomor Handphone</string>
+    <string name="welcome_register_page_text">Selamat Datang di GoLing</string>
+    <string name="copywriting_register_page">Masukkan nomor hp untuk pengguna pertama kali\n di Aplikasi GoLing</string>
+    <string name="next_register_button_text">Selanjutnya</string>
 </resources>

@@ -51,24 +51,16 @@ class RegisterPhonectivity : AppCompatActivity() {
         }
 
         btnRegister = findViewById(R.id.register_button)
+        btnRegister.text = getString(R.string.next_register_button_text)
         btnRegister.setOnClickListener{
             val phoneNumber = phoneNumberEditText.text.toString().trim()
-            registrasiViewModel.register(username, email, password, phoneNumber)
-        }
-        registrasiViewModel.message.observe(this){message ->
+            registrasiViewModel.phone_number = phoneNumber
             val intent = Intent(this, RegisterActivity::class.java)
-            intent.putExtra("Pesan Sukses", message)
             startActivity(intent)
             finish()
+//            registrasiViewModel.register(username, email, password, phoneNumber)
         }
 
-        registrasiViewModel.errorMessage.observe(this){ error ->
-            val intent = Intent(this, RegisterActivity::class.java)
-            intent.putExtra("Pesan Error", error)
-            startActivity(intent)
-            finish()
-
-        }
 
 
 
