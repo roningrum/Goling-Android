@@ -73,12 +73,15 @@ class RegisterActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         intent.data = null
+        finish()
     }
 
     override fun onStop() {
         super.onStop()
         intent.data = null
+        finish()
     }
+
 
     private fun showSuccessMessage(message: String) {
         val rootView = findViewById<View>(android.R.id.content)

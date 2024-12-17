@@ -1,4 +1,4 @@
-package dev.antasource.goling.ui
+package dev.antasource.goling.util
 
 import android.content.Context
 import android.content.SharedPreferences

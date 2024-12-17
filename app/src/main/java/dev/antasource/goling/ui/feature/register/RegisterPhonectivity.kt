@@ -2,21 +2,15 @@ package dev.antasource.goling.ui.feature.register
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
-import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import dev.antasource.goling.R
-import dev.antasource.goling.data.networksource.AuthenticationRemoteSource
+import dev.antasource.goling.data.networksource.NetworkRemoteSource
 import dev.antasource.goling.data.repositoty.AuthenticationRepository
 import dev.antasource.goling.ui.factory.AuthViewModelFactory
 import dev.antasource.goling.ui.feature.register.viewmodel.RegisterViewModel
@@ -30,7 +24,7 @@ class RegisterPhonectivity : AppCompatActivity() {
     private var email : String = ""
 
     private val registrasiViewModel : RegisterViewModel by viewModels{
-        val authDataSource = AuthenticationRemoteSource()
+        val authDataSource = NetworkRemoteSource()
         val repo = AuthenticationRepository(authDataSource)
         AuthViewModelFactory(repo)
     }

@@ -1,12 +1,10 @@
 package dev.antasource.goling.ui.feature.login
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.util.Patterns
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -18,17 +16,16 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import dev.antasource.goling.R
-import dev.antasource.goling.data.networksource.AuthenticationRemoteSource
+import dev.antasource.goling.data.networksource.NetworkRemoteSource
 import dev.antasource.goling.data.repositoty.AuthenticationRepository
-import dev.antasource.goling.ui.SharedPrefUtil
+import dev.antasource.goling.util.SharedPrefUtil
 import dev.antasource.goling.ui.factory.AuthViewModelFactory
 import dev.antasource.goling.ui.feature.home.HomeActivity
 import dev.antasource.goling.ui.feature.login.viewmodel.LoginViewModel
-import java.util.regex.Pattern
 
 class LoginActivity : AppCompatActivity() {
     private val loginViewModel: LoginViewModel by viewModels {
-        val authDataSource = AuthenticationRemoteSource()
+        val authDataSource = NetworkRemoteSource()
         val repo = AuthenticationRepository(authDataSource)
         AuthViewModelFactory(repo)
     }
@@ -68,6 +65,9 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.accessToken.observe(this){ response ->
             response?.let {
                 SharedPrefUtil.saveAccessToken(this, response)
+                val intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
+                finish()
             }
         }
         loginViewModel.message.observe(this){message ->

@@ -6,9 +6,14 @@ import dev.antasource.goling.data.networksource.model.LoginRequest
 import dev.antasource.goling.data.networksource.model.LoginResponse
 import dev.antasource.goling.data.networksource.model.RegisterRequest
 import dev.antasource.goling.data.networksource.model.RegisterResponse
+import dev.antasource.goling.data.networksource.model.UserRequest
+import dev.antasource.goling.data.networksource.model.UserResponse
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 interface ApiService {
 
@@ -20,4 +25,10 @@ interface ApiService {
 
     @POST("auth/forget-password")
     suspend fun resetPassword(@Body forgotPassRequest: ForgotPassRequest): Response<ForgotPassResponse>
+
+    @GET("user")
+    suspend fun getUser(@Header("Authorization")token: String): Response<UserResponse>
+
+    @PUT("user/update-user")
+    suspend fun updateUser(@Header("Authorization")token: String, userRequest: UserRequest)
 }

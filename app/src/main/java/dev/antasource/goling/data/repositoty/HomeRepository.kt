@@ -1,4 +1,7 @@
 package dev.antasource.goling.data.repositoty
 
-class HomeRepository {
+import dev.antasource.goling.data.networksource.NetworkRemoteSource
+
+class HomeRepository(private val networkRemoteSource: NetworkRemoteSource) {
+    suspend fun getUserProfile(token: String) = networkRemoteSource.getUser(token)
 }

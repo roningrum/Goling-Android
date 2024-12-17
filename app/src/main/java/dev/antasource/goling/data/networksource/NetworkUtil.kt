@@ -11,16 +11,24 @@ object NetworkUtil {
         level = HttpLoggingInterceptor.Level.BODY
     }
 
-    private val client =OkHttpClient
-        .Builder()
-        .addInterceptor(loggingInterceptor)
-        .build()
+    private fun client(authToken: String? = null): OkHttpClient {
+        val builder = OkHttpClient.Builder()
+        builder.addInterceptor(loggingInterceptor)
+        authToken?.let {
+            builder.addInterceptor{chain ->
+                chain.proceed(chain.request().newBuilder()
+                    .addHeader("Authorization", "Bearer $authToken").build())
+            }
+        }
+        return builder.build()
+
+    }
 
     val apiService : ApiService by lazy {
      Retrofit.Builder()
-            .baseUrl("http://46.202.168.96:3000/api/")
+            .baseUrl("https://antasource.online/api/")
             .addConverterFactory(GsonConverterFactory.create())
-            .client(client)
+            .client(client())
             .build()
             .create(ApiService::class.java)
 

@@ -3,4 +3,7 @@
     <string name="login_button_text">Masuk</string>
     <string name="login_title_page">Login</string>
     <string name="login_subtitle_text">Masukkan akun Goling Anda</string>
+    <string name="home_menu_txt">Home\n</string>
+    <string name="history_menu_txt">History</string>
+    <string name="profile">Profile</string>
 </resources>

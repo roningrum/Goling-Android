@@ -29,9 +29,11 @@
         <!-- android:exported="false" /> -->
         <activity
             android:name=".ui.feature.register.RegisterActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".ui.feature.login.LoginActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".ui.feature.walkthrough.WalkthroughActivity"

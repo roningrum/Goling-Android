@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import dev.antasource.goling.data.networksource.model.ErrorMessage
 import dev.antasource.goling.data.networksource.model.ForgotPassRequest
-import dev.antasource.goling.data.networksource.model.ForgotPassResponse
 import dev.antasource.goling.data.networksource.model.LoginRequest
 import dev.antasource.goling.data.repositoty.AuthenticationRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
