@@ -2,15 +2,16 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="gold">#F0A500</color>
-    <color name="bluePrimary">#27255F</color>
+    <color name="gold">#F8DF7C</color>
+    <color name="bluePrimary">#0300A2</color>
     <color name="darkBrown">#4A3933</color>
     <color name="darkBlue">#27255F</color>
-    <color name="backgrouncColor">#F7F7F7</color>
-    <color name="surfaceColor">#E6D5B8</color>
+    <color name="backgroundColor">#F7F7F7</color>
+    <color name="surfaceColor">#F6F2EC</color>
     <color name="orange">#E45826</color>
     <color name="disableColor">#E4E0E1</color>
     <color name="grayColor">#424242</color>
     <color name="greenColor">#02B96A</color>
     <color name="redColor">#EE4E4E</color>
+    <color name="graySecondary">#E9E9E9</color>
 </resources>

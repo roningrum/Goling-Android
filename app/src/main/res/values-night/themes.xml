@@ -1,7 +1,45 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.GolingAndroid" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorOnBackground">@color/surfaceColor</item>
+        <item name="colorOnPrimary">@color/darkBrown</item>
+        <item name="colorSecondary">@color/orange</item>
+        <item name="colorOnSecondary">@color/surfaceColor</item>
+
+        <!--        font Family-->
+        <item name="fontFamily">@font/rubik</item>
     </style>
+
+    <style name="Theme.GolingAndroid" parent="Base.Theme.GolingAndroid">
+       <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <!--    TextInput Layout-->
+    <style name="Theme.GolingAndroid.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="cornerRadius">8dp</item>
+        <item name="minHeight">48dp</item>
+    </style>
+
+    <style name="Theme.GolingAndroid.AppTitle" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">24sp</item>
+        <item name="lineHeight">20dp</item>
+        <item name="fontFamily">@font/rubik_semibold</item>
+        <item name="fontWeight">600</item>
+    </style>
+
+    <style name="Theme.GolingAndroid.AppSubtitle" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/rubik_regular</item>
+    </style>
+
+    <!--    Bottom Navigation-->
+    <style name="Theme.GolingAndroid.BottomNav" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="backgroundTint">@color/white</item>
+        <item name="fontFamily">@font/rubik_regular</item>
+        <item name="rippleColor">@android:color/transparent</item>
+        <item name="itemRippleColor">@android:color/transparent</item>
+    </style>
+
 </resources>

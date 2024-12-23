@@ -57,8 +57,9 @@ dependencies {
 
     implementation(libs.kotlinx.coroutines.android)
     implementation (libs.androidx.lifecycle.viewmodel.ktx)
-    implementation("androidx.security:security-crypto:1.0.0")
-    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
+    implementation(libs.androidx.security.crypto)
+    implementation (libs.androidx.lifecycle.livedata.ktx)
+    implementation (libs.circleimageview)
 //    implementation("androidx.lifecycle:activity-activity-ktx:2.8.7")
 //    kapt ("androidx.lifecycle:lifecycle-compiler:2.8.7")
 

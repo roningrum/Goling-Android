@@ -14,4 +14,19 @@
     <string name="welcome_register_page_text">Selamat Datang di GoLing</string>
     <string name="copywriting_register_page">Masukkan nomor hp untuk pengguna pertama kali\n di Aplikasi GoLing</string>
     <string name="next_register_button_text">Selanjutnya</string>
+    <string name="content_desc_toolbar">logo_app</string>
+    <string name="greeting_profile">Halo</string>
+    <string name="saldo_gocash_title">Saldo GoCash</string>
+    <string name="currency_amount_ewallet">Rp</string>
+    <string name="sample_amount">55.000</string>
+    <string name="pickup_menu_txt">Pickup</string>
+    <string name="drop_off_menu">Drop Off</string>
+    <string name="other_features">Layanan Lainnya</string>
+    <string name="check_postage_menu">Cek Ongkir</string>
+    <string name="peta_drop_noff_menu">Peta Drop \nOff</string>
+    <string name="bpdcash_menu">BpdCash</string>
+    <string name="goling_cs_menu">Goling CS</string>
+    <string name="notification_menu">Notification</string>
+    <string name="masukkan_resi">Masukkan Resi</string>
+    <string name="lacak_nomor_resi_search">Lacak Nomor Resi</string>
 </resources>

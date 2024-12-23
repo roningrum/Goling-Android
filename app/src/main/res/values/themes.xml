@@ -1,18 +1,28 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.GolingAndroid" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryVariant">@color/surfaceColor</item>
         <item name="colorOnBackground">@color/surfaceColor</item>
         <item name="colorOnPrimary">@color/darkBrown</item>
         <item name="colorSecondary">@color/orange</item>
         <item name="colorOnSecondary">@color/surfaceColor</item>
+        <item name="colorSurface">@color/surfaceColor</item>
 
 <!--        font Family-->
         <item name="fontFamily">@font/rubik</item>
     </style>
 
-    <style name="Theme.GolingAndroid" parent="Base.Theme.GolingAndroid" />
+    <style name="Theme.GolingAndroid" parent="Base.Theme.GolingAndroid">
+        <item name="statusBarBackground">?attr/colorPrimary</item>
+    </style>
+
+<!--    bottomAppBar-->
+    <style name="Theme.GolingAndroid.BottomAppBar" parent="Widget.MaterialComponents.BottomAppBar">
+        <item name="backgroundTint">@color/white</item>
+    </style>
+
 
 <!--    TextInput Layout-->
     <style name="Theme.GolingAndroid.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
@@ -32,12 +42,24 @@
         <item name="fontFamily">@font/rubik_regular</item>
     </style>
 
+    <style name="Theme.GolingAndroid.AppMenu" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/rubik_semibold</item>
+    </style>
+    <style name="Theme.GolingAndroid.Toolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="background">@color/backgroundColor</item>
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/rubik_semibold</item>
+    </style>
+
 <!--    Bottom Navigation-->
     <style name="Theme.GolingAndroid.BottomNav" parent="Widget.MaterialComponents.BottomNavigationView">
-        <item name="backgroundTint">@color/white</item>
+        <item name="backgroundTint">@android:color/transparent</item>
         <item name="fontFamily">@font/rubik_regular</item>
         <item name="rippleColor">@android:color/transparent</item>
         <item name="itemRippleColor">@android:color/transparent</item>
+        <item name="paddingStart">8dp</item>
+        <item name="paddingEnd">8dp</item>
     </style>
 
 </resources>
