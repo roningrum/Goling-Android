@@ -46,18 +46,38 @@ class HomeActivity : AppCompatActivity() {
         bottomNav.setOnItemSelectedListener{ item ->
             when(item.itemId){
                 R.id.home ->{
+                    ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.view_fragment)) { v, insets ->
+                        val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                        v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
+                        insets
+                    }
                     loadFragment(HomeFragment())
                     true
                 }
                 R.id.history ->{
+                    ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.view_fragment)) { v, insets ->
+                        val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                        v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
+                        insets
+                    }
                     loadFragment(HistoryFragment())
                     true
                 }
                 R.id.notification ->{
+                    ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.view_fragment)) { v, insets ->
+                        val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                        v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
+                        insets
+                    }
                     loadFragment(NotificationFragment())
                     true
                 }
                 R.id.profile->{
+                    ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.view_fragment)) { v, insets ->
+                        val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                        v.setPadding(systemBars.left, 0, systemBars.right, 0)
+                        insets
+                    }
                     loadFragment(ProfileFragment())
                     true
                 }
@@ -86,11 +106,6 @@ class HomeActivity : AppCompatActivity() {
 
     private fun loadFragment(fragment: Fragment) {
         if(true){
-            ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.view_fragment)) { v, insets ->
-                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-                v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
-                insets
-            }
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(R.id.view_fragment, fragment)
             transaction.commit()

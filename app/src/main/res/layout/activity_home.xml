@@ -49,6 +49,8 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:backgroundTint="@color/gold"
+        app:tint="@color/bluePrimary"
         android:contentDescription="@string/app_name"
         android:src="@drawable/icon_scan"
         app:layout_anchor="@id/bottomAppBar" />

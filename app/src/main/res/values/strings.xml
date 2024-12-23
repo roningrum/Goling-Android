@@ -40,4 +40,6 @@
     <string name="notification_menu">Notification</string>
     <string name="masukkan_resi">Masukkan Resi</string>
     <string name="lacak_nomor_resi_search">Lacak Nomor Resi</string>
+    <string name="user_sample">User</string>
+    <string name="user_sample_email">user@mail.com</string>
 </resources>

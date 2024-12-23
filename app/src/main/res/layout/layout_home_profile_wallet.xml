@@ -17,7 +17,8 @@
         <com.google.android.material.search.SearchBar
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.75"
+            app:titleTextAppearance="@style/Theme.GolingAndroid.TextInputLayout"
             android:hint="@string/lacak_nomor_resi_search"
             app:backgroundTint="@android:color/transparent" />
 
@@ -26,6 +27,7 @@
             android:layout_height="32dp"
             android:layout_gravity="center_vertical"
             android:layout_marginHorizontal="16dp"
+            android:layout_weight="0.25"
             android:contentDescription="Scan Icon"
             android:src="@drawable/icon_scan"
             app:tint="@color/grayColor" />

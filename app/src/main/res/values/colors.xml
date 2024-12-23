@@ -2,7 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="gold">#F8DF7C</color>
+    <color name="yellow">#F8DF7C</color>
+    <color name="gold">#E0AF29</color>
     <color name="bluePrimary">#0300A2</color>
     <color name="darkBrown">#4A3933</color>
     <color name="darkBlue">#27255F</color>

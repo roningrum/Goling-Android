@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Theme.GolingAndroid.AppSubtitle"
+        android:text="Account Setting"/>
+
+    <LinearLayout
+        android:id="@+id/profile_change_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="12dp"
+        android:layout_marginBottom="12dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="3"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_weight="0.25"
+                android:src="@drawable/ic_person_profile"
+                app:tint="@color/bluePrimary"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Theme.GolingAndroid.SettingMenu"
+                android:textSize="14sp"
+                android:layout_weight="2.75"
+                android:textColor="@color/darkBlue"
+                android:layout_gravity="center"
+                android:text="Personal Information"/>
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_weight="0.25"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_go_to"
+                app:tint="@color/gold"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/pass_change_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="12dp"
+        android:layout_marginBottom="12dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="3"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_weight="0.25"
+                android:src="@drawable/ic_lock"
+                app:tint="@color/bluePrimary"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Theme.GolingAndroid.SettingMenu"
+                android:textSize="14sp"
+                android:layout_weight="2.75"
+                android:textColor="@color/darkBlue"
+                android:layout_gravity="center"
+                android:text="Change Password"/>
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_weight="0.25"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_go_to"
+                app:tint="@color/gold"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/emai_change_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="12dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="3"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_weight="0.25"
+                android:src="@drawable/ic_email"
+                app:tint="@color/bluePrimary"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Theme.GolingAndroid.SettingMenu"
+                android:textSize="14sp"
+                android:layout_weight="2.75"
+                android:textColor="@color/darkBlue"
+                android:layout_gravity="center"
+                android:text="Change Email"/>
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_weight="0.25"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_go_to"
+                app:tint="@color/gold"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
