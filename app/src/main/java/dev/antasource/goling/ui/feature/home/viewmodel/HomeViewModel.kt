@@ -28,6 +28,7 @@ class HomeViewModel(private val homeRepository: HomeRepository): ViewModel() {
     var job: Job? = null
     val exceptionHandler = CoroutineExceptionHandler { _, throwable -> }
 
+    var token: String = ""
 
     fun getUser(token: String){
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
@@ -50,4 +51,5 @@ class HomeViewModel(private val homeRepository: HomeRepository): ViewModel() {
             }
         }
     }
+
 }

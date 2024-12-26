@@ -31,4 +31,14 @@
     <string name="lacak_nomor_resi_search">Lacak Nomor Resi</string>
     <string name="user_sample">User</string>
     <string name="user_sample_email">user@mail.com</string>
+    <string name="title_nominal">Masukkan Nominal</string>
+    <string name="currency_text">Rp</string>
+    <string name="hint_nominal">0</string>
+    <string name="log_out">Log out</string>
+    <string name="title_amount_choice">Pilih Nominal</string>
+    <string name="sample_name_user">Laraswati Andarawati</string>
+    <string name="visible_amount">visible_amount</string>
+    <string name="top_up_label">Top up</string>
+    <string name="service_order_title">Layanan Pemesanan</string>
+    <string name="sample_nominal">Rp.5000</string>
 </resources>

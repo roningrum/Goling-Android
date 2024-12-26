@@ -3,6 +3,7 @@ package dev.antasource.goling.ui.factory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dev.antasource.goling.data.repositoty.AuthenticationRepository
+import dev.antasource.goling.ui.feature.home.viewmodel.ProfileViewModel
 import dev.antasource.goling.ui.feature.login.viewmodel.LoginViewModel
 import dev.antasource.goling.ui.feature.register.viewmodel.RegisterViewModel
 
@@ -14,6 +15,9 @@ class AuthViewModelFactory(private val repository: AuthenticationRepository) : V
         }else if(modelClass.isAssignableFrom(RegisterViewModel::class.java)){
             @Suppress("UNCHECKED_CAST")
             return RegisterViewModel(repository) as T
+        }else if(modelClass.isAssignableFrom(ProfileViewModel::class.java)){
+            @Suppress("UNCHECKED_CAST")
+            return ProfileViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel")
     }

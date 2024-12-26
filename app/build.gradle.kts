@@ -20,6 +20,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "API_URL", "\"https://antasource.online/api/\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -27,6 +30,11 @@ android {
                 "proguard-rules.pro"
             )
         }
+    }
+    buildFeatures{
+        viewBinding = true
+        buildConfig = true
+        dataBinding= true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -60,6 +68,7 @@ dependencies {
     implementation(libs.androidx.security.crypto)
     implementation (libs.androidx.lifecycle.livedata.ktx)
     implementation (libs.circleimageview)
+    implementation (libs.androidx.fragment.ktx)
 //    implementation("androidx.lifecycle:activity-activity-ktx:2.8.7")
 //    kapt ("androidx.lifecycle:lifecycle-compiler:2.8.7")
 

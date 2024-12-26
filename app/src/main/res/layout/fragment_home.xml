@@ -6,6 +6,7 @@
     tools:context=".ui.feature.home.fragment.HomeFragment">
 
     <include
+        android:id="@+id/layout_home"
         layout="@layout/layout_home_goling"/>
 
 </FrameLayout>

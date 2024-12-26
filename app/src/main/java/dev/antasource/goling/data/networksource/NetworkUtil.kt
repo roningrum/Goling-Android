@@ -1,5 +1,6 @@
 package dev.antasource.goling.data.networksource
 
+import dev.antasource.goling.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -26,7 +27,7 @@ object NetworkUtil {
 
     val apiService : ApiService by lazy {
      Retrofit.Builder()
-            .baseUrl("https://antasource.online/api/")
+            .baseUrl(BuildConfig.API_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client())
             .build()

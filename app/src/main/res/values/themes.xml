@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.GolingAndroid" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
@@ -30,11 +30,22 @@
         <item name="minHeight">48dp</item>
     </style>
 
+    <style name="Theme.GolingAndroid.EditText" parent="Widget.AppCompat.TextView">
+        <item name="fontFamily">@font/rubik_bold</item>
+        <item name="fontWeight">700</item>
+    </style>
+
     <style name="Theme.GolingAndroid.AppTitle" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">24sp</item>
         <item name="lineHeight">20dp</item>
         <item name="fontFamily">@font/rubik_semibold</item>
         <item name="fontWeight">600</item>
+    </style>
+
+    <style name="Theme.GolingAndroid.CurrencyText" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">32sp</item>
+        <item name="fontFamily">@font/rubik_bold</item>
+        <item name="fontWeight">700</item>
     </style>
 
     <style name="Theme.GolingAndroid.AppSubtitle" parent="Widget.AppCompat.TextView">
@@ -54,9 +65,25 @@
 
 
     <style name="Theme.GolingAndroid.Toolbar" parent="Widget.MaterialComponents.Toolbar">
-        <item name="background">@color/backgroundColor</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="fontFamily">@font/rubik_semibold</item>
+    </style>
+
+<!--    chip top up-->
+    <style name="Theme.GolingAndroid.Chip" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">#FAFAFA</item>
+        <item name="chipStrokeColor">@color/gold</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="chipCornerRadius">8dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/darkBlue</item>
+        <item name="android:textAppearance">@style/chipText</item>
+    </style>
+
+    <style name="chipText" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/rubik_semibold</item>
     </style>
 
 <!--    Bottom Navigation-->

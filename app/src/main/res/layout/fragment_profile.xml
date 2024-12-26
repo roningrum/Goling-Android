@@ -81,7 +81,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/profile_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <FrameLayout
                 android:id="@+id/layout_account_setting"
@@ -94,6 +94,20 @@
                 <include layout="@layout/layout_profil_info_setting"/>
 
             </FrameLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/logout_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginHorizontal="32dp"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                app:strokeColor="@color/bluePrimary"
+                android:text="@string/log_out"
+                app:cornerRadius="8dp"
+                app:layout_constraintTop_toBottomOf="@id/layout_account_setting"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

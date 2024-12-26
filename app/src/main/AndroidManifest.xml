@@ -22,6 +22,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.feature.topup.PaymentWebViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.feature.topup.TopUpActivity"
             android:exported="false" />
         <activity
@@ -43,11 +46,11 @@
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.feature.login.LoginActivity"
+            android:name=".ui.feature.home.HomeActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.feature.home.HomeActivity"
+            android:name=".ui.feature.login.LoginActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>

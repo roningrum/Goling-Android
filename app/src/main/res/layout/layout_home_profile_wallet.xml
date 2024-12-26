@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:id="@+id/layout_profile"
@@ -21,42 +22,46 @@
             app:titleTextAppearance="@style/Theme.GolingAndroid.TextInputLayout"
             android:hint="@string/lacak_nomor_resi_search"
             app:backgroundTint="@android:color/transparent" />
-
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginHorizontal="16dp"
-            android:layout_weight="0.25"
-            android:contentDescription="Scan Icon"
-            android:src="@drawable/icon_scan"
-            app:tint="@color/grayColor" />
     </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/card_wallet"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="170dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/background_wallet_svg"
-        android:padding="16dp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_profile">
 
-        <TextView
-            android:id="@+id/text_title_card"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/welcome_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/saldo_gocash_title"
-            android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:orientation="vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Theme.GolingAndroid.AppSubtitle"
+                android:textColor="@color/white"
+                android:text="@string/welcome_text"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Theme.GolingAndroid.AppTitle"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:text="@string/sample_name_user"/>
+
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/layout_amount_wallet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text_title_card"
+            android:layout_below="@id/welcome_layout"
             android:layout_marginTop="16dp"
             android:gravity="center"
             android:orientation="horizontal"
@@ -88,6 +93,7 @@
                 android:layout_height="24dp"
                 android:layout_marginStart="8dp"
                 android:padding="0dp"
+                android:contentDescription="@string/visible_amount"
                 android:src="@drawable/ic_visibility"
                 app:iconSize="24dp"
                 app:tint="@color/white" />
@@ -120,7 +126,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_regular"
-                android:text="Top up"
+                android:text="@string/top_up_label"
                 android:textAlignment="center"
                 android:textColor="@color/black" />
         </LinearLayout>

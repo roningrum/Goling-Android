@@ -7,4 +7,120 @@
     android:layout_height="match_parent"
     tools:context=".ui.feature.topup.TopUpActivity">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/materialToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="8dp"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Top Up"
+        app:titleCentered="true"
+        app:titleTextAppearance="@style/Theme.GolingAndroid.Toolbar"
+        app:titleTextColor="@color/darkBlue" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_top_up"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/graySecondary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/materialToolbar">
+
+        <TextView
+            android:id="@+id/title_topup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_nominal"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            style="@style/Theme.GolingAndroid.AppSubtitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/layout_top_up_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_topup">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Theme.GolingAndroid.CurrencyText"
+                android:text="@string/currency_text"/>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/amount_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_nominal"
+                android:maxLines="1"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                style="@style/Theme.GolingAndroid.EditText"
+                android:background="@android:color/transparent"
+                android:textSize="32sp"
+                android:layout_marginHorizontal="8dp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_nominal_choice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:paddingVertical="12dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_top_up_input">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_amount_choice"/>
+
+            <GridView
+                android:id="@+id/grid_amount_chip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:useDefaultMargins="true"
+                android:layout_marginTop="8dp"
+                android:numColumns="2" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_top_up_confirm"
+        style="@style/Widget.Material3.Button"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        app:cornerRadius="8dp"
+        android:text="Lanjutkan"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/darkBlue"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

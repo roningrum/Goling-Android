@@ -4,8 +4,11 @@ import dev.antasource.goling.data.networksource.model.ForgotPassRequest
 import dev.antasource.goling.data.networksource.model.ForgotPassResponse
 import dev.antasource.goling.data.networksource.model.LoginRequest
 import dev.antasource.goling.data.networksource.model.LoginResponse
+import dev.antasource.goling.data.networksource.model.LogoutResponse
 import dev.antasource.goling.data.networksource.model.RegisterRequest
 import dev.antasource.goling.data.networksource.model.RegisterResponse
+import dev.antasource.goling.data.networksource.model.TopUpRequest
+import dev.antasource.goling.data.networksource.model.TopUpResponse
 import dev.antasource.goling.data.networksource.model.UserRequest
 import dev.antasource.goling.data.networksource.model.UserResponse
 import retrofit2.Response
@@ -26,9 +29,15 @@ interface ApiService {
     @POST("auth/forget-password")
     suspend fun resetPassword(@Body forgotPassRequest: ForgotPassRequest): Response<ForgotPassResponse>
 
+    @POST("auth/logout")
+    suspend fun logout(@Header("Authorization")token: String): Response<LogoutResponse>
+
     @GET("user")
     suspend fun getUser(@Header("Authorization")token: String): Response<UserResponse>
 
     @PUT("user/update-user")
     suspend fun updateUser(@Header("Authorization")token: String, userRequest: UserRequest)
+
+    @POST("wallet/topup")
+    suspend fun topUpWallet(@Header("Authorization")token: String, @Body topUpRequest: TopUpRequest): Response<TopUpResponse>
 }

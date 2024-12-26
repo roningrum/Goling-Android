@@ -18,10 +18,14 @@ import com.google.android.material.textfield.TextInputEditText
 import dev.antasource.goling.R
 import dev.antasource.goling.data.networksource.NetworkRemoteSource
 import dev.antasource.goling.data.repositoty.AuthenticationRepository
-import dev.antasource.goling.util.SharedPrefUtil
 import dev.antasource.goling.ui.factory.AuthViewModelFactory
 import dev.antasource.goling.ui.feature.home.HomeActivity
 import dev.antasource.goling.ui.feature.login.viewmodel.LoginViewModel
+import dev.antasource.goling.util.SharedPrefUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     private val loginViewModel: LoginViewModel by viewModels {
@@ -63,12 +67,16 @@ class LoginActivity : AppCompatActivity() {
         SharedPrefUtil.clear(this)
 
         loginViewModel.accessToken.observe(this){ response ->
-            response?.let {
-                SharedPrefUtil.saveAccessToken(this, response)
-                val intent = Intent(this, HomeActivity::class.java)
-                startActivity(intent)
-                finish()
+            CoroutineScope(Dispatchers.Main).launch{
+                delay(3000)
+                response?.let {
+                    SharedPrefUtil.saveAccessToken(this@LoginActivity, response)
+                    val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             }
+
         }
         loginViewModel.message.observe(this){message ->
             val rootView = findViewById<View>(android.R.id.content)
