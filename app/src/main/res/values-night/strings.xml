@@ -41,4 +41,5 @@
     <string name="top_up_label">Top up</string>
     <string name="service_order_title">Layanan Pemesanan</string>
     <string name="sample_nominal">Rp.5000</string>
+    <string name="icon_origin_estimate">origin</string>
 </resources>

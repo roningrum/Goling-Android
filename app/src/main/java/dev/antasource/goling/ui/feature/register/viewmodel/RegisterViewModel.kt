@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import dev.antasource.goling.data.networksource.model.ErrorMessage
-import dev.antasource.goling.data.networksource.model.RegisterRequest
+import dev.antasource.goling.data.model.ErrorMessage
+import dev.antasource.goling.data.model.RegisterRequest
 import dev.antasource.goling.data.repositoty.AuthenticationRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope

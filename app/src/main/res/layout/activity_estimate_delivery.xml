@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.feature.estimate.EstimateDeliveryActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar_estimate_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:minHeight="56dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Check Estimate Rate"
+        app:titleCentered="true"
+        app:titleTextAppearance="@style/Theme.GolingAndroid.Toolbar" />
+
+    <RelativeLayout
+        android:id="@+id/layout_estimate_form"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/graySecondary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_estimate_menu">
+
+        <LinearLayout
+            android:id="@+id/layout_package_detail_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:paddingVertical="12dp">
+
+                <RelativeLayout
+                    android:id="@+id/layout_destination_estimate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/icon_origin_location"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/icon_origin_estimate"
+                        android:src="@drawable/ic_origin_location" />
+
+                    <View
+                        android:id="@+id/space_between"
+                        android:layout_width="2dp"
+                        android:layout_height="56dp"
+                        android:layout_below="@id/icon_origin_location"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/line_drawable" />
+
+                    <ImageView
+                        android:id="@+id/icon_destination_location"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:scaleType="centerCrop"
+                        android:layout_below="@id/space_between"
+                        android:contentDescription="@string/icon_origin_estimate"
+                        android:src="@drawable/ic_destination_location" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="16dp">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/input_origin_layout"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@color/white"
+                        app:hintEnabled="false"
+                        app:hintTextAppearance="@style/Theme.GolingAndroid.TextInputLayout">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/input_origin_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:hint="Origin"
+                            style="@style/Theme.GolingAndroid.InputText"
+                            android:focusableInTouchMode="false"
+                            android:focusable="false"
+                            android:padding="0dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/input_destination_layout"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/input_origin_layout"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@color/white"
+                        app:hintEnabled="false"
+                        app:hintTextAppearance="@style/Theme.GolingAndroid.TextInputLayout">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:hint="Destination"
+                            style="@style/Theme.GolingAndroid.InputText"
+                            android:focusableInTouchMode="false"
+                            android:focusable="false"
+                            android:padding="0dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/title_weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/rubik_semibold"
+                    android:textSize="16sp"
+                    android:text="Weight"
+                    />
+                <TextView
+                    android:id="@+id/subtitle_weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/rubik_regular"
+                    android:textSize="12sp"
+                    android:textColor="@color/secondaryColor"
+                    android:text="Minimal weight 10kg"
+                    />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/input_weight_layout"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@color/white"
+                    app:hintEnabled="false"
+                    app:hintTextAppearance="@style/Theme.GolingAndroid.TextInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:hint="Item Weight(Kg)"
+                        style="@style/Theme.GolingAndroid.InputText"
+                        android:padding="0dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/title_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/rubik_semibold"
+                    android:textSize="16sp"
+                    android:text="Package Size"
+                    />
+
+                <TextView
+                    android:id="@+id/subtitle_package"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/rubik_regular"
+                    android:textSize="12sp"
+                    android:textColor="@color/secondaryColor"
+                    android:text="Please input your size"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/input_size_layout"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        app:hintEnabled="false"
+                        app:hintTextAppearance="@style/Theme.GolingAndroid.TextInputLayout">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:hint="Lenght(cm)"
+                            style="@style/Theme.GolingAndroid.InputText"
+                            android:padding="0dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/input_width_layout"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        app:hintEnabled="false"
+                        app:hintTextAppearance="@style/Theme.GolingAndroid.TextInputLayout">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:hint="Width(cm)"
+                            style="@style/Theme.GolingAndroid.InputText"
+                            android:padding="0dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/input_height_layout"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        app:hintEnabled="false"
+                        app:hintTextAppearance="@style/Theme.GolingAndroid.TextInputLayout">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:hint="Height(cm)"
+                            style="@style/Theme.GolingAndroid.InputText"
+                            android:padding="0dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_check_estimate"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            app:cornerRadius="8dp"
+            android:backgroundTint="@color/darkBlue"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:layout_marginTop="24dp"
+            android:layout_marginHorizontal="16dp"
+            android:text="Check Estimate"
+            android:layout_below="@id/layout_package_detail_form"/>
+    </RelativeLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

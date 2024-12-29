@@ -6,7 +6,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
-import android.window.OnBackInvokedDispatcher
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -40,15 +39,34 @@ class TopUpActivity : AppCompatActivity() {
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, 0, systemBars.right, 0)
+            v.setPadding(systemBars.left, systemBars.top+24, systemBars.right, 0)
             insets
         }
 
         setSupportActionBar(binding.materialToolbar)
-        actionBar?.setDisplayHomeAsUpEnabled(true)
-        actionBar?.setIcon(R.drawable.ic_back)
+        supportActionBar?.apply {
+            setDisplayShowHomeEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
+//            setHomeAsUpIndicator(R.drawable.ic_back)
+        }
+
+//        onBackPrevPage()
 
         topupViewModel.token = SharedPrefUtil.getAccessToken(this).toString()
+
+        topupViewModel.topUpResponse.observe(this){ response ->
+            Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, PaymentWebViewActivity::class.java)
+            intent.putExtra("payment_url", response.invoiceUrl)
+            startActivity(intent)
+            finish()
+        }
+
+        topupViewModel.errorMessage.observe(this){response ->
+            Toast.makeText(this, "Response $response", Toast.LENGTH_SHORT).show()
+
+        }
+
 
         val chipAmount = listOf("5000", "10000", "20000", "25000", "30000", "35000", "40000", "45000")
         binding.gridAmountChip.adapter = ChipAmountAdapter(this, chipAmount) { chipText ->
@@ -59,6 +77,8 @@ class TopUpActivity : AppCompatActivity() {
             binding.amountEditText.setSelection(nominal.length)
 //            checkEnableButton()  // Periksa status tombol
         }
+
+
         binding.amountEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 // Memberitahu bahwa pengguna mengetik
@@ -93,27 +113,8 @@ class TopUpActivity : AppCompatActivity() {
             topupViewModel.topUpAmountWallet()
         }
 
-        topupViewModel.topUpResponse.observe(this){ response ->
-            response.let {
-                Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, PaymentWebViewActivity::class.java)
-                intent.putExtra("payment_url", response.invoiceUrl)
-                startActivity(intent)
-                finish()
-            }
-        }
-
-        topupViewModel.errorMessage.observe(this){response ->
-            Toast.makeText(this, "Response $response", Toast.LENGTH_SHORT).show()
-
-        }
 
     }
-
-    override fun getOnBackInvokedDispatcher(): OnBackInvokedDispatcher {
-        return super.getOnBackInvokedDispatcher()
-    }
-
 }
 
 

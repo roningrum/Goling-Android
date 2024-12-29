@@ -60,7 +60,9 @@
         app:layout_constraintTop_toBottomOf="@id/title_order_service"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
-        <include layout="@layout/layout_home_goling_menu"/>
+        <include
+            android:id="@+id/layout_goling_menu"
+            layout="@layout/layout_home_goling_menu"/>
     </FrameLayout>
 
 

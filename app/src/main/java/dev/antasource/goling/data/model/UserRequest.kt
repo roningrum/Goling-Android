@@ -1,4 +1,4 @@
-package dev.antasource.goling.data.networksource.model
+package dev.antasource.goling.data.model
 
 data class UserRequest(
     val username:String,

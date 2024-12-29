@@ -1,6 +1,6 @@
-package dev.antasource.goling.data.networksource.model
+package dev.antasource.goling.data.model
 
-data class UserResponse(
+data class Users(
     var createdAt: String,
     var email: String,
     var id: Int,

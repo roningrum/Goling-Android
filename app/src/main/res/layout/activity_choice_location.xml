@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.feature.estimate.ChoiceLocationActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/materialToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="8dp"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Select Location"
+        app:titleCentered="true"
+        app:titleTextAppearance="@style/Theme.GolingAndroid.Toolbar"
+        app:titleTextColor="@color/darkBlue" />
+
+    <LinearLayout
+        android:id="@+id/layout_select_location_form"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="16dp"
+        android:background="@color/graySecondary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/materialToolbar">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selected Location"
+            style="@style/Theme.GolingAndroid.Title"
+            android:textSize="14sp"
+            android:textColor="@color/darkBlue" />
+
+        <LinearLayout
+            android:id="@+id/layout_field_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_selected_province"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text ="Province"
+                android:fontFamily="@font/rubik_regular"
+                android:textSize="14sp"
+                android:drawablePadding="8dp"
+                android:drawableStart="@drawable/ic_selected_mode"/>
+            <TextView
+                android:id="@+id/text_selected_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text ="City"
+                android:visibility="gone"
+                android:fontFamily="@font/rubik_regular"
+                android:textSize="14sp"
+                android:drawablePadding="8dp"
+                android:drawableStart="@drawable/ic_selected_mode"/>
+            <TextView
+                android:id="@+id/text_selected_district"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text ="District"
+                android:visibility="gone"
+                android:fontFamily="@font/rubik_regular"
+                android:textSize="14sp"
+                android:drawablePadding="8dp"
+                android:drawableStart="@drawable/ic_selected_mode"/>
+            <TextView
+                android:id="@+id/text_selected_villages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text ="Villages"
+                android:visibility="gone"
+                android:fontFamily="@font/rubik_regular"
+                android:textSize="14sp"
+                android:drawablePadding="8dp"
+                android:drawableStart="@drawable/ic_selected_mode"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/title_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Province"
+            android:layout_marginTop="16dp"
+            style="@style/Theme.GolingAndroid.Title"
+            android:textSize="14sp"
+            android:textColor="@color/darkBlue" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_region"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="6dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

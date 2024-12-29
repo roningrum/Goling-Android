@@ -35,6 +35,11 @@
         <item name="fontWeight">700</item>
     </style>
 
+    <style name="Theme.GolingAndroid.InputText" parent="Widget.AppCompat.TextView">
+        <item name="fontFamily">@font/rubik_regular</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="Theme.GolingAndroid.AppTitle" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">24sp</item>
         <item name="lineHeight">20dp</item>
@@ -53,6 +58,11 @@
         <item name="fontFamily">@font/rubik_regular</item>
     </style>
 
+    <style name="Theme.GolingAndroid.Title" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/rubik_semibold</item>
+    </style>
+
     <style name="Theme.GolingAndroid.AppMenu" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">16sp</item>
         <item name="fontFamily">@font/rubik_semibold</item>
@@ -66,6 +76,7 @@
 
     <style name="Theme.GolingAndroid.Toolbar" parent="Widget.MaterialComponents.Toolbar">
         <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/darkBlue</item>
         <item name="fontFamily">@font/rubik_semibold</item>
     </style>
 

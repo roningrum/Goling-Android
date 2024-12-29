@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import dev.antasource.goling.data.networksource.model.ErrorMessage
-import dev.antasource.goling.data.networksource.model.UserResponse
+import dev.antasource.goling.data.model.ErrorMessage
+import dev.antasource.goling.data.model.UserResponse
 import dev.antasource.goling.data.repositoty.HomeRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -22,8 +22,6 @@ class HomeViewModel(private val homeRepository: HomeRepository): ViewModel() {
     private val _errorMsg = MutableLiveData<String>()
     val errorMsg: LiveData<String> = _errorMsg
 
-    private val _message = MutableLiveData<String>()
-    val message: LiveData<String> = _message
 
     var job: Job? = null
     val exceptionHandler = CoroutineExceptionHandler { _, throwable -> }
@@ -36,7 +34,6 @@ class HomeViewModel(private val homeRepository: HomeRepository): ViewModel() {
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
                     _userResponse.value = response.body()
-                    _message.value = response.body()?.username
                 } else {
                     try {
                         val gson = Gson()
