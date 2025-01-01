@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import dev.antasource.goling.data.model.ErrorMessage
 import dev.antasource.goling.data.model.country.Districs
+import dev.antasource.goling.data.model.country.LocationDeliver
 import dev.antasource.goling.data.model.country.Regencies
 import dev.antasource.goling.data.model.country.Region
 import dev.antasource.goling.data.model.country.Villages
@@ -29,12 +30,17 @@ class EstimateViewModel(private val repository: ShippingRepository) : ViewModel(
     private val _distric = MutableLiveData<List<Districs>>()
     val districs: LiveData<List<Districs>> = _distric
 
-
     private val _villages = MutableLiveData<List<Villages>>()
     val villages: LiveData<List<Villages>> = _villages
 
     private val _errorMsg = MutableLiveData<String>()
     val errorMsg: LiveData<String> = _errorMsg
+
+    val _originLocation = MutableLiveData<LocationDeliver>()
+    val originLocation : LiveData<LocationDeliver> = _originLocation
+
+    val _destinateLocation = MutableLiveData<LocationDeliver>()
+    val destinateLocation : LiveData<LocationDeliver> = _destinateLocation
 
     var provinceId = 0
     var regenciesId = 0

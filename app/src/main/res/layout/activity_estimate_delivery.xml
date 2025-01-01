@@ -86,7 +86,7 @@
                         android:id="@+id/input_origin_layout"
                         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="48dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:background="@color/white"
@@ -97,10 +97,12 @@
                             android:id="@+id/input_origin_edit_text"
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
-                            android:hint="Origin"
                             style="@style/Theme.GolingAndroid.InputText"
                             android:focusableInTouchMode="false"
                             android:focusable="false"
+                            android:hint="Origin"
+                            android:textSize="12sp"
+                            android:inputType="textMultiLine"
                             android:padding="0dp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -118,12 +120,15 @@
                         app:hintTextAppearance="@style/Theme.GolingAndroid.TextInputLayout">
 
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/input_destination_edit_text"
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
-                            android:hint="Destination"
                             style="@style/Theme.GolingAndroid.InputText"
                             android:focusableInTouchMode="false"
                             android:focusable="false"
+                            android:hint="Destination"
+                            android:textSize="12sp"
+                            android:inputType="textMultiLine"
                             android:padding="0dp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -171,6 +176,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:hint="Item Weight(Kg)"
+                        android:inputType="number"
+                        android:maxLines="1"
                         style="@style/Theme.GolingAndroid.InputText"
                         android:padding="0dp" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -225,6 +232,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
                             android:hint="Lenght(cm)"
+                            android:inputType="number"
+                            android:maxLines="1"
                             style="@style/Theme.GolingAndroid.InputText"
                             android:padding="0dp" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -244,6 +253,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
                             android:hint="Width(cm)"
+                            android:inputType="number"
+                            android:maxLines="1"
                             style="@style/Theme.GolingAndroid.InputText"
                             android:padding="0dp" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -263,6 +274,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
                             android:hint="Height(cm)"
+                            android:inputType="number"
+                            android:maxLines="1"
                             style="@style/Theme.GolingAndroid.InputText"
                             android:padding="0dp" />
                     </com.google.android.material.textfield.TextInputLayout>

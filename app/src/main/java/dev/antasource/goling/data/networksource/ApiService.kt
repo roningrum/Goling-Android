@@ -16,6 +16,7 @@ import dev.antasource.goling.data.model.UserResponse
 import dev.antasource.goling.data.model.country.Districs
 import dev.antasource.goling.data.model.country.Regencies
 import dev.antasource.goling.data.model.country.Villages
+import dev.antasource.goling.data.model.topup.Balance
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -51,7 +52,11 @@ interface ApiService {
     @GET("wallet/verify-payment")
     suspend fun verifyPayment(@Header("Authorization")token: String, @Query("transactionId") transactionId: String): Response<PaymentResponse>
 
-//    Get Location
+    @GET("wallet/balance")
+    suspend fun balance(@Header("Authorization")token: String): Response<Balance>
+
+
+    //    Get Location
     @GET("wilayah")
     suspend fun getRegion(): Response<List<Region>>
 

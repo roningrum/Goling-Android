@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     kotlin("kapt")
+    id("kotlin-parcelize")
 //    alias("kotlin-kapt")
 }
 
@@ -69,16 +70,6 @@ dependencies {
     implementation (libs.androidx.lifecycle.livedata.ktx)
     implementation (libs.circleimageview)
     implementation (libs.androidx.fragment.ktx)
-
-    //Room Db
-
-
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-
-
-
-
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

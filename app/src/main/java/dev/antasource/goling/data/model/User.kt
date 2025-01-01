@@ -1,6 +1,6 @@
 package dev.antasource.goling.data.model
 
-data class Users(
+data class User(
     var createdAt: String,
     var email: String,
     var id: Int,

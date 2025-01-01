@@ -13,6 +13,7 @@ class NetworkRemoteSource() {
     suspend fun topUpWallet(token: String, topUpRequest: TopUpRequest) = NetworkUtil.apiService.topUpWallet("Bearer $token", topUpRequest)
     suspend fun verifyPayment(token:String, transactionId: String) = NetworkUtil.apiService.verifyPayment("Bearer $token",
        transactionId)
+    suspend fun balance(token: String) = NetworkUtil.apiService.balance("Bearer $token")
     suspend fun logout(token: String) = NetworkUtil.apiService.logout("Bearer $token ")
     suspend fun getRegion() = NetworkUtil.apiService.getRegion()
     suspend fun getRegencies(provinceId: Int) = NetworkUtil.apiService.getCity(provinceId)
