@@ -19,10 +19,22 @@ import dev.antasource.goling.ui.feature.estimate.adapter.RegenciesAdapter
 import dev.antasource.goling.ui.feature.estimate.adapter.RegionAdapter
 import dev.antasource.goling.ui.feature.estimate.adapter.VillagesAdapter
 import dev.antasource.goling.ui.feature.estimate.viewmodel.EstimateViewModel
+import dev.antasource.goling.util.SharedPrefUtil
 import kotlin.getValue
 
 class ChoiceLocationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChoiceLocationBinding
+
+    private var originProvinceId = 0
+    private var originCityId = 0
+    private var originDistrictId = 0
+    private var originVillageId = 0
+
+    private var destinateProvinceId = 0
+    private var destinateCityId = 0
+    private var destinateDistricId = 0
+    private var destinateVillageId = 0
+
 
     private var originProvince = ""
     private var originCity = ""
@@ -34,7 +46,7 @@ class ChoiceLocationActivity : AppCompatActivity() {
     private var destinateDistric = ""
     private var destinateVillage = ""
 
-    private val estimateViewModel by viewModels<EstimateViewModel>(){
+    private val estimateViewModel by viewModels<EstimateViewModel>() {
         val data = NetworkRemoteSource()
         val repo = ShippingRepository(data)
         ShippingViewModelFactory(repo)
@@ -55,25 +67,33 @@ class ChoiceLocationActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        estimateViewModel.region.observe(this){ region->
-            binding.listRegion.adapter = RegionAdapter(region){selectedRegion ->
-                if(intent.getStringExtra("fieldLocation") == "origin"){
-                    originProvince= selectedRegion.name
-                }else{
+        estimateViewModel.region.observe(this) { region ->
+            binding.listRegion.adapter = RegionAdapter(region) { selectedRegion ->
+                if (intent.getStringExtra("fieldLocation") == "origin") {
+                    originProvince = selectedRegion.name
+                    originProvinceId = selectedRegion.id.toInt()
+                } else {
+                    destinateProvinceId = selectedRegion.id.toInt()
                     destinateProvince = selectedRegion.name
                 }
-                estimateViewModel.provinceId = selectedRegion.id.toInt()
                 binding.textSelectedProvince.text = selectedRegion.name.toString()
                 binding.textSelectedCity.visibility = View.VISIBLE
+                estimateViewModel.provinceId = selectedRegion.id.toInt()
                 estimateViewModel.getRegenciesId()
             }
         }
 
-        estimateViewModel.regencies.observe(this){ regencies->
-            binding.listRegion.adapter = RegenciesAdapter(regencies){selectedRegencies->
-                originCity = selectedRegencies.name
-                destinateCity = selectedRegencies.name
+        estimateViewModel.regencies.observe(this) { regencies ->
+            binding.listRegion.adapter = RegenciesAdapter(regencies) { selectedRegencies ->
                 estimateViewModel.regenciesId = selectedRegencies.id.toInt()
+                if (intent.getStringExtra("fieldLocation") == "origin") {
+                    originCity = selectedRegencies.name
+                    originCityId = selectedRegencies.id.toInt()
+                } else {
+                    destinateCity = selectedRegencies.name
+                    destinateCityId = selectedRegencies.id.toInt()
+                }
+
                 binding.textSelectedCity.text = selectedRegencies.name.toString()
                 binding.textSelectedDistrict.visibility = View.VISIBLE
 
@@ -81,10 +101,17 @@ class ChoiceLocationActivity : AppCompatActivity() {
 
             }
         }
-        estimateViewModel.districs.observe(this){distric ->
-            binding.listRegion.adapter = DistrictAdapter(distric){ selectedDistric->
-                originDistric = selectedDistric.name
-                destinateDistric = selectedDistric.name
+        estimateViewModel.districs.observe(this) { distric ->
+            binding.listRegion.adapter = DistrictAdapter(distric) { selectedDistric ->
+
+                if (intent.getStringExtra("fieldLocation") == "origin") {
+                    originDistric = selectedDistric.name
+                    originDistrictId = selectedDistric.id.toInt()
+                } else {
+                    destinateDistric = selectedDistric.name
+                    destinateDistricId = selectedDistric.id.toInt()
+                }
+
                 estimateViewModel.districtId = selectedDistric.id.toInt()
                 binding.textSelectedDistrict.text = selectedDistric.name.toString()
                 binding.textSelectedVillages.visibility = View.VISIBLE
@@ -92,10 +119,16 @@ class ChoiceLocationActivity : AppCompatActivity() {
                 estimateViewModel.getVillages()
             }
         }
-        estimateViewModel.villages.observe(this){ village ->
-            binding.listRegion.adapter = VillagesAdapter(village){ selectedVillage ->
-                originVillage = selectedVillage.name
-                destinateVillage = selectedVillage.name
+        estimateViewModel.villages.observe(this) { village ->
+            binding.listRegion.adapter = VillagesAdapter(village) { selectedVillage ->
+                if (intent.getStringExtra("fieldLocation") == "origin") {
+                    originVillage = selectedVillage.name
+                    originVillageId = selectedVillage.id.toInt()
+                } else {
+                    destinateVillage = selectedVillage.name
+                    destinateVillageId = selectedVillage.id.toInt()
+                }
+
                 binding.textSelectedVillages.text = selectedVillage.name
                 directBackToForm()
             }
@@ -105,18 +138,34 @@ class ChoiceLocationActivity : AppCompatActivity() {
     }
 
     private fun directBackToForm() {
-        if(intent.getStringExtra("fieldLocation") == "origin"){
+        if (intent.getStringExtra("fieldLocation") == "origin") {
             val intent = Intent(this, EstimateDeliveryActivity::class.java)
-            var bundle = Bundle()
-            bundle.putParcelable("origin", LocationDeliver(originProvince,originCity, originDistric,originVillage))
-            intent.putExtra("originLocation", bundle)
+            val origin = LocationDeliver(
+                originProvinceId,
+                originCityId,
+                originDistrictId,
+                originVillageId,
+                originProvince,
+                originCity,
+                originDistric,
+                originVillage
+            )
+            SharedPrefUtil.saveOriginDataPrefs(this, origin)
             startActivity(intent)
             finish()
-        }else if (intent.getStringExtra("fieldLocation") == "destinate"){
+        } else if (intent.getStringExtra("fieldLocation") == "destinate") {
             val intent = Intent(this, EstimateDeliveryActivity::class.java)
-            var bundle = Bundle()
-            bundle.putParcelable("destinate", LocationDeliver(destinateProvince,destinateCity, destinateDistric,destinateVillage))
-            intent.putExtra("destinateLocation", bundle)
+            val destination = LocationDeliver(
+                destinateProvinceId,
+                destinateCityId,
+                destinateDistricId,
+                destinateVillageId,
+                destinateProvince,
+                destinateCity,
+                destinateDistric,
+                destinateVillage
+            )
+            SharedPrefUtil.saveDesDataPrefs(this, destination)
             startActivity(intent)
             finish()
         }

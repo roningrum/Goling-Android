@@ -5,6 +5,10 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class LocationDeliver (
+    val provinceId: Int,
+    val cityId: Int,
+    val districId: Int,
+    val villageId: Int,
     val province: String,
     val city: String,
     val distric: String,

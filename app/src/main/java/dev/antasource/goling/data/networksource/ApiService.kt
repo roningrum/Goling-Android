@@ -16,6 +16,8 @@ import dev.antasource.goling.data.model.UserResponse
 import dev.antasource.goling.data.model.country.Districs
 import dev.antasource.goling.data.model.country.Regencies
 import dev.antasource.goling.data.model.country.Villages
+import dev.antasource.goling.data.model.estimate.EstimateShipRequest
+import dev.antasource.goling.data.model.estimate.EstimateShipResponse
 import dev.antasource.goling.data.model.topup.Balance
 import retrofit2.Response
 import retrofit2.http.Body
@@ -68,5 +70,9 @@ interface ApiService {
 
     @GET("wilayah/{districtId}/villages")
     suspend fun getVillage(@Path("districtId") districtId: Int): Response<List<Villages>>
+
+    //estimate
+    @POST("shipping/estimate-shipping")
+    suspend fun getEstimateShipping(@Body estimateRequest: EstimateShipRequest): Response<EstimateShipResponse>
 
 }

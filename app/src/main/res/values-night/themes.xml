@@ -3,23 +3,41 @@
     <style name="Base.Theme.GolingAndroid" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryVariant">@color/surfaceColor</item>
         <item name="colorOnBackground">@color/surfaceColor</item>
         <item name="colorOnPrimary">@color/darkBrown</item>
         <item name="colorSecondary">@color/orange</item>
         <item name="colorOnSecondary">@color/surfaceColor</item>
+        <item name="colorSurface">@color/surfaceColor</item>
 
         <!--        font Family-->
         <item name="fontFamily">@font/rubik</item>
     </style>
 
     <style name="Theme.GolingAndroid" parent="Base.Theme.GolingAndroid">
-       <item name="android:windowLightStatusBar">true</item>
+        <item name="statusBarBackground">?attr/colorPrimary</item>
     </style>
+
+    <!--    bottomAppBar-->
+    <style name="Theme.GolingAndroid.BottomAppBar" parent="Widget.MaterialComponents.BottomAppBar">
+        <item name="backgroundTint">@color/white</item>
+    </style>
+
 
     <!--    TextInput Layout-->
     <style name="Theme.GolingAndroid.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
         <item name="cornerRadius">8dp</item>
         <item name="minHeight">48dp</item>
+    </style>
+
+    <style name="Theme.GolingAndroid.EditText" parent="Widget.AppCompat.TextView">
+        <item name="fontFamily">@font/rubik_bold</item>
+        <item name="fontWeight">700</item>
+    </style>
+
+    <style name="Theme.GolingAndroid.InputText" parent="Widget.AppCompat.TextView">
+        <item name="fontFamily">@font/rubik_regular</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="Theme.GolingAndroid.AppTitle" parent="Widget.AppCompat.TextView">
@@ -29,17 +47,64 @@
         <item name="fontWeight">600</item>
     </style>
 
+    <style name="Theme.GolingAndroid.CurrencyText" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">32sp</item>
+        <item name="fontFamily">@font/rubik_bold</item>
+        <item name="fontWeight">700</item>
+    </style>
+
     <style name="Theme.GolingAndroid.AppSubtitle" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">16sp</item>
         <item name="fontFamily">@font/rubik_regular</item>
     </style>
 
+    <style name="Theme.GolingAndroid.Title" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/rubik_semibold</item>
+    </style>
+
+    <style name="Theme.GolingAndroid.AppMenu" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/rubik_semibold</item>
+    </style>
+
+    <style name="Theme.GolingAndroid.SettingMenu" parent="Theme.GolingAndroid.AppMenu">
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/rubik_regular</item>
+    </style>
+
+
+    <style name="Theme.GolingAndroid.Toolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/darkBlue</item>
+        <item name="fontFamily">@font/rubik_semibold</item>
+    </style>
+
+    <!--    chip top up-->
+    <style name="Theme.GolingAndroid.Chip" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">#FAFAFA</item>
+        <item name="chipStrokeColor">@color/gold</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="chipCornerRadius">8dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/darkBlue</item>
+        <item name="android:textAppearance">@style/chipText</item>
+    </style>
+
+    <style name="chipText" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/rubik_semibold</item>
+    </style>
+
     <!--    Bottom Navigation-->
     <style name="Theme.GolingAndroid.BottomNav" parent="Widget.MaterialComponents.BottomNavigationView">
-        <item name="backgroundTint">@color/white</item>
+        <item name="backgroundTint">@android:color/transparent</item>
         <item name="fontFamily">@font/rubik_regular</item>
         <item name="rippleColor">@android:color/transparent</item>
         <item name="itemRippleColor">@android:color/transparent</item>
+        <item name="paddingStart">8dp</item>
+        <item name="paddingEnd">8dp</item>
     </style>
 
 </resources>

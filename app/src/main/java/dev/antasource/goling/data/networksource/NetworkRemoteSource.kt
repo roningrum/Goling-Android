@@ -4,6 +4,7 @@ import dev.antasource.goling.data.model.ForgotPassRequest
 import dev.antasource.goling.data.model.LoginRequest
 import dev.antasource.goling.data.model.RegisterRequest
 import dev.antasource.goling.data.model.TopUpRequest
+import dev.antasource.goling.data.model.estimate.EstimateShipRequest
 
 class NetworkRemoteSource() {
     suspend fun getLoginResponse(login: LoginRequest) = NetworkUtil.apiService.loginService(login)
@@ -19,4 +20,5 @@ class NetworkRemoteSource() {
     suspend fun getRegencies(provinceId: Int) = NetworkUtil.apiService.getCity(provinceId)
     suspend fun getDistrics(cityId: Int) = NetworkUtil.apiService.getDistrict(cityId)
     suspend fun getVillages(districtId: Int) = NetworkUtil.apiService.getVillage(districtId)
+    suspend fun getEstimateShipping(estimateShipRequest: EstimateShipRequest) = NetworkUtil.apiService.getEstimateShipping(estimateShipRequest)
 }

@@ -42,4 +42,11 @@
     <string name="service_order_title">Layanan Pemesanan</string>
     <string name="sample_nominal">Rp.5000</string>
     <string name="icon_origin_estimate">origin</string>
+    <string name="sample_shipment_fee">20000</string>
+    <string name="sample_insurance_rate">400</string>
+    <string name="sample_total">400</string>
+    <string name="estimate_title">Estimate</string>
+    <string name="shipment_fee_title">Shipment Fee</string>
+    <string name="total_shipping_title">Total Shipping</string>
+    <string name="label_checked_insurance">Include Insurance Delivery</string>
 </resources>

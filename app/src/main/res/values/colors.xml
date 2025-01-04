@@ -16,4 +16,5 @@
     <color name="greenColor">#02B96A</color>
     <color name="redColor">#EE4E4E</color>
     <color name="graySecondary">#F4F3F3</color>
+    <color name="grayBorder">#A7A7A7</color>
 </resources>
