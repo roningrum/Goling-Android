@@ -1,8 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Goling-Android</string>
+    <string name="app_title">Goling</string>
     <string name="login_button_text">Masuk</string>
+    <string name="tagline_Goling">Kirim Cepat, Aman dan Selamat</string>
+    <string name="username_hint_input">username</string>
+    <string name="password_hint_text">password</string>
+    <string name="forgot_pass_button_text">Lupa Kata Sandi</string>
+    <string name="email_hint_text">email</string>
+    <string name="register_button_text">Daftar</string>
+    <string name="title_activity_login_screen">LoginScreenActivity</string>
+    <string name="onboarding_activity_source">onboarding</string>
     <string name="login_title_page">Login</string>
     <string name="login_subtitle_text">Masukkan akun Goling Anda</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home_menu_txt">Home\n</string>
     <string name="history_menu_txt">History</string>
     <string name="profile">Profile</string>
@@ -16,26 +26,28 @@
     <string name="next_register_button_text">Selanjutnya</string>
     <string name="content_desc_toolbar">logo_app</string>
     <string name="greeting_profile">Halo</string>
+    <string name="sample_name_profile">Jessica C</string>
     <string name="saldo_gocash_title">Saldo GoCash</string>
     <string name="currency_amount_ewallet">Rp</string>
     <string name="sample_amount">55.000</string>
-    <string name="pickup_menu_txt">Pickup</string>
+    <string name="pickup_menu_txt">Pick Up</string>
     <string name="drop_off_menu">Drop Off</string>
     <string name="other_features">Layanan Lainnya</string>
     <string name="check_postage_menu">Cek Ongkir</string>
     <string name="peta_drop_noff_menu">Peta Drop \nOff</string>
-    <string name="bpdcash_menu">BpdCash</string>
+    <string name="bpdcash_menu">Go Cash</string>
     <string name="goling_cs_menu">Goling CS</string>
     <string name="notification_menu">Notification</string>
     <string name="masukkan_resi">Masukkan Resi</string>
     <string name="lacak_nomor_resi_search">Lacak Nomor Resi</string>
     <string name="user_sample">User</string>
     <string name="user_sample_email">user@mail.com</string>
-    <string name="title_nominal">Masukkan Nominal</string>
+    <string name="title_nominal">Nominal</string>
     <string name="currency_text">Rp</string>
     <string name="hint_nominal">0</string>
     <string name="log_out">Log out</string>
     <string name="title_amount_choice">Pilih Nominal</string>
+    <string name="welcome_text">Welcome</string>
     <string name="sample_name_user">Laraswati Andarawati</string>
     <string name="visible_amount">visible_amount</string>
     <string name="top_up_label">Top up</string>
@@ -47,6 +59,7 @@
     <string name="sample_total">400</string>
     <string name="estimate_title">Estimate</string>
     <string name="shipment_fee_title">Shipment Fee</string>
+    <string name="insurance_rate_title">Insurance Rate</string>
     <string name="total_shipping_title">Total Shipping</string>
     <string name="label_checked_insurance">Include Insurance Delivery</string>
 </resources>

@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Base.Theme.GolingAndroid" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.GolingAndroid" parent="Theme.Material3.Light.NoActionBar">
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/bluePrimary</item>
         <item name="colorPrimaryVariant">@color/surfaceColor</item>
@@ -10,21 +10,28 @@
         <item name="colorOnSecondary">@color/surfaceColor</item>
         <item name="colorSurface">@color/surfaceColor</item>
 
-<!--        font Family-->
+        <!--        font Family-->
         <item name="fontFamily">@font/rubik</item>
+    </style>
+
+    <style name="Theme.GolingAndroid.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="windowSplashScreenAnimationDuration">2000</item>
+        <item name="postSplashScreenTheme">@style/Theme.SplashScreen</item>
     </style>
 
     <style name="Theme.GolingAndroid" parent="Base.Theme.GolingAndroid">
         <item name="statusBarBackground">?attr/colorPrimary</item>
     </style>
 
-<!--    bottomAppBar-->
+    <!--    bottomAppBar-->
     <style name="Theme.GolingAndroid.BottomAppBar" parent="Widget.MaterialComponents.BottomAppBar">
         <item name="backgroundTint">@color/white</item>
     </style>
 
 
-<!--    TextInput Layout-->
+    <!--    TextInput Layout-->
     <style name="Theme.GolingAndroid.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
         <item name="cornerRadius">8dp</item>
         <item name="minHeight">48dp</item>
@@ -80,7 +87,7 @@
         <item name="fontFamily">@font/rubik_semibold</item>
     </style>
 
-<!--    chip top up-->
+    <!--    chip top up-->
     <style name="Theme.GolingAndroid.Chip" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="chipBackgroundColor">#FAFAFA</item>
         <item name="chipStrokeColor">@color/gold</item>
@@ -97,7 +104,7 @@
         <item name="android:fontFamily">@font/rubik_semibold</item>
     </style>
 
-<!--    Bottom Navigation-->
+    <!--    Bottom Navigation-->
     <style name="Theme.GolingAndroid.BottomNav" parent="Widget.MaterialComponents.BottomNavigationView">
         <item name="backgroundTint">@android:color/transparent</item>
         <item name="fontFamily">@font/rubik_regular</item>
