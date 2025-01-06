@@ -25,6 +25,8 @@ class HomeFragment : Fragment() {
         val repo = HomeRepository(data)
         MainViewModelFactory(repo)
     }
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,21 +46,13 @@ class HomeFragment : Fragment() {
         val token = SharedPrefUtil.getAccessToken(view.context).toString()
 
         homeViewModel.userResponse.observe(requireActivity()){ data ->
-            nameUser.text = data.user.username.toString()
+            nameUser.text = data.users.username
         }
-
-        homeViewModel.balance.observe(requireActivity()) { balance ->
-            val balanceTopUp = balance
-            binding.layoutHome.layoutHomeWallet.amountNominalTxt.text = "${balanceTopUp.balance}"
-        }
-
         homeViewModel.errorMsg.observe(requireActivity()){ error ->
             Log.e("Error Message", "Error $error")
         }
         Log.d("Token User", "Token $token")
-
         homeViewModel.getUser(token)
-        homeViewModel.getBalance(token)
 
         topUpWalletbtn.setOnClickListener{ v->
             val intent = Intent(v.context, TopUpActivity::class.java)

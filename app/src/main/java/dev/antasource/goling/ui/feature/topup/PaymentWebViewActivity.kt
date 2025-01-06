@@ -90,9 +90,10 @@ class PaymentWebViewActivity : AppCompatActivity() {
                 CoroutineScope(Dispatchers.Main).launch{
                     delay(3000)
                     response?.let {
-                        val intent = Intent(this@PaymentWebViewActivity, SuccessTopUpActivity::class.java)
+                        val intent = Intent(this@PaymentWebViewActivity, HomeActivity::class.java)
                         startActivity(intent)
                         finish()
+                        showSnackbar(response.message)
                     }
                 }
             }
@@ -102,7 +103,7 @@ class PaymentWebViewActivity : AppCompatActivity() {
             CoroutineScope(Dispatchers.Main).launch{
                 delay(3000)
                 errorMsg?.let {
-                    val intent = Intent(this@PaymentWebViewActivity, HomeActivity::class.java)
+                    val intent = Intent(this@PaymentWebViewActivity, TopUpActivity::class.java)
                     startActivity(intent)
                     finish()
                     showSnackbar(errorMsg)
