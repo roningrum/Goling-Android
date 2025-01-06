@@ -3,20 +3,27 @@ package dev.antasource.goling.ui.feature.login.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import dev.antasource.goling.data.model.ErrorMessage
 import dev.antasource.goling.data.model.ForgotPassRequest
 import dev.antasource.goling.data.model.LoginRequest
 import dev.antasource.goling.data.repositoty.AuthenticationRepository
+import dev.antasource.goling.ui.feature.login.LoginUiState
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okio.IOException
 
 class LoginViewModel(private val loginRepo: AuthenticationRepository) : ViewModel() {
+    private val _loginState = MutableStateFlow<LoginUiState>(LoginUiState.Idle)
+    val loginState : StateFlow<LoginUiState> = _loginState
+
     private val _accessToken = MutableLiveData<String>()
     val accessToken: LiveData<String> = _accessToken
 
@@ -48,6 +55,27 @@ class LoginViewModel(private val loginRepo: AuthenticationRepository) : ViewMode
                     }
                 }
 
+            }
+        }
+    }
+
+    fun loginGoling(username: String, pass: String){
+        viewModelScope.launch{
+            _loginState.value = LoginUiState.Idle
+            val response = loginRepo.loginProcess(LoginRequest(username = username, password = pass))
+            if (response.isSuccessful) {
+                val message = response.body()?.message
+                val token = response.body()?.token
+               _loginState.value = LoginUiState.Success(message, token)
+            } else {
+                try {
+                    val gson = Gson()
+                    val error =
+                        gson.fromJson(response.errorBody()?.string(), ErrorMessage::class.java)
+                    _loginState.value = LoginUiState.Error(error.message)
+                } catch (e: IOException) {
+                    _loginState.value = LoginUiState.Error(e.message!!)
+                }
             }
         }
     }

@@ -8,7 +8,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import dev.antasource.goling.core.navigation.customNavHost
+import dev.antasource.goling.core.navigation.CustomNavHost
 import dev.antasource.goling.ui.feature.ui.theme.GolingAndroidTheme
 
 class MainActivity : ComponentActivity() {
@@ -23,28 +23,9 @@ class MainActivity : ComponentActivity() {
             GolingAndroidTheme() {
 //                SetLightStatusBar()
                 navHostController = rememberNavController()
-                customNavHost(navHostController)
+                CustomNavHost(navHostController)
             }
         }
     }
 }
 
-//@Composable
-//private fun ChangeSystemBarsTheme(lightTheme: Boolean) {
-//    val barColor = MaterialTheme.colorScheme.background.toArgb()
-//    LaunchedEffect(lightTheme) {
-//        if (lightTheme) {
-//
-//            )
-//        } else {
-//            enableEdgeToEdge(
-//                statusBarStyle = SystemBarStyle.dark(
-//                    barColor,
-//                ),
-//                navigationBarStyle = SystemBarStyle.dark(
-//                    barColor,
-//                ),
-//            )
-//        }
-//    }
-//}
