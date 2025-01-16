@@ -63,4 +63,5 @@
     <string name="total_shipping_title">Total Shipping</string>
     <string name="label_checked_insurance">Include Insurance Delivery</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="detail_pengirim">Detail Pengirim</string>
 </resources>

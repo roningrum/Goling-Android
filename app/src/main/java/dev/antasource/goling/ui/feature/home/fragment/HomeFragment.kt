@@ -14,8 +14,10 @@ import dev.antasource.goling.databinding.FragmentHomeBinding
 import dev.antasource.goling.ui.factory.MainViewModelFactory
 import dev.antasource.goling.ui.feature.estimate.EstimateDeliveryActivity
 import dev.antasource.goling.ui.feature.home.viewmodel.HomeViewModel
+import dev.antasource.goling.ui.feature.pickup.PickupActivity
 import dev.antasource.goling.ui.feature.topup.TopUpActivity
 import dev.antasource.goling.util.SharedPrefUtil
+import dev.antasource.goling.util.Util
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -42,17 +44,24 @@ class HomeFragment : Fragment() {
         val topUpWalletbtn = binding.layoutHome.layoutHomeWallet.topUpWalletButton
         val nameUser = binding.layoutHome.layoutHomeWallet.nameUserWallet
         val estimateMenu = binding.layoutHome.layoutGolingMenu.checkPostageMenu
+        val pickupMenu = binding.layoutHome.layoutGolingMenu.pickupMenu
 
         val token = SharedPrefUtil.getAccessToken(view.context).toString()
 
         homeViewModel.userResponse.observe(requireActivity()){ data ->
             nameUser.text = data.users.username
         }
+        homeViewModel.balance.observe(requireActivity()){balance ->
+            binding.layoutHome.layoutHomeWallet.amountNominalTxt.text = Util.formatCurrency(balance.balance)
+
+        }
+
         homeViewModel.errorMsg.observe(requireActivity()){ error ->
             Log.e("Error Message", "Error $error")
         }
         Log.d("Token User", "Token $token")
         homeViewModel.getUser(token)
+        homeViewModel.getBalance(token)
 
         topUpWalletbtn.setOnClickListener{ v->
             val intent = Intent(v.context, TopUpActivity::class.java)
@@ -60,6 +69,11 @@ class HomeFragment : Fragment() {
         }
         estimateMenu.setOnClickListener{ v->
             val intent = Intent(v.context, EstimateDeliveryActivity::class.java)
+            startActivity(intent)
+        }
+
+        pickupMenu.setOnClickListener{ v->
+            val intent = Intent(v.context, PickupActivity::class.java)
             startActivity(intent)
         }
     }

@@ -14,12 +14,6 @@
         <item name="fontFamily">@font/rubik</item>
     </style>
 
-    <style name="Theme.GolingAndroid.SplashScreen" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/white</item>
-        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
-        <item name="windowSplashScreenAnimationDuration">2000</item>
-        <item name="postSplashScreenTheme">@style/Theme.SplashScreen</item>
-    </style>
 
     <style name="Theme.GolingAndroid" parent="Base.Theme.GolingAndroid">
         <item name="statusBarBackground">?attr/colorPrimary</item>
@@ -68,6 +62,11 @@
     <style name="Theme.GolingAndroid.Title" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">16sp</item>
         <item name="fontFamily">@font/rubik_semibold</item>
+    </style>
+
+    <style name="Theme.GolingAndroid.Body" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/rubik_regular</item>
     </style>
 
     <style name="Theme.GolingAndroid.AppMenu" parent="Widget.AppCompat.TextView">

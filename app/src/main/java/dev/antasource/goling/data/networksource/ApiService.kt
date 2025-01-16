@@ -18,13 +18,20 @@ import dev.antasource.goling.data.model.country.Regencies
 import dev.antasource.goling.data.model.country.Villages
 import dev.antasource.goling.data.model.estimate.EstimateShipRequest
 import dev.antasource.goling.data.model.estimate.EstimateShipResponse
+import dev.antasource.goling.data.model.pickup.response.OrderResponse
+import dev.antasource.goling.data.model.product.ProductTypeResponse
 import dev.antasource.goling.data.model.topup.Balance
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Part
+import retrofit2.http.PartMap
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -57,7 +64,6 @@ interface ApiService {
     @GET("wallet/balance")
     suspend fun balance(@Header("Authorization")token: String): Response<Balance>
 
-
     //    Get Location
     @GET("wilayah")
     suspend fun getRegion(): Response<List<Region>>
@@ -75,4 +81,14 @@ interface ApiService {
     @POST("shipping/estimate-shipping")
     suspend fun getEstimateShipping(@Body estimateRequest: EstimateShipRequest): Response<EstimateShipResponse>
 
+    //Ship
+    @GET("admin/product-types")
+    suspend fun getProductTypes(): Response<ProductTypeResponse>
+
+    @Multipart
+    @POST("orders")
+    suspend fun postOrders(
+        @PartMap() partMap: MutableMap<String, RequestBody>,
+        @Part photo: MultipartBody.Part
+    ): Response<OrderResponse>
 }

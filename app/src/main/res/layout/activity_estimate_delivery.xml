@@ -118,6 +118,7 @@
                         app:hintTextAppearance="@style/Theme.GolingAndroid.TextInputLayout">
 
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/input_destination_edit_text"
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
                             android:hint="Destination"

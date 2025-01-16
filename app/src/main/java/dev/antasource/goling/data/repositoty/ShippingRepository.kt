@@ -9,4 +9,7 @@ class ShippingRepository(private val networkRemoteSource: NetworkRemoteSource) {
     suspend fun getDistrics(cityId: Int) = networkRemoteSource.getDistrics(cityId)
     suspend fun getVillages(districtId: Int) = networkRemoteSource.getVillages(districtId)
     suspend fun getEstimateShipping(estimateShipRequest: EstimateShipRequest) = networkRemoteSource.getEstimateShipping(estimateShipRequest)
+
+    //get all product
+    suspend fun getProductType()= networkRemoteSource.getProductType()
 }
