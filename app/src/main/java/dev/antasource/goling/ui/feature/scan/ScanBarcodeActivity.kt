@@ -1,5 +1,6 @@
 package dev.antasource.goling.ui.feature.scan
 
+import android.Manifest
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.KeyEvent
@@ -8,12 +9,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.journeyapps.barcodescanner.CaptureManager
 import com.journeyapps.barcodescanner.DecoratedBarcodeView
 import dev.antasource.goling.databinding.ActivityScanBarcodeBinding
+import dev.antasource.goling.util.permission.PermissionManager
 
 class ScanBarcodeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityScanBarcodeBinding
     private lateinit var capture: CaptureManager
     private lateinit var scan: DecoratedBarcodeView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +26,19 @@ class ScanBarcodeActivity : AppCompatActivity() {
 
         scan = binding.scannerCamera
 
-        initializeQrScanner(savedInstanceState)
+        val permission = PermissionManager(this)
+        permission.checkPermissions(
+            Manifest.permission.CAMERA
+        ){ isGranted ->
+            if(isGranted){
+                initializeQrScanner(savedInstanceState)
+            }
+            else{
+                //
+            }
+        }
+
+
     }
 
     private fun initializeQrScanner(savedInstanceState: Bundle?) = with(binding) {

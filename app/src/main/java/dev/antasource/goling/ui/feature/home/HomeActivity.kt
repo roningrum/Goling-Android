@@ -34,7 +34,7 @@ class HomeActivity : AppCompatActivity() {
         )
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
             insets
         }
         loadFragment(HomeFragment())
@@ -43,9 +43,6 @@ class HomeActivity : AppCompatActivity() {
 
         scannerButton.setOnClickListener {
             launchScreen()
-//            val intent = Intent(this, ScanBarcodeActivity::class.java)
-//            startActivity(intent)
-//            finish()
         }
 
         bottomNav.setOnItemSelectedListener { item ->

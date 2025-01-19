@@ -1,5 +1,6 @@
 package dev.antasource.goling.ui.feature.pickup.viewmodel
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,6 +12,18 @@ import kotlinx.coroutines.launch
 class PickupViewModel(private val repository: ShippingRepository): ViewModel() {
     private val _productType = MutableLiveData<List<ProductType>>()
     val productType : LiveData<List<ProductType>> = _productType
+
+
+    private var _imageUri : Uri? = null
+
+    fun setImageUri(uri: Uri){
+        _imageUri = uri
+    }
+
+    fun getImageUri(): Uri? {
+        return _imageUri
+    }
+
 
     fun getProductType(){
         viewModelScope.launch{

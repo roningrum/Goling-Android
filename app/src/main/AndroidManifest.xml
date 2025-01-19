@@ -3,13 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
+        android:name="android.hardware.camera.any"/>
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28" />
+        android:maxSdkVersion="28"
+        />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28"
+        />
 
     <application
         android:allowBackup="true"
@@ -25,13 +28,16 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.feature.pickup.CameraActivity"
+            android:exported="false" />
+        <activity
             android:name=".DetailPackageActivity"
             android:exported="false" />
         <activity
             android:name=".ui.feature.pickup.RecepientFormActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.feature.pickup.ItemDetailPackageActivity"
+            android:name=".ui.feature.splashscreen.SplashScreenActivity"
             android:exported="false" />
         <activity
             android:name=".ui.feature.pickup.SenderFormActivity"
@@ -75,7 +81,7 @@
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.feature.splashscreen.SplashScreenActivity"
+            android:name=".ui.feature.pickup.ItemDetailPackageActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>

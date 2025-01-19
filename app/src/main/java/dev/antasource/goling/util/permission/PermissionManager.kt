@@ -31,6 +31,7 @@ class PermissionManager(
 
     private val requestPermissionLauncher =
         caller.registerForActivityResult(ActivityResultContracts.RequestPermission()){ isGranted ->
+
             if(!isGranted){
                 // Explain to the user that the feature is unavailable because the
                 // feature requires a permission that the user has denied. At the
