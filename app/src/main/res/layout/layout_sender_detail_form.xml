@@ -49,8 +49,7 @@
             style="@style/Theme.GolingAndroid.InputText"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
+            android:maxLines="2"
             android:hint="Alamat Pengirim"
             android:padding="0dp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -74,8 +73,7 @@
             style="@style/Theme.GolingAndroid.InputText"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
+            android:inputType="textPersonName"
             android:hint="Nama Pengirim"
             android:padding="0dp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -99,9 +97,9 @@
             style="@style/Theme.GolingAndroid.InputText"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
+            android:maxLength="12"
             android:hint="Nomor Hp"
+            android:inputType="phone"
             android:padding="0dp" />
     </com.google.android.material.textfield.TextInputLayout>
 

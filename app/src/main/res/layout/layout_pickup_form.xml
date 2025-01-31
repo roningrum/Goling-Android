@@ -65,6 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView
@@ -94,12 +95,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardBackgroundColor="@color/graySecondary"
+                android:visibility="gone"
                 android:layout_marginTop="4dp"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="0dp"
                 android:padding="8dp">
 
                 <TextView
+                    android:id="@+id/sender_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -173,6 +176,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView
@@ -202,12 +206,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardBackgroundColor="@color/graySecondary"
+                android:visibility="gone"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="0dp"
                 android:layout_marginTop="4dp"
                 android:padding="8dp">
 
                 <TextView
+                    android:id="@+id/text_recepient_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -282,131 +288,99 @@
                 android:layout_height="wrap_content"
                 app:cardBackgroundColor="@color/graySecondary"
                 app:cardCornerRadius="4dp"
+                android:visibility="gone"
                 android:layout_marginTop="4dp"
                 app:cardElevation="0dp"
-                android:padding="8dp">
+                android:padding="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/name_item_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:textSize="12sp"
-                        style="@style/Theme.GolingAndroid.Title"
-                        android:text="Nama barang"
-                        />
-
-                    <TextView
-                        android:id="@+id/name_item"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:textSize="12sp"
-                        style="@style/Theme.GolingAndroid.Body"
-                        android:text="File"
-                        android:textStyle="normal"
-                        />
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-                        <LinearLayout
-                            android:layout_width="0dp"
+                        <TextView
+                            android:id="@+id/type_item"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:layout_marginTop="4dp"
+                            android:textSize="12sp"
+                            style="@style/Theme.GolingAndroid.Title"
+                            android:text="Tipe Barang"
+                            />
 
-                            <TextView
-                                android:id="@+id/type_item"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:textSize="12sp"
-                                style="@style/Theme.GolingAndroid.Title"
-                                android:text="Tipe Barang"
-                                />
-
-                            <TextView
-                                android:id="@+id/jenis_item"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:textSize="12sp"
-                                style="@style/Theme.GolingAndroid.Body"
-                                android:text="Document"
-                                android:textStyle="normal"
-                                />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
+                        <TextView
+                            android:id="@+id/jenis_item"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:layout_marginTop="2dp"
+                            android:textSize="12sp"
+                            style="@style/Theme.GolingAndroid.Body"
+                            android:textStyle="normal"
+                            />
 
-                            <TextView
-                                android:id="@+id/weight_title_item"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:textSize="12sp"
-                                style="@style/Theme.GolingAndroid.Title"
-                                android:text=" Berat Barang"
-                                />
+                    </LinearLayout>
 
-                            <TextView
-                                android:id="@+id/weight_item"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:textSize="12sp"
-                                style="@style/Theme.GolingAndroid.Body"
-                                android:text="5kg"
-                                android:textStyle="normal"
-                                />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:layout_width="0dp"
+                        <TextView
+                            android:id="@+id/weight_title_item"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:layout_marginTop="4dp"
+                            android:textSize="12sp"
+                            style="@style/Theme.GolingAndroid.Title"
+                            android:text=" Berat Barang"
+                            />
 
-                            <TextView
-                                android:id="@+id/dimension_title_item"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:textSize="12sp"
-                                style="@style/Theme.GolingAndroid.Title"
-                                android:text="Dimensi Barang"
-                                />
+                        <TextView
+                            android:id="@+id/weight_item"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:textSize="12sp"
+                            style="@style/Theme.GolingAndroid.Body"
+                            android:textStyle="normal"
+                            />
 
-                            <TextView
-                                android:id="@+id/dimension_item"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:textSize="12sp"
-                                style="@style/Theme.GolingAndroid.Body"
-                                android:text="18 x 16 x 14 cm"
-                                android:textStyle="normal"
-                                />
-
-                        </LinearLayout>
+                    </LinearLayout>
 
 
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/dimension_title_item"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textSize="12sp"
+                            style="@style/Theme.GolingAndroid.Title"
+                            android:text="Dimensi Barang"
+                            />
+
+                        <TextView
+                            android:id="@+id/dimension_item"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:textSize="12sp"
+                            style="@style/Theme.GolingAndroid.Body"
+                            android:text=""
+                            android:textStyle="normal"
+                            />
 
                     </LinearLayout>
 
@@ -426,6 +400,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         app:strokeWidth="1dp"
+        android:visibility="gone"
         app:strokeColor="@color/grayBorder"
         app:cardBackgroundColor="@color/white"
         android:layout_marginHorizontal="12dp"
@@ -523,20 +498,4 @@
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
-
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_pay"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginTop="12dp"
-        style="@style/Widget.Material3.Button"
-        app:backgroundTint="@color/darkBlue"
-        android:text="Lanjutkan Pembayaran"
-        android:textColor="@color/white"
-        app:cornerRadius="8dp"
-        android:layout_marginHorizontal="16dp"/>
-
-
-
 </LinearLayout>

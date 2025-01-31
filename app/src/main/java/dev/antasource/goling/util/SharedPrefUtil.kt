@@ -75,6 +75,17 @@ object SharedPrefUtil {
         }
     }
 
+    fun isFormOpenedBefore(context: Context): Boolean {
+        return getSharedPref(context).getBoolean("form_opened_before", false)
+    }
+
+    fun setFormOpenedBefore(context: Context, value: Boolean) {
+        val editor = getSharedPref(context).edit()
+        editor.putBoolean("form_opened_before", value)
+        editor.apply()
+    }
+
+
     fun clearLocation(context: Context) {
         val editor = getSharedPref(context).edit()
         editor.remove("destinate_loc")

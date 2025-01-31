@@ -1,6 +1,8 @@
 package dev.antasource.goling.data.repositoty
 
 import dev.antasource.goling.data.model.estimate.EstimateShipRequest
+import dev.antasource.goling.data.model.pickup.request.OrderRequest
+import dev.antasource.goling.data.model.pickup.response.Order
 import dev.antasource.goling.data.networksource.NetworkRemoteSource
 
 class ShippingRepository(private val networkRemoteSource: NetworkRemoteSource) {
@@ -12,4 +14,6 @@ class ShippingRepository(private val networkRemoteSource: NetworkRemoteSource) {
 
     //get all product
     suspend fun getProductType()= networkRemoteSource.getProductType()
+    suspend fun getProductTypeById(id: Int)= networkRemoteSource.getProductTypeId(id)
+    suspend fun createOrder(token:String, order: OrderRequest) = networkRemoteSource.postOrder(token, order)
 }

@@ -53,7 +53,6 @@ class HomeFragment : Fragment() {
         }
         homeViewModel.balance.observe(requireActivity()){balance ->
             binding.layoutHome.layoutHomeWallet.amountNominalTxt.text = Util.formatCurrency(balance.balance)
-
         }
 
         homeViewModel.errorMsg.observe(requireActivity()){ error ->

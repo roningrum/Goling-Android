@@ -62,7 +62,6 @@ class ChoiceLocationActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
             insets
         }
-
         setSupportActionBar(binding.materialToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)

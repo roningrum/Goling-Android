@@ -1,5 +1,9 @@
 package dev.antasource.goling.data.model.pickup.request
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class DestinationReceipt(
     val destinationProvinceId : String,
     val destinationCityId : String,
@@ -8,4 +12,4 @@ data class DestinationReceipt(
     val destinationAddress : String,
     val destinationName : String,
     val destinationPhone : String,
-)
+): Parcelable

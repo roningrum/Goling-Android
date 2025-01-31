@@ -51,7 +51,7 @@ class EstimateDeliveryActivity : AppCompatActivity() {
     var destinationVillageId = 0
 
 
-    private val estimateViewModel by viewModels<EstimateViewModel>(){
+    private val estimateViewModel by viewModels<EstimateViewModel>() {
         val data = NetworkRemoteSource()
         val repo = ShippingRepository(data)
         ShippingViewModelFactory(repo)
@@ -78,13 +78,13 @@ class EstimateDeliveryActivity : AppCompatActivity() {
             insets
         }
 
-        binding.inputOriginEditText.setOnClickListener{
+        binding.inputOriginEditText.setOnClickListener {
             val intent = Intent(this, ChoiceLocationActivity::class.java)
             intent.putExtra("fieldLocation", "origin")
             startActivity(intent)
         }
 
-        binding.inputDestinationEditText.setOnClickListener{
+        binding.inputDestinationEditText.setOnClickListener {
             val intent = Intent(this, ChoiceLocationActivity::class.java)
             intent.putExtra("fieldLocation", "destinate")
             startActivity(intent)
@@ -93,23 +93,24 @@ class EstimateDeliveryActivity : AppCompatActivity() {
         binding.inputOriginEditText.setHint("Origin")
         getDataLocation()
 
-        binding.buttonCheckedInsurance.setOnCheckedChangeListener{ v, isChecked ->
+        binding.buttonCheckedInsurance.setOnCheckedChangeListener { v, isChecked ->
             estimateViewModel.isGuarantee = isChecked
         }
 
-        binding.buttonCheckEstimate.setOnClickListener{
+        binding.buttonCheckEstimate.setOnClickListener {
 
             if (binding.inputWeightEdit.text.isNullOrEmpty() ||
                 binding.inputLengthEdit.text.isNullOrEmpty() ||
                 binding.inputHeightEdit.text.isNullOrEmpty() ||
-                binding.inputWidthEdit.text.isNullOrEmpty()) {
+                binding.inputWidthEdit.text.isNullOrEmpty()
+            ) {
 
                 Toast.makeText(this, "Semua input harus diisi", Toast.LENGTH_SHORT).show()
 
             } else {
                 weight = binding.inputWeightEdit.text.toString().toInt()
                 length = binding.inputLengthEdit.text.toString().toInt()
-                height= binding.inputHeightEdit.text.toString().toInt()
+                height = binding.inputHeightEdit.text.toString().toInt()
                 width = binding.inputWidthEdit.text.toString().toInt()
 
                 estimateViewModel.originProvinceId = originProvinceId
@@ -132,17 +133,16 @@ class EstimateDeliveryActivity : AppCompatActivity() {
                 SharedPrefUtil.clearLocation(this)
             }
 
-           Log.d("Berat Barang", "${binding.inputWeightEdit.text.toString().toInt()}")
+            Log.d("Berat Barang", "${binding.inputWeightEdit.text.toString().toInt()}")
         }
 
-        estimateViewModel.data.observe(this){ data ->
+        estimateViewModel.data.observe(this) { data ->
 
             binding.cardEstimateLayout.visibility = View.VISIBLE
-            if(data.details.isGuaranteed == true){
+            if (data.details.isGuaranteed == true) {
                 binding.insuranceRateLayout.visibility = View.VISIBLE
                 binding.insuranceCost.text = Util.formatCurrency(data.insuranceRate)
-            }
-            else{
+            } else {
                 binding.insuranceRateLayout.visibility = View.GONE
             }
             binding.shipmentCost.text = Util.formatCurrency(data.itemPrice)
@@ -155,7 +155,15 @@ class EstimateDeliveryActivity : AppCompatActivity() {
         val originData = SharedPrefUtil.getLastOriginLocation(this)
         originData?.let {
 
-            binding.inputOriginEditText.setText("${it.province}, ${it.city}, ${it.distric}, ${it.village}")
+            binding.inputOriginEditText.setText(buildString {
+                append(it.province)
+                append(", ")
+                append(it.city)
+                append(", ")
+                append(it.distric)
+                append(", ")
+                append(it.village)
+            })
 
             originProvinceId = it.provinceId
             originCityId = it.cityId
@@ -166,7 +174,16 @@ class EstimateDeliveryActivity : AppCompatActivity() {
         val destinationData = SharedPrefUtil.getLastDestinateLocation(this)
         destinationData?.let {
 
-            binding.inputDestinationEditText.setText("${it.province}, ${it.city}, ${it.distric}, ${it.village}")
+            binding.inputDestinationEditText.setText(
+                buildString {
+                    append(it.province)
+                    append(", ")
+                    append(it.city)
+                    append(", ")
+                    append(it.distric)
+                    append(", ")
+                    append(it.village)
+                })
 
             destinationProvinceId = it.provinceId
             destinationCityId = it.cityId

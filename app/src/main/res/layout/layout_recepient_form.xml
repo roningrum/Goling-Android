@@ -47,8 +47,6 @@
             style="@style/Theme.GolingAndroid.InputText"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
             android:hint="Alamat Penerima"
             android:padding="0dp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -68,12 +66,10 @@
         app:hintTextAppearance="@style/Theme.GolingAndroid.TextInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/input_sender_name_edit_text"
+            android:id="@+id/input_recepient_name_edit_text"
             style="@style/Theme.GolingAndroid.InputText"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
             android:hint="Nama Penerima"
             android:padding="0dp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -97,14 +93,12 @@
             style="@style/Theme.GolingAndroid.InputText"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
             android:hint="Nomor Hp"
             android:padding="0dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_use_sender_detail"
+        android:id="@+id/button_use_recepip_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"

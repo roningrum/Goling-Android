@@ -1,10 +1,21 @@
 package dev.antasource.goling.data.networksource
 
+import android.util.Log
 import dev.antasource.goling.data.model.ForgotPassRequest
 import dev.antasource.goling.data.model.LoginRequest
 import dev.antasource.goling.data.model.RegisterRequest
 import dev.antasource.goling.data.model.TopUpRequest
 import dev.antasource.goling.data.model.estimate.EstimateShipRequest
+import dev.antasource.goling.data.model.pickup.request.OrderRequest
+import dev.antasource.goling.data.model.pickup.request.OrderRequestMapper
+import dev.antasource.goling.data.model.pickup.request.OrderRequestMapper.toPartMap
+import dev.antasource.goling.data.model.pickup.response.OrderResponse
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.Response
 
 class NetworkRemoteSource() {
     suspend fun getLoginResponse(login: LoginRequest) = NetworkUtil.apiService.loginService(login)
@@ -23,4 +34,11 @@ class NetworkRemoteSource() {
     suspend fun getEstimateShipping(estimateShipRequest: EstimateShipRequest) = NetworkUtil.apiService.getEstimateShipping(estimateShipRequest)
 
     suspend fun getProductType() = NetworkUtil.apiService.getProductTypes()
+    suspend fun getProductTypeId(id: Int) = NetworkUtil.apiService.getProductTypesbyId(id)
+    suspend fun postOrder(token: String, orderRequest: OrderRequest) : Response<OrderResponse> {
+        val partMap = toPartMap(orderRequest)
+        Log.d("Order Request", "part $partMap")
+        val photoPart = orderRequest.multipartImage
+        return NetworkUtil.apiService.postOrders("Bearer $token", partMap, photoPart)
+    }
 }

@@ -1,5 +1,6 @@
 package dev.antasource.goling.data.networksource
 
+import com.google.gson.GsonBuilder
 import dev.antasource.goling.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -26,9 +27,13 @@ object NetworkUtil {
     }
 
     val apiService : ApiService by lazy {
+        val gson = GsonBuilder()
+            .setLenient()
+            .create()
+
      Retrofit.Builder()
             .baseUrl(BuildConfig.API_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .client(client())
             .build()
             .create(ApiService::class.java)

@@ -19,6 +19,8 @@ import dev.antasource.goling.data.model.country.Villages
 import dev.antasource.goling.data.model.estimate.EstimateShipRequest
 import dev.antasource.goling.data.model.estimate.EstimateShipResponse
 import dev.antasource.goling.data.model.pickup.response.OrderResponse
+import dev.antasource.goling.data.model.product.ProductType
+import dev.antasource.goling.data.model.product.ProductTypeIdResponse
 import dev.antasource.goling.data.model.product.ProductTypeResponse
 import dev.antasource.goling.data.model.topup.Balance
 import okhttp3.MultipartBody
@@ -85,10 +87,14 @@ interface ApiService {
     @GET("admin/product-types")
     suspend fun getProductTypes(): Response<ProductTypeResponse>
 
+    @GET("admin/product-types/{id}")
+    suspend fun getProductTypesbyId(@Path("id") id: Int): Response<ProductTypeIdResponse>
+
     @Multipart
     @POST("orders")
     suspend fun postOrders(
-        @PartMap() partMap: MutableMap<String, RequestBody>,
+        @Header("Authorization") token: String,
+        @PartMap orderRequest: Map<String, @JvmSuppressWildcards RequestBody>,
         @Part photo: MultipartBody.Part
     ): Response<OrderResponse>
 }
