@@ -4,6 +4,7 @@ accompanistSystemuicontroller = "<version>"
 agp = "8.7.3"
 cameraCoreVersion = "1.4.1"
 circleimageview = "3.1.0"
+compressorVersion = "3.0.1"
 converterGson = "2.11.0"
 coreSplashscreen = "1.0.1"
 datastorePreferences = "1.1.1"
@@ -57,6 +58,7 @@ androidx-security-crypto = { module = "androidx.security:security-crypto", versi
 androidx-ui = { module = "androidx.compose.ui:ui" }
 androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }
+compressor = { module = "id.zelory:compressor", version.ref = "compressorVersion" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 google-accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPagerVersion" }
 google-accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }

@@ -20,7 +20,7 @@ class SenderFormActivity : AppCompatActivity() {
 
     var originProvinceId = 0
     var originCityId = 0
-    var originDistricId = 0
+    var originDistrictId = 0
     var originVillageId = 0
 
     var name = ""
@@ -65,7 +65,7 @@ class SenderFormActivity : AppCompatActivity() {
             )
             originProvinceId = originData.provinceId
             originCityId = originData.cityId
-            originDistricId = originData.districId
+            originDistrictId = originData.districId
             originVillageId = originData.villageId
         }
     }
@@ -127,7 +127,7 @@ class SenderFormActivity : AppCompatActivity() {
             originCityId = originCityId.toString(),
             originPhone = phoneNumber.trim(),
             originAddress = address,
-            originDistricId = originDistricId.toString(),
+            originDistrictId = originDistrictId.toString(),
             originVillageId = originVillageId.toString(),
             originProvinceId = originProvinceId.toString()
         )

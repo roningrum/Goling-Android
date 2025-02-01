@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -30,6 +31,7 @@ import dev.antasource.goling.ui.factory.ShippingViewModelFactory
 import dev.antasource.goling.ui.feature.pickup.SenderFormActivity
 import dev.antasource.goling.ui.feature.pickup.viewmodel.PickupViewModel
 import java.io.File
+import java.io.FileOutputStream
 import java.lang.Integer.parseInt
 
 class ItemDetailPackageActivity : AppCompatActivity() {
@@ -75,6 +77,7 @@ class ItemDetailPackageActivity : AppCompatActivity() {
             if (result.resultCode == RESULT_OK) {
                 val imageUri: Uri? = result.data?.getStringExtra("IMAGE_URI")?.let { Uri.parse(it) }
                 imageUri?.let {
+                    saveImageToExternalStorage(it)
                     displayImage(it) // Display the image
                 }
             }
@@ -277,8 +280,31 @@ class ItemDetailPackageActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun saveImageToExternalStorage(imageUri: Uri): String? {
+        val context = this
+        val fileName = "IMG_${System.currentTimeMillis()}.jpg"
+        val file = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), fileName)
+
+        try {
+            val inputStream = context.contentResolver.openInputStream(imageUri)
+            val outputStream = FileOutputStream(file)
+            inputStream?.copyTo(outputStream)
+            inputStream?.close()
+            outputStream.close()
+
+            return file.absolutePath // Return path gambar yang disimpan
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
+
+
 
 }
+
+
 
 
 

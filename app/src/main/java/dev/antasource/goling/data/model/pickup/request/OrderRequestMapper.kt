@@ -18,7 +18,7 @@ object OrderRequestMapper {
         // Origin Sender
         partMap["originProvinceId"] = orderRequest.originSender.originProvinceId.toPart()
         partMap["originCityId"] = orderRequest.originSender.originCityId.toPart()
-        partMap["originDistricId"] = orderRequest.originSender.originDistricId.toPart()
+        partMap["originDistrictId"] = orderRequest.originSender.originDistrictId.toPart()
         partMap["originVillageId"] = orderRequest.originSender.originVillageId.toPart()
         partMap["originAddress"] = orderRequest.originSender.originAddress.toPart()
         partMap["originName"] = orderRequest.originSender.originName.toPart()
@@ -27,7 +27,7 @@ object OrderRequestMapper {
         // Destination Receipt
         partMap["destinationProvinceId"] = orderRequest.destinationReceipt.destinationProvinceId.toPart()
         partMap["destinationCityId"] = orderRequest.destinationReceipt.destinationCityId.toPart()
-        partMap["destinationDistricId"] = orderRequest.destinationReceipt.destinationDistricId.toPart()
+        partMap["destinationDistrictId"] = orderRequest.destinationReceipt.destinationDistrictId.toPart()
         partMap["destinationVillageId"] = orderRequest.destinationReceipt.destinationVillageId.toPart()
         partMap["destinationAddress"] = orderRequest.destinationReceipt.destinationAddress.toPart()
         partMap["destinationName"] = orderRequest.destinationReceipt.destinationName.toPart()
@@ -43,9 +43,6 @@ object OrderRequestMapper {
         // Additional Details
         partMap["glassware"] = orderRequest.additionalDetails.glassware.toPart()
         partMap["isGuarantee"] = orderRequest.additionalDetails.isGuaranteed.toPart()
-
-        // Multipart Image
-//        val photoPart = orderRequest.multipartImage
 
         return partMap
     }

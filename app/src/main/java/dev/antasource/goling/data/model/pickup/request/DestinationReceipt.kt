@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class DestinationReceipt(
     val destinationProvinceId : String,
     val destinationCityId : String,
-    val destinationDistricId : String,
+    val destinationDistrictId : String,
     val destinationVillageId : String,
     val destinationAddress : String,
     val destinationName : String,

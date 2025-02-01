@@ -126,7 +126,7 @@ class RecepientFormActivity : AppCompatActivity() {
         val recepientDestination = DestinationReceipt(
             destinationProvinceId = recepientProvinceId.toString(),
             destinationCityId = recepientCityId.toString(),
-            destinationDistricId = recepientDistricId.toString(),
+            destinationDistrictId = recepientDistricId.toString(),
             destinationVillageId = recepientVillageId.toString(),
             destinationAddress = address,
             destinationName = name,

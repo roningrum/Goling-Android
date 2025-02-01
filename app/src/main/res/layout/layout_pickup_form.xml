@@ -427,7 +427,7 @@
                     android:text="estimasi"/>
 
                 <TextView
-                    android:id="@+id/estimation_send"
+                    android:id="@+id/txt_estimation_send"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -452,13 +452,13 @@
                     android:text="Biaya Asuransi"/>
 
                 <TextView
-                    android:id="@+id/include_assurance_send"
+                    android:id="@+id/txt_include_assurance_send"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textStyle="bold"
                     android:textAlignment="textEnd"
-                    android:text="Rp. 200"/>
+                    android:text=""/>
 
             </LinearLayout>
 
@@ -486,13 +486,12 @@
                     android:text="Total"/>
 
                 <TextView
-                    android:id="@+id/total_amount_send"
+                    android:id="@+id/txt_total_amount_send"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textStyle="bold"
-                    android:textAlignment="textEnd"
-                    android:text="Rp. 32,000"/>
+                    android:textAlignment="textEnd" />
 
             </LinearLayout>
 

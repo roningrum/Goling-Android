@@ -13,6 +13,7 @@ import dev.antasource.goling.data.model.pickup.request.DestinationReceipt
 import dev.antasource.goling.data.model.pickup.request.OrderRequest
 import dev.antasource.goling.data.model.pickup.request.OriginSender
 import dev.antasource.goling.data.model.pickup.request.PackageDetails
+import dev.antasource.goling.data.model.pickup.response.OrderResponse
 import dev.antasource.goling.data.networksource.NetworkRemoteSource
 import dev.antasource.goling.data.repositoty.ShippingRepository
 import dev.antasource.goling.databinding.ActivityPickupBinding
@@ -20,7 +21,8 @@ import dev.antasource.goling.ui.factory.ShippingViewModelFactory
 import dev.antasource.goling.ui.feature.pickup.viewmodel.PickupViewModel
 import dev.antasource.goling.util.ParcelableUtils.parcelabe
 import dev.antasource.goling.util.SharedPrefUtil
-import dev.antasource.goling.util.Util
+import dev.antasource.goling.util.Util.bitmapToFile
+import dev.antasource.goling.util.Util.getResizedBitmap
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -34,7 +36,6 @@ class PickupActivity : AppCompatActivity() {
     private lateinit var dataOriginSender: OriginSender
     private lateinit var dataDestinationReceipt: DestinationReceipt
     private var path = ""
-    private lateinit var additionalDetails: AdditionalDetails
     private lateinit var packageDetails: PackageDetails
 
     private val pickupViewModel by viewModels<PickupViewModel>() {
@@ -57,6 +58,10 @@ class PickupActivity : AppCompatActivity() {
         pickupViewModel.token = SharedPrefUtil.getAccessToken(this).toString()
         pickupBinding.buttonPay.setOnClickListener{
             sendData()
+        }
+
+        pickupViewModel.orderResponse.observe(this){ order ->
+            showEstimatePriceOrder(order)
         }
 
     }
@@ -121,13 +126,17 @@ class PickupActivity : AppCompatActivity() {
 
     private fun sendData() {
         Log.d("Path", "Path Image $path")
-        Log.d("origin provinde Id", "Origin Sender ")
+        Log.d("origin provinde Id", "Origin Distric Sender ${dataOriginSender.originDistrictId} ")
         val file = File(path)
 
-        val requestFile = file.asRequestBody("image/jpg".toMediaTypeOrNull())
-        Log.d("Request File", "Request $requestFile")
+        val compressed = getResizedBitmap(file.path, 1024)
+        val afterResized = bitmapToFile(this, compressed)
 
-        pickupViewModel.sendOrder(orderRequest = OrderRequest(
+        val fileSizeKB = afterResized.length() / 1024
+        val requestFile = file.asRequestBody("image/jpg".toMediaTypeOrNull())
+
+        if(fileSizeKB <= 1024){
+            pickupViewModel.sendOrder(orderRequest = OrderRequest(
             originSender = dataOriginSender,
             destinationReceipt = dataDestinationReceipt,
             packageDetails = packageDetails,
@@ -135,13 +144,15 @@ class PickupActivity : AppCompatActivity() {
                 glassware = false,
                 isGuaranteed = false
             ),
-            multipartImage = MultipartBody.Part.createFormData("photo", file.name, requestFile)
+            multipartImage = MultipartBody.Part.createFormData("photo", afterResized.name, requestFile)
         ))
-
-        pickupViewModel.orderResponse.observe(this){
-            Log.d("Response Data", "Response $it")
+        } else{
+            Log.d("Compressed File", "File Besar")
         }
+
     }
+
+
 
     private fun setupToolbar() {
         setSupportActionBar(pickupBinding.materialToolbar)
@@ -186,4 +197,13 @@ class PickupActivity : AppCompatActivity() {
             textRecepientAddress.text = data.destinationAddress
         }
     }
+
+    private fun showEstimatePriceOrder(response: OrderResponse) {
+        pickupBinding.layoutPickupForm.summaryAmount.visibility = View.VISIBLE
+        pickupBinding.layoutPickupForm.txtEstimationSend.text = response.estimasi
+        pickupBinding.layoutPickupForm.txtIncludeAssuranceSend.text = "${response.order.insuranceRate}"
+        pickupBinding.layoutPickupForm.txtTotalAmountSend.text = "${response.order.totalCost}"
+    }
 }
+
+

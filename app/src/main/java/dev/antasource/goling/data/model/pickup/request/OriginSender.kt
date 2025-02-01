@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class OriginSender(
     val originProvinceId : String,
     val originCityId : String,
-    val originDistricId : String,
+    val originDistrictId : String,
     val originVillageId : String,
     val originAddress : String,
     val originName : String,
