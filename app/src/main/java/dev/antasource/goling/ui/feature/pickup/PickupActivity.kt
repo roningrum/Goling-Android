@@ -4,25 +4,34 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import dev.antasource.goling.R
+import dev.antasource.goling.data.model.estimate.Data
+import dev.antasource.goling.data.model.estimate.EstimateShipRequest
 import dev.antasource.goling.data.model.pickup.request.AdditionalDetails
 import dev.antasource.goling.data.model.pickup.request.DestinationReceipt
 import dev.antasource.goling.data.model.pickup.request.OrderRequest
 import dev.antasource.goling.data.model.pickup.request.OriginSender
 import dev.antasource.goling.data.model.pickup.request.PackageDetails
-import dev.antasource.goling.data.model.pickup.response.OrderResponse
 import dev.antasource.goling.data.networksource.NetworkRemoteSource
 import dev.antasource.goling.data.repositoty.ShippingRepository
 import dev.antasource.goling.databinding.ActivityPickupBinding
 import dev.antasource.goling.ui.factory.ShippingViewModelFactory
+import dev.antasource.goling.ui.feature.home.HomeActivity
 import dev.antasource.goling.ui.feature.pickup.viewmodel.PickupViewModel
 import dev.antasource.goling.util.ParcelableUtils.parcelabe
 import dev.antasource.goling.util.SharedPrefUtil
 import dev.antasource.goling.util.Util.bitmapToFile
 import dev.antasource.goling.util.Util.getResizedBitmap
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -33,10 +42,10 @@ class PickupActivity : AppCompatActivity() {
 
     private lateinit var pickupBinding: ActivityPickupBinding
 
-    private lateinit var dataOriginSender: OriginSender
-    private lateinit var dataDestinationReceipt: DestinationReceipt
+    lateinit var dataOriginSender: OriginSender
+    lateinit var dataDestinationReceipt: DestinationReceipt
     private var path = ""
-    private lateinit var packageDetails: PackageDetails
+    lateinit var packageDetails: PackageDetails
 
     private val pickupViewModel by viewModels<PickupViewModel>() {
         val data = NetworkRemoteSource()
@@ -46,22 +55,25 @@ class PickupActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
 
+        enableEdgeToEdge()
         pickupBinding = ActivityPickupBinding.inflate(layoutInflater)
         setContentView(pickupBinding.root)
-
+        ViewCompat.setOnApplyWindowInsetsListener(pickupBinding.main) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
         setupToolbar()
         setupFormNavigation()
         handleData()
-
         pickupViewModel.token = SharedPrefUtil.getAccessToken(this).toString()
-        pickupBinding.buttonPay.setOnClickListener{
-            sendData()
-        }
-
         pickupViewModel.orderResponse.observe(this){ order ->
-            showEstimatePriceOrder(order)
+            Toast.makeText(this, "${order.orderHistory.status}", Toast.LENGTH_SHORT).show()
+            pickupViewModel.clearOrderData(this)
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
     }
@@ -71,16 +83,16 @@ class PickupActivity : AppCompatActivity() {
         val dataPenerima: DestinationReceipt? = intent.parcelabe("destination")
         val pathImage = intent.getStringExtra("path")
         val packageInfo: PackageDetails? = intent.parcelabe("packageInfo")
-
         pathImage?.let {
             path = it
         }
-
         dataOrigin?.let {
             pickupViewModel.saveOriginDataToLocal(this, it) }
         dataPenerima?.let {
             pickupViewModel.saveDestinationToLocal(this, it)
         }
+        pickupViewModel.getOriginData(this)
+        pickupViewModel.getReceiptData(this)
 
         packageInfo?.let {
             packageDetails = packageInfo
@@ -100,59 +112,120 @@ class PickupActivity : AppCompatActivity() {
             pickupViewModel.productName.observe(this){
                 pickupBinding.layoutPickupForm.jenisItem.text = it.productTypeName.name
             }
-
             pickupViewModel.getproductTypeById(it.productType)
 
+           checkData()
+
+        } ?: run {
+            Toast.makeText(this, "Pacakage info tidak ditemukan", Toast.LENGTH_SHORT).show()
         }
-
-        pickupViewModel.getOriginData(this)
-        pickupViewModel.getReceiptData(this)
-
 
         pickupViewModel.sender.observe(this) {
             if (it != null) {
                 dataOriginSender = it
                 bindOriginData(it)
+
+                checkData()
             }
         }
         pickupViewModel.receipt.observe(this) {
             if (it != null) {
                 dataDestinationReceipt = it
                 bindDestinationData(it)
-            }
 
+                checkData()
+            }
         }
+    }
+
+    private fun checkData() {
+        if (this::dataOriginSender.isInitialized && this::dataDestinationReceipt.isInitialized && this::packageDetails.isInitialized) {
+            getEstimateData()
+        }
+    }
+
+
+    private fun getEstimateData(){
+        val producTypeName = intent.getStringExtra("productTypeName")
+        val estimateShipRequest = EstimateShipRequest(
+            originProvinceId = dataOriginSender.originProvinceId.toInt(),
+            originDistrictId = dataOriginSender.originDistrictId.toInt(),
+            originCityId = dataOriginSender.originCityId.toInt(),
+            originVillageId = dataOriginSender.originVillageId.toInt(),
+            originAddress = dataOriginSender.originAddress,
+            destinationProvinceId = dataDestinationReceipt.destinationProvinceId.toInt(),
+            destinationCityId = dataDestinationReceipt.destinationCityId.toInt(),
+            destinationDistrictId = dataDestinationReceipt.destinationDistrictId.toInt(),
+            destinationVillageId = dataDestinationReceipt.destinationVillageId.toInt(),
+            destinationAddress = dataDestinationReceipt.destinationAddress,
+            height = packageDetails.height.toInt(),
+            width = packageDetails.width.toInt(),
+            length = packageDetails.length.toInt(),
+            weight = packageDetails.weight.toInt(),
+            productType = producTypeName.toString(),
+            isGuaranteed = false
+        )
+        pickupViewModel.getEstimatePrice(estimateShipRequest)
+
+        pickupViewModel.data.observe(this){ data ->
+            showEstimatePriceOrder(data)
+        }
+
+    }
+
+    private fun showEstimatePriceOrder(response: Data) {
+
+        //show Progress bar
+        pickupBinding.layoutPickupForm.progressLoadingSummary.visibility = View.VISIBLE
+        pickupBinding.layoutPickupForm.summaryAmount.visibility = View.GONE
+
+        CoroutineScope(Dispatchers.Main).launch{
+            delay(2000)
+
+            pickupBinding.layoutPickupForm.progressLoadingSummary.visibility = View.GONE
+            pickupBinding.layoutPickupForm.summaryAmount.visibility = View.VISIBLE
+            pickupBinding.layoutPickupForm.txtEstimationSend.text = response.deliveryTime
+            pickupBinding.layoutPickupForm.txtIncludeAssuranceSend.text = "${response.insuranceRate}"
+            pickupBinding.layoutPickupForm.txtTotalAmountSend.text = "${response.itemPrice}"
+
+            showBalanceOrder()
+        }
+    }
+
+    private fun showBalanceOrder(){
+        pickupBinding.payCard.visibility = View.VISIBLE
+        pickupViewModel.getBallance()
+        pickupViewModel.balance.observe(this){ it->
+            pickupBinding.pickupBalanceWallet.text = "${it.balance}"
+        }
+        pickupBinding.buttonPay.setOnClickListener {
+            sendData()
+        }
+
     }
 
     private fun sendData() {
-        Log.d("Path", "Path Image $path")
-        Log.d("origin provinde Id", "Origin Distric Sender ${dataOriginSender.originDistrictId} ")
         val file = File(path)
-
         val compressed = getResizedBitmap(file.path, 1024)
         val afterResized = bitmapToFile(this, compressed)
-
         val fileSizeKB = afterResized.length() / 1024
-        val requestFile = file.asRequestBody("image/jpg".toMediaTypeOrNull())
+        val requestFile = afterResized.asRequestBody("image/jpg".toMediaTypeOrNull())
 
         if(fileSizeKB <= 1024){
             pickupViewModel.sendOrder(orderRequest = OrderRequest(
-            originSender = dataOriginSender,
-            destinationReceipt = dataDestinationReceipt,
-            packageDetails = packageDetails,
-            additionalDetails = AdditionalDetails(
-                glassware = false,
-                isGuaranteed = false
-            ),
-            multipartImage = MultipartBody.Part.createFormData("photo", afterResized.name, requestFile)
-        ))
+                originSender = dataOriginSender,
+                destinationReceipt = dataDestinationReceipt,
+                packageDetails = packageDetails,
+                additionalDetails = AdditionalDetails(
+                    glassware = false,
+                    isGuaranteed = false
+                ),
+                multipartImage = MultipartBody.Part.createFormData("photo", afterResized.name, requestFile)
+            ))
         } else{
-            Log.d("Compressed File", "File Besar")
+            Toast.makeText(this, "File Terlalu Besar", Toast.LENGTH_SHORT).show()
         }
-
     }
-
-
 
     private fun setupToolbar() {
         setSupportActionBar(pickupBinding.materialToolbar)
@@ -198,12 +271,7 @@ class PickupActivity : AppCompatActivity() {
         }
     }
 
-    private fun showEstimatePriceOrder(response: OrderResponse) {
-        pickupBinding.layoutPickupForm.summaryAmount.visibility = View.VISIBLE
-        pickupBinding.layoutPickupForm.txtEstimationSend.text = response.estimasi
-        pickupBinding.layoutPickupForm.txtIncludeAssuranceSend.text = "${response.order.insuranceRate}"
-        pickupBinding.layoutPickupForm.txtTotalAmountSend.text = "${response.order.totalCost}"
-    }
+
 }
 
 

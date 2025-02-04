@@ -33,12 +33,11 @@ class RecepientFormActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityRecepientFormBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         setupTextWatchers()
         checkSenderField()
         binding.layoutRecepientForm.buttonUseRecepipDetail.setEnabled(false)

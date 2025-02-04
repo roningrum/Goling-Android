@@ -28,11 +28,9 @@ import dev.antasource.goling.data.repositoty.ShippingRepository
 import dev.antasource.goling.databinding.ActivityItemDetailPackageBinding
 import dev.antasource.goling.databinding.FilterOtherBottomBinding
 import dev.antasource.goling.ui.factory.ShippingViewModelFactory
-import dev.antasource.goling.ui.feature.pickup.SenderFormActivity
 import dev.antasource.goling.ui.feature.pickup.viewmodel.PickupViewModel
 import java.io.File
 import java.io.FileOutputStream
-import java.lang.Integer.parseInt
 
 class ItemDetailPackageActivity : AppCompatActivity() {
 
@@ -45,6 +43,7 @@ class ItemDetailPackageActivity : AppCompatActivity() {
     }
 
     private var productTypeId = 0
+    private var productTypeName = ""
 
     private var weight = 0
     private var length = 0
@@ -178,6 +177,7 @@ class ItemDetailPackageActivity : AppCompatActivity() {
                         }
 
                         productTypeId = tag as Int
+                        productTypeName = text as String
 
                         // Reset status chip lainnya
                         binding.layoutItemDetailPackage.chipGroup.children.forEach { child ->
@@ -239,6 +239,7 @@ class ItemDetailPackageActivity : AppCompatActivity() {
                         }
                     }
                     productTypeId = othersChips.tag as Int
+                    productTypeName = othersChips.text.toString()
                     bottomSheetDialog.dismiss()
                 }
             }
@@ -275,6 +276,7 @@ class ItemDetailPackageActivity : AppCompatActivity() {
 
         val intent = Intent(this, PickupActivity::class.java)
         intent.putExtra("path", uriPath)
+        intent.putExtra("productTypeName", productTypeName)
         intent.putExtra("packageInfo", packageInfo)
         intent.putExtra("additionalInfo", additionalDetails)
         startActivity(intent)

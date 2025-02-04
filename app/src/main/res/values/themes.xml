@@ -14,7 +14,6 @@
         <item name="fontFamily">@font/rubik</item>
     </style>
 
-
     <style name="Theme.GolingAndroid" parent="Base.Theme.GolingAndroid">
         <item name="statusBarBackground">?attr/colorPrimary</item>
     </style>

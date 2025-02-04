@@ -27,8 +27,6 @@ class HomeFragment : Fragment() {
         val repo = HomeRepository(data)
         MainViewModelFactory(repo)
     }
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

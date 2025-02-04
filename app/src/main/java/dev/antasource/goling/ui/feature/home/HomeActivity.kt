@@ -1,9 +1,7 @@
 package dev.antasource.goling.ui.feature.home
 
-import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -25,16 +23,13 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var bottomNav: BottomNavigationView
     private lateinit var scannerButton: FloatingActionButton
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        enableEdgeToEdge(
-            statusBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.WHITE)
-        )
+        enableEdgeToEdge()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
         loadFragment(HomeFragment())
@@ -49,56 +44,21 @@ class HomeActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.home -> {
                     loadFragment(HomeFragment())
-                    ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-                        val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-                        v.setPadding(
-                            systemBars.left,
-                            systemBars.top,
-                            systemBars.right,
-                            systemBars.bottom
-                        )
-                        insets
-                    }
                     true
                 }
 
                 R.id.history -> {
                     loadFragment(HistoryFragment())
-                    ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-                        val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-                        v.setPadding(
-                            systemBars.left,
-                            systemBars.top,
-                            systemBars.right,
-                            systemBars.bottom
-                        )
-                        insets
-                    }
                     true
                 }
 
                 R.id.notification -> {
                     loadFragment(NotificationFragment())
-                    ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-                        val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-                        v.setPadding(
-                            systemBars.left,
-                            systemBars.top,
-                            systemBars.right,
-                            systemBars.bottom
-                        )
-                        insets
-                    }
                     true
                 }
 
                 R.id.profile -> {
                     loadFragment(ProfileFragment())
-                    ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-                        val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-                        v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
-                        insets
-                    }
                     true
                 }
 

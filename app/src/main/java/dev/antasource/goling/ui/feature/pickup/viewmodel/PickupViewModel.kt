@@ -15,12 +15,14 @@ import dev.antasource.goling.data.model.country.Regencies
 import dev.antasource.goling.data.model.country.Region
 import dev.antasource.goling.data.model.country.Villages
 import dev.antasource.goling.data.model.estimate.Data
+import dev.antasource.goling.data.model.estimate.EstimateShipRequest
 import dev.antasource.goling.data.model.pickup.request.DestinationReceipt
 import dev.antasource.goling.data.model.pickup.request.OrderRequest
 import dev.antasource.goling.data.model.pickup.request.OriginSender
 import dev.antasource.goling.data.model.pickup.response.OrderResponse
 import dev.antasource.goling.data.model.product.ProductType
 import dev.antasource.goling.data.model.product.ProductTypeIdResponse
+import dev.antasource.goling.data.model.topup.Balance
 import dev.antasource.goling.data.repositoty.ShippingRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -65,6 +67,10 @@ class PickupViewModel(private val repository: ShippingRepository): ViewModel() {
 
     private val _orderResponse = MutableLiveData<OrderResponse>()
     val orderResponse : LiveData<OrderResponse> = _orderResponse
+
+
+    private val _balance = MutableLiveData<Balance>()
+    val balance : LiveData<Balance> = _balance
 
 
     var job: Job? = null
@@ -142,6 +148,47 @@ class PickupViewModel(private val repository: ShippingRepository): ViewModel() {
                 }
             }
         }
+    }
+
+    fun getBallance(){
+        viewModelScope.launch{
+            viewModelScope.launch{
+                val response = repository.getBalance(token)
+                if(response.isSuccessful){
+                    _balance.value = response.body()
+                }else{
+                    try {
+                        val gson = Gson()
+                        val error =
+                            gson.fromJson(response.errorBody()?.string(), ErrorMessage::class.java)
+                        _errorMsg.value = error.message
+                    } catch (e: IOException) {
+                        _errorMsg.value = e.message
+                    }
+                }
+            }
+
+        }
+    }
+
+    fun getEstimatePrice(estimateShipRequest: EstimateShipRequest){
+        viewModelScope.launch{
+            val response = repository.getEstimateShipping(estimateShipRequest)
+            if (response.isSuccessful) {
+                _data.value = response.body()?.data
+            } else {
+                try {
+                    val gson = Gson()
+                    val error =
+                        gson.fromJson(response.errorBody()?.string(), ErrorMessage::class.java)
+                    _errorMsg.value = error.message
+                } catch (e: IOException) {
+                    _errorMsg.value = e.message
+                }
+
+            }
+        }
+
     }
 
     fun sendOrder(orderRequest: OrderRequest){
