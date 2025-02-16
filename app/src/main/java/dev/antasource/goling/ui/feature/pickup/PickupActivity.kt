@@ -1,9 +1,11 @@
 package dev.antasource.goling.ui.feature.pickup
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -26,6 +28,7 @@ import dev.antasource.goling.ui.feature.home.HomeActivity
 import dev.antasource.goling.ui.feature.pickup.viewmodel.PickupViewModel
 import dev.antasource.goling.util.ParcelableUtils.parcelabe
 import dev.antasource.goling.util.SharedPrefUtil
+import dev.antasource.goling.util.Util
 import dev.antasource.goling.util.Util.bitmapToFile
 import dev.antasource.goling.util.Util.getResizedBitmap
 import kotlinx.coroutines.CoroutineScope
@@ -42,10 +45,13 @@ class PickupActivity : AppCompatActivity() {
 
     private lateinit var pickupBinding: ActivityPickupBinding
 
-    lateinit var dataOriginSender: OriginSender
-    lateinit var dataDestinationReceipt: DestinationReceipt
+    private lateinit var dataOriginSender: OriginSender
+    private lateinit var dataDestinationReceipt: DestinationReceipt
     private var path = ""
-    lateinit var packageDetails: PackageDetails
+    private var itemPrice = 0
+    private var balance = 0
+
+    private lateinit var packageDetails: PackageDetails
 
     private val pickupViewModel by viewModels<PickupViewModel>() {
         val data = NetworkRemoteSource()
@@ -69,7 +75,7 @@ class PickupActivity : AppCompatActivity() {
         handleData()
         pickupViewModel.token = SharedPrefUtil.getAccessToken(this).toString()
         pickupViewModel.orderResponse.observe(this){ order ->
-            Toast.makeText(this, "${order.orderHistory.status}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, order.orderHistory.status, Toast.LENGTH_SHORT).show()
             pickupViewModel.clearOrderData(this)
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
@@ -96,7 +102,7 @@ class PickupActivity : AppCompatActivity() {
 
         packageInfo?.let {
             packageDetails = packageInfo
-            pickupBinding.layoutPickupForm.cardDetailPacket.visibility = View.VISIBLE
+            pickupBinding.layoutPickupForm.cardDetailPacket.visibility = VISIBLE
             pickupBinding.layoutPickupForm.weightItem.text = buildString {
                 append(it.weight)
                 append("kg")
@@ -116,15 +122,12 @@ class PickupActivity : AppCompatActivity() {
 
            checkData()
 
-        } ?: run {
-            Toast.makeText(this, "Pacakage info tidak ditemukan", Toast.LENGTH_SHORT).show()
         }
 
         pickupViewModel.sender.observe(this) {
             if (it != null) {
                 dataOriginSender = it
                 bindOriginData(it)
-
                 checkData()
             }
         }
@@ -132,7 +135,6 @@ class PickupActivity : AppCompatActivity() {
             if (it != null) {
                 dataDestinationReceipt = it
                 bindDestinationData(it)
-
                 checkData()
             }
         }
@@ -174,34 +176,49 @@ class PickupActivity : AppCompatActivity() {
     }
 
     private fun showEstimatePriceOrder(response: Data) {
-
         //show Progress bar
-        pickupBinding.layoutPickupForm.progressLoadingSummary.visibility = View.VISIBLE
-        pickupBinding.layoutPickupForm.summaryAmount.visibility = View.GONE
+        pickupBinding.layoutPickupForm.progressLoadingSummary.visibility = VISIBLE
+        pickupBinding.layoutPickupForm.summaryAmount.visibility = GONE
 
         CoroutineScope(Dispatchers.Main).launch{
             delay(2000)
-
-            pickupBinding.layoutPickupForm.progressLoadingSummary.visibility = View.GONE
-            pickupBinding.layoutPickupForm.summaryAmount.visibility = View.VISIBLE
+            pickupBinding.layoutPickupForm.progressLoadingSummary.visibility = GONE
+            pickupBinding.layoutPickupForm.summaryAmount.visibility = VISIBLE
             pickupBinding.layoutPickupForm.txtEstimationSend.text = response.deliveryTime
             pickupBinding.layoutPickupForm.txtIncludeAssuranceSend.text = "${response.insuranceRate}"
             pickupBinding.layoutPickupForm.txtTotalAmountSend.text = "${response.itemPrice}"
 
-            showBalanceOrder()
+            itemPrice = response.itemPrice
+
+            showBalanceOrder(itemPrice)
         }
     }
 
-    private fun showBalanceOrder(){
-        pickupBinding.payCard.visibility = View.VISIBLE
+    @SuppressLint("SetTextI18n", "ResourceAsColor")
+    private fun showBalanceOrder(price : Int){
+        pickupBinding.payCard.visibility = VISIBLE
         pickupViewModel.getBallance()
         pickupViewModel.balance.observe(this){ it->
-            pickupBinding.pickupBalanceWallet.text = "${it.balance}"
+            if(it.balance != 0){
+                pickupBinding.pickupBalanceWallet.text = "${it.balance}"
+            } else{
+                pickupBinding.pickupBalanceWallet.text = "0"
+            }
+
+            if(it.balance < price){
+                pickupBinding.buttonPay.isEnabled = false
+                pickupBinding.pickupBalanceWallet.setTextColor(R.color.redColor)
+                pickupBinding.pickupBalanceWallet.text = "Saldo kurang: ${Util.formatCurrency(it.balance)}"
+            } else{
+                pickupBinding.buttonPay.isEnabled = true
+                pickupBinding.pickupBalanceWallet.text = "${it.balance}"
+            }
         }
         pickupBinding.buttonPay.setOnClickListener {
-            sendData()
+            if(pickupBinding.buttonPay.isEnabled){
+                sendData()
+            }
         }
-
     }
 
     private fun sendData() {
@@ -251,9 +268,9 @@ class PickupActivity : AppCompatActivity() {
     private fun bindOriginData(data: OriginSender) {
         Log.d("Origin Data", "data $data")
         pickupBinding.layoutPickupForm.apply {
-            senderNamelayout.visibility = View.VISIBLE
-            phoneSender.visibility = View.VISIBLE
-            cardAddressSender.visibility = View.VISIBLE
+            senderNamelayout.visibility = VISIBLE
+            phoneSender.visibility = VISIBLE
+            cardAddressSender.visibility = VISIBLE
             nameSender.text = data.originName
             phoneSender.text = data.originPhone
             senderAddress.text = data.originAddress
@@ -262,9 +279,9 @@ class PickupActivity : AppCompatActivity() {
 
     private fun bindDestinationData(data: DestinationReceipt) {
         pickupBinding.layoutPickupForm.apply {
-            recepientNamelayout.visibility = View.VISIBLE
-            phoneRecepientSender.visibility = View.VISIBLE
-            cardAddressRecepient.visibility = View.VISIBLE
+            recepientNamelayout.visibility = VISIBLE
+            phoneRecepientSender.visibility = VISIBLE
+            cardAddressRecepient.visibility = VISIBLE
             nameRecepientSender.text = data.destinationName
             phoneRecepientSender.text = data.destinationPhone
             textRecepientAddress.text = data.destinationAddress

@@ -19,7 +19,7 @@ import dev.antasource.goling.ui.feature.pickup.adapter.RegenciesAdapter
 import dev.antasource.goling.ui.feature.pickup.adapter.RegionAdapter
 import dev.antasource.goling.ui.feature.pickup.adapter.VillagesAdapter
 import dev.antasource.goling.ui.feature.pickup.viewmodel.PickupViewModel
-import dev.antasource.goling.util.SharedPrefUtil
+
 
 class PickupChoiceLocationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPickupChoiceLocationBinding

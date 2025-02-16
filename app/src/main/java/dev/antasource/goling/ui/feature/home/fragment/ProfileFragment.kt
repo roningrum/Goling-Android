@@ -6,11 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import dev.antasource.goling.R
 import dev.antasource.goling.data.networksource.NetworkRemoteSource
 import dev.antasource.goling.data.repositoty.AuthenticationRepository
 import dev.antasource.goling.databinding.FragmentProfileBinding
@@ -46,18 +43,26 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         profileViewModel.token = SharedPrefUtil.getAccessToken(view.context).toString()
+        profileViewModel.getUserProfile()
         binding.logoutButton.setOnClickListener {
             profileViewModel.logout()
         }
+
+        profileViewModel.userResponse.observe(requireActivity()){ user ->
+            binding.txtNameProfile.text = user.users.username
+            binding.txtEmailProfile.text = user.users.email
+
+        }
+
 
         profileViewModel.message.observe(requireActivity()) { message ->
             CoroutineScope(Dispatchers.Main).launch {
                 delay(3000)
                 message?.let {
                     Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                    SharedPrefUtil.clear(view.context)
                     val intent = Intent(requireActivity(), LoginActivity::class.java)
                     startActivity(intent)
+                    SharedPrefUtil.clear(view.context)
                     activity?.finish()
                 }
             }

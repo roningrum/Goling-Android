@@ -6,5 +6,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class AdditionalDetails(
     val glassware: Boolean,
-    val isGuaranteed: Boolean
+    val isGuaranteed: Boolean,
+    val orderTypeId : Int = 1
 ): Parcelable

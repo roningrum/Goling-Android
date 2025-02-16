@@ -94,6 +94,7 @@ object SharedPrefUtil {
     }
 
     fun clear(context: Context) {
-        getSharedPref(context).edit().clear().commit()
+        val editor = getSharedPref(context).edit()
+        editor.clear()
     }
 }

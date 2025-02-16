@@ -18,4 +18,10 @@ class ShippingRepository(private val networkRemoteSource: NetworkRemoteSource) {
 
     //get balance
     suspend fun getBalance(token: String) = networkRemoteSource.getBalance(token)
+
+    //get order
+    suspend fun getOrders(token: String) = networkRemoteSource.getOrders(token)
+
+    //get OrderDetail
+    suspend fun getOrderDetail(token: String, id: Long) = networkRemoteSource.getOrderDetail(token, id)
 }

@@ -4,5 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.feature.home.fragment.HistoryFragment">
-    <include layout="@layout/layout_history_fragment"/>
+    <include
+        android:id="@+id/layout_history_fragment"
+        layout="@layout/layout_history_fragment"/>
 </FrameLayout>

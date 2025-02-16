@@ -1,14 +1,17 @@
 package dev.antasource.goling.ui.feature.home
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
@@ -34,12 +37,12 @@ class HomeActivity : AppCompatActivity() {
         }
         loadFragment(HomeFragment())
         bottomNav = findViewById(R.id.bottom_nav_menu)
-        scannerButton = findViewById(R.id.fab_scanner)
 
+        showTransactionMessage()
+        scannerButton = findViewById(R.id.fab_scanner)
         scannerButton.setOnClickListener {
             launchScreen()
         }
-
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home -> {
@@ -65,7 +68,13 @@ class HomeActivity : AppCompatActivity() {
                 else -> false
             }
         }
+    }
 
+    private fun showTransactionMessage() {
+        val message = intent.getStringExtra("TRANSACTION_MESSAGE")
+        message?.let {
+            showSnackbarSuccess(message)
+        }?:""
     }
 
     private fun loadFragment(fragment: Fragment) {
@@ -91,6 +100,13 @@ class HomeActivity : AppCompatActivity() {
                 )
             )
         barcodeLauncher.launch(option)
+    }
+
+    private fun showSnackbarSuccess(message: String) {
+        val rootView = findViewById<View>(android.R.id.content)
+        val snackbarMsg = Snackbar.make(rootView, message, Snackbar.LENGTH_SHORT)
+        snackbarMsg.setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.greenColor))
+        snackbarMsg.show()
     }
 
     private val barcodeLauncher = registerForActivityResult(

@@ -18,6 +18,9 @@ import dev.antasource.goling.data.model.country.Regencies
 import dev.antasource.goling.data.model.country.Villages
 import dev.antasource.goling.data.model.estimate.EstimateShipRequest
 import dev.antasource.goling.data.model.estimate.EstimateShipResponse
+import dev.antasource.goling.data.model.history.OrdersResponse
+import dev.antasource.goling.data.model.pickup.response.Order
+import dev.antasource.goling.data.model.pickup.response.OrderDetailResponse
 import dev.antasource.goling.data.model.pickup.response.OrderResponse
 import dev.antasource.goling.data.model.product.ProductType
 import dev.antasource.goling.data.model.product.ProductTypeIdResponse
@@ -90,6 +93,7 @@ interface ApiService {
     @GET("admin/product-types/{id}")
     suspend fun getProductTypesbyId(@Path("id") id: Int): Response<ProductTypeIdResponse>
 
+    // Get Order
     @Multipart
     @POST("orders")
     suspend fun postOrders(
@@ -97,4 +101,15 @@ interface ApiService {
         @PartMap orderRequest: Map<String, @JvmSuppressWildcards RequestBody>,
         @Part photo: MultipartBody.Part
     ): Response<OrderResponse>
+
+    @GET("orders")
+    suspend fun getOrders(
+        @Header("Authorization") token: String,
+    ): Response<OrdersResponse>
+
+    @GET("orders/{id}")
+    suspend fun getOrderId(
+        @Header("Authorization") token: String,
+        @Path("id") id: Long
+    ): Response<OrderDetailResponse>
 }

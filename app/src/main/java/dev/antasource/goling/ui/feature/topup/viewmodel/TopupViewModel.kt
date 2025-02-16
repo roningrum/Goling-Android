@@ -1,9 +1,9 @@
 package dev.antasource.goling.ui.feature.topup.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import dev.antasource.goling.data.model.ErrorMessage
 import dev.antasource.goling.data.model.PaymentResponse
@@ -39,21 +39,18 @@ class TopupViewModel(private val repository: TopUpRepository): ViewModel() {
 
 
     fun topUpAmountWallet(){
-        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch{
-            Log.d("Check Token", "Token $token")
+        viewModelScope.launch{
             val response = repository.topupwallet(token, TopUpRequest(amount))
-            withContext(Dispatchers.Main){
-                if(response.isSuccessful){
-                    _topUpResponse.value = response.body()
-                }
-                else{
-                    try {
-                        val gson = Gson()
-                        val error = gson.fromJson(response.errorBody()?.string(), ErrorMessage::class.java )
-                        _errorMessage.value = error.message
-                    } catch (e: IOException){
-                        _errorMessage.value = e.message
-                    }
+            if(response.isSuccessful){
+                _topUpResponse.value = response.body()
+            }
+            else{
+                try {
+                    val gson = Gson()
+                    val error = gson.fromJson(response.errorBody()?.string(), ErrorMessage::class.java )
+                    _errorMessage.value = error.message
+                } catch (e: IOException){
+                    _errorMessage.value = e.message
                 }
             }
         }

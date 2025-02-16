@@ -11,4 +11,5 @@ class AuthenticationRepository (private val networkRemoteSource: NetworkRemoteSo
     suspend fun registerAccount(registerRequest: RegisterRequest) = networkRemoteSource.getRegisterResponse(registerRequest)
     suspend fun resetPass(forgotPassRequest: ForgotPassRequest ) = networkRemoteSource.resetPassResponse(forgotPassRequest)
     suspend fun logout(token: String) = networkRemoteSource.logout(token)
+    suspend fun getUserProfile(token: String) = networkRemoteSource.getUser(token)
   }

@@ -1,59 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.feature.home.HomeActivity">
 
     <FrameLayout
         android:id="@+id/view_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_nav_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bottomAppBar"
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav_menu"
+        style="@style/Theme.GolingAndroid.BottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Theme.GolingAndroid.BottomAppBar"
-        app:contentInsetEnd="0dp"
-        app:background="@color/surfaceColor"
-        app:contentInsetStart="0dp"
-        app:elevation="2dp"
-        app:fabAlignmentMode="center"
-        app:fabCradleMargin="10dp"
-        app:fabCradleRoundedCornerRadius="8dp"
-        app:fabCradleVerticalOffset="10dp"
-        android:layout_gravity="bottom">
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_nav_menu"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:elevation="0dp"
-            android:background="@android:color/transparent"
-            app:labelVisibilityMode="labeled"
-            style="@style/Theme.GolingAndroid.BottomNav"
-            app:menu="@menu/bottom_navigation_menu"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-    </com.google.android.material.bottomappbar.BottomAppBar>
+        app:elevation="0dp"
+        android:fitsSystemWindows="false"
+        app:backgroundTint="@color/white"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="@+id/view_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_navigation_menu" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_scanner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:backgroundTint="@color/gold"
-        app:tint="@color/bluePrimary"
-        android:contentDescription="@string/app_name"
         android:src="@drawable/icon_scan"
-        app:layout_anchor="@id/bottomAppBar" />
+        app:backgroundTint="@color/gold"
+        app:elevation="8dp"
+        android:layout_marginBottom="56dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

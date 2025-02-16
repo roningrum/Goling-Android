@@ -2,7 +2,6 @@ package dev.antasource.goling.ui.feature.home.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,21 +17,25 @@ import dev.antasource.goling.ui.feature.pickup.PickupActivity
 import dev.antasource.goling.ui.feature.topup.TopUpActivity
 import dev.antasource.goling.util.SharedPrefUtil
 import dev.antasource.goling.util.Util
+import dev.antasource.goling.R
+import dev.antasource.goling.ui.feature.login.LoginActivity
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
 
-    private val homeViewModel by viewModels<HomeViewModel>(){
+    private var isBalanceVisible = false
+
+    private val homeViewModel by viewModels<HomeViewModel>() {
         val data = NetworkRemoteSource()
         val repo = HomeRepository(data)
         MainViewModelFactory(repo)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentHomeBinding.inflate(inflater,container, false )
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -46,30 +49,62 @@ class HomeFragment : Fragment() {
 
         val token = SharedPrefUtil.getAccessToken(view.context).toString()
 
-        homeViewModel.userResponse.observe(requireActivity()){ data ->
-            nameUser.text = data.users.username
-        }
-        homeViewModel.balance.observe(requireActivity()){balance ->
-            binding.layoutHome.layoutHomeWallet.amountNominalTxt.text = Util.formatCurrency(balance.balance)
+        if(token.isEmpty()){
+            val intent = Intent(requireActivity(), LoginActivity::class.java)
+            startActivity(intent)
+            activity?.finish()
         }
 
-        homeViewModel.errorMsg.observe(requireActivity()){ error ->
-            Log.e("Error Message", "Error $error")
-        }
-        Log.d("Token User", "Token $token")
         homeViewModel.getUser(token)
         homeViewModel.getBalance(token)
 
-        topUpWalletbtn.setOnClickListener{ v->
+        binding.layoutHome.layoutHomeWallet.amountNominalTxt.text = "*******"
+        binding.layoutHome.layoutHomeWallet.visibleAmountBtn.setImageResource(R.drawable.ic_visibility_off)
+
+        binding.layoutHome.layoutHomeWallet.visibleAmountBtn.setOnClickListener {
+            if (isBalanceVisible) {
+                binding.layoutHome.layoutHomeWallet.amountNominalTxt.text = "*******"
+                binding.layoutHome.layoutHomeWallet.visibleAmountBtn.setImageResource(R.drawable.ic_visibility_off)
+            } else {
+                homeViewModel.balance.observe(requireActivity()) { balance ->
+                    if (balance.balance != 0) {
+                        binding.layoutHome.layoutHomeWallet.amountNominalTxt.text =
+                            Util.formatCurrency(balance.balance)
+                    } else {
+                        binding.layoutHome.layoutHomeWallet.amountNominalTxt.text =
+                            Util.formatCurrency(0)
+
+                    }
+
+                }
+                binding.layoutHome.layoutHomeWallet.visibleAmountBtn.setImageResource(R.drawable.ic_visibility)
+            }
+            isBalanceVisible = !isBalanceVisible;
+        }
+
+        homeViewModel.userResponse.observe(requireActivity()) { data ->
+            nameUser.text = data.users.username
+        }
+        homeViewModel.errorMsg.observe(requireActivity()) { error ->
+            binding.layoutHome.layoutHomeWallet.amountNominalTxt.text = Util.formatCurrency(0)
+            if(error.contains("Expired")){
+                val intent = Intent(requireActivity(), LoginActivity::class.java)
+                startActivity(intent)
+                activity?.finish()
+            }
+
+        }
+
+        topUpWalletbtn.setOnClickListener { v ->
             val intent = Intent(v.context, TopUpActivity::class.java)
             startActivity(intent)
         }
-        estimateMenu.setOnClickListener{ v->
+        estimateMenu.setOnClickListener { v ->
             val intent = Intent(v.context, EstimateDeliveryActivity::class.java)
             startActivity(intent)
         }
 
-        pickupMenu.setOnClickListener{ v->
+        pickupMenu.setOnClickListener { v ->
             val intent = Intent(v.context, PickupActivity::class.java)
             startActivity(intent)
         }

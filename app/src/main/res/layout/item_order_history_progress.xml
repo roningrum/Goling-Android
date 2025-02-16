@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <!-- Timeline Indicator -->
+    <LinearLayout
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <!-- Circle Indicator -->
+        <View
+            android:id="@+id/circleIndicator"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:background="@drawable/circle_background"
+            android:layout_gravity="center"/>
+
+        <!-- Line -->
+        <View
+            android:id="@+id/lineIndicator"
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/yellow"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+    <!-- Timeline Content -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/txt_order_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/order_placed"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/gold"/>
+
+        <TextView
+            android:id="@+id/tvDateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/_9_februari_2025_04_43pm"
+            android:textSize="14sp"
+            android:textColor="@color/grayColor"/>
+
+    </LinearLayout>
+</LinearLayout>

@@ -3,15 +3,17 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.snackbar.Snackbar
 import dev.antasource.goling.R
 import dev.antasource.goling.data.networksource.NetworkRemoteSource
 import dev.antasource.goling.data.repositoty.TopUpRepository
@@ -39,12 +41,12 @@ class PaymentWebViewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         binding = ActivityWebViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        enableEdgeToEdge()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, 0, systemBars.right, 0)
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
@@ -65,14 +67,10 @@ class PaymentWebViewActivity : AppCompatActivity() {
                         topupViewModel.transactionId = transactionId
                         topupViewModel.verifyTopUp()
                     }
-
                     return true
                 }
                 return false
             }
-
-
-
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
                 Log.d("WebView", "Page finished loading: $url")
@@ -91,9 +89,10 @@ class PaymentWebViewActivity : AppCompatActivity() {
                     delay(3000)
                     response?.let {
                         val intent = Intent(this@PaymentWebViewActivity, HomeActivity::class.java)
+                        intent.putExtra("TRANSACTION_MESSAGE", response.message)
                         startActivity(intent)
                         finish()
-                        showSnackbar(response.message)
+
                     }
                 }
             }
@@ -103,19 +102,20 @@ class PaymentWebViewActivity : AppCompatActivity() {
             CoroutineScope(Dispatchers.Main).launch{
                 delay(3000)
                 errorMsg?.let {
-                    val intent = Intent(this@PaymentWebViewActivity, TopUpActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                    showSnackbar(errorMsg)
+                    showSnackbarError(errorMsg)
                 }
             }
-
         }
 
     }
 
-    private fun showSnackbar(msg: String){
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+
+
+    private fun showSnackbarError(message: String) {
+        val rootView = findViewById<View>(android.R.id.content)
+        val snackbarMsg = Snackbar.make(rootView, message, Snackbar.LENGTH_SHORT)
+        snackbarMsg.setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.redColor))
+        snackbarMsg.show()
     }
 
     private fun extractTransactionId(url: String): String {

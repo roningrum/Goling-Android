@@ -34,9 +34,10 @@ class TopUpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         binding = ActivityTopUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        enableEdgeToEdge()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top+24, systemBars.right, 0)
@@ -47,13 +48,9 @@ class TopUpActivity : AppCompatActivity() {
         supportActionBar?.apply {
             setDisplayShowHomeEnabled(true)
             setDisplayHomeAsUpEnabled(true)
-//            setHomeAsUpIndicator(R.drawable.ic_back)
         }
 
-//        onBackPrevPage()
-
         topupViewModel.token = SharedPrefUtil.getAccessToken(this).toString()
-
         topupViewModel.topUpResponse.observe(this){ response ->
             Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
             val intent = Intent(this, PaymentWebViewActivity::class.java)
@@ -61,21 +58,17 @@ class TopUpActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-
         topupViewModel.errorMessage.observe(this){response ->
             Toast.makeText(this, "Response $response", Toast.LENGTH_SHORT).show()
 
         }
-
-
-        val chipAmount = listOf("5000", "10000", "20000", "25000", "30000", "35000", "40000", "45000")
+        val chipAmount = listOf("100000", "200000","300000", "350000", "400000", "500000", "1000000")
         binding.gridAmountChip.adapter = ChipAmountAdapter(this, chipAmount) { chipText ->
             // Ketika chip dipilih, tampilkan nominal dan aktifkan tombol
             isAmountSelected = true
             val nominal = Util.formatCurrency(chipText.toInt())
             binding.amountEditText.setText(nominal)
             binding.amountEditText.setSelection(nominal.length)
-//            checkEnableButton()  // Periksa status tombol
         }
 
 

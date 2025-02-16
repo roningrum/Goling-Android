@@ -19,7 +19,7 @@ import okio.IOException
 
 class HomeViewModel(private val homeRepository: HomeRepository): ViewModel() {
     private val _userResponse = MutableLiveData<UserResponse>()
-    val userResponse : LiveData<UserResponse> = _userResponse
+    val userResponse: LiveData<UserResponse> = _userResponse
 
     private val _balance = MutableLiveData<Balance>()
     val balance : LiveData<Balance> = _balance

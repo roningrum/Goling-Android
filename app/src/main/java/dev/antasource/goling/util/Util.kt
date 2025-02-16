@@ -1,12 +1,21 @@
 package dev.antasource.goling.util
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.MultiFormatWriter
+import com.google.zxing.common.BitMatrix
+import com.journeyapps.barcodescanner.BarcodeEncoder
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 
 object Util {
     fun formatCurrency(amount: Int): String {
@@ -60,6 +69,37 @@ object Util {
 
         FileOutputStream(file).use { it.write(byteArray) }
         return file
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun convertIsoToDate(isoDate: String?): String {
+        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        format.timeZone = TimeZone.getTimeZone("UTC")
+        val date: Date = format.parse(isoDate!!) ?: return ""
+
+        val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
+        return outputFormat.format(date)
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun convertIsoToDateTime(isoDate: String?): String {
+        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        format.timeZone = TimeZone.getTimeZone("UTC")
+        val date: Date = format.parse(isoDate!!) ?: return ""
+
+        val outputFormat = SimpleDateFormat("dd MMMM yyyy HH:mm", Locale("id", "ID"))
+        return outputFormat.format(date)
+    }
+
+    fun generateBarcode(orderId: String, width: Int, height: Int): Bitmap? {
+        return try {
+            val bitMatrix: BitMatrix = MultiFormatWriter().encode(orderId, BarcodeFormat.CODE_128, width, height)
+            val barcodeEncoder = BarcodeEncoder()
+            barcodeEncoder.createBitmap(bitMatrix)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
     }
 
 

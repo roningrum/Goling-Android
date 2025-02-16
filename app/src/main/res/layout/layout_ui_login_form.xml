@@ -33,6 +33,8 @@
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:hint="@string/password_hint_text"
         android:maxEms="14"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/grayBorder"
         android:layout_marginTop="16dp"
         app:boxCornerRadiusBottomEnd="8dp"
         app:boxCornerRadiusTopEnd="8dp"

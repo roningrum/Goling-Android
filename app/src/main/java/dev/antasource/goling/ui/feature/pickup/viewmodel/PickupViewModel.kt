@@ -24,12 +24,7 @@ import dev.antasource.goling.data.model.product.ProductType
 import dev.antasource.goling.data.model.product.ProductTypeIdResponse
 import dev.antasource.goling.data.model.topup.Balance
 import dev.antasource.goling.data.repositoty.ShippingRepository
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import okio.IOException
 
 class PickupViewModel(private val repository: ShippingRepository): ViewModel() {
@@ -72,9 +67,6 @@ class PickupViewModel(private val repository: ShippingRepository): ViewModel() {
     private val _balance = MutableLiveData<Balance>()
     val balance : LiveData<Balance> = _balance
 
-
-    var job: Job? = null
-    val exceptionHandler = CoroutineExceptionHandler { _, throwable -> }
 
     private var _imageUri : Uri? = null
 
@@ -152,22 +144,19 @@ class PickupViewModel(private val repository: ShippingRepository): ViewModel() {
 
     fun getBallance(){
         viewModelScope.launch{
-            viewModelScope.launch{
-                val response = repository.getBalance(token)
-                if(response.isSuccessful){
-                    _balance.value = response.body()
-                }else{
-                    try {
-                        val gson = Gson()
-                        val error =
-                            gson.fromJson(response.errorBody()?.string(), ErrorMessage::class.java)
-                        _errorMsg.value = error.message
-                    } catch (e: IOException) {
-                        _errorMsg.value = e.message
-                    }
+            val response = repository.getBalance(token)
+            if(response.isSuccessful){
+                _balance.value = response.body()
+            }else{
+                try {
+                    val gson = Gson()
+                    val error =
+                        gson.fromJson(response.errorBody()?.string(), ErrorMessage::class.java)
+                    _errorMsg.value = error.message
+                } catch (e: IOException) {
+                    _errorMsg.value = e.message
                 }
             }
-
         }
     }
 
@@ -209,84 +198,85 @@ class PickupViewModel(private val repository: ShippingRepository): ViewModel() {
     }
 
     fun getRegion() {
-        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            withContext(Dispatchers.Main) {
-                val response = repository.getRegion()
-                if (response.isSuccessful) {
-                    _region.value = response.body()
-                } else {
-                    try {
-                        val gson = Gson()
-                        val error =
-                            gson.fromJson(response.errorBody()?.string(), ErrorMessage::class.java)
-                        _errorMsg.value = error.message
-                    } catch (e: IOException) {
-                        _errorMsg.value = e.message
-                    }
+        viewModelScope.launch{
+            val response = repository.getRegion()
+            if (response.isSuccessful) {
+                _region.value = response.body()
+            } else {
+                try {
+                    val gson = Gson()
+                    val error =
+                        gson.fromJson(response.errorBody()?.string(), ErrorMessage::class.java)
+                    _errorMsg.value = error.message
+                } catch (e: IOException) {
+                    _errorMsg.value = e.message
                 }
             }
+
         }
     }
+
+    fun getRegionName(id: String) = _region.value?.find { it.id == id }?.name
+
 
     fun getRegenciesId() {
-        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            withContext(Dispatchers.Main) {
-                val response = repository.getCityRegencies(provinceId)
-                if (response.isSuccessful) {
-                    _regencies.value = response.body()
-                } else {
-                    try {
-                        val gson = Gson()
-                        val error =
-                            gson.fromJson(response.errorBody()?.string(), ErrorMessage::class.java)
-                        _errorMsg.value = error.message
-                    } catch (e: IOException) {
-                        _errorMsg.value = e.message
-                    }
+        viewModelScope.launch{
+            val response = repository.getCityRegencies(provinceId)
+            if (response.isSuccessful) {
+                _regencies.value = response.body()
+            } else {
+                try {
+                    val gson = Gson()
+                    val error =
+                        gson.fromJson(response.errorBody()?.string(), ErrorMessage::class.java)
+                    _errorMsg.value = error.message
+                } catch (e: IOException) {
+                    _errorMsg.value = e.message
                 }
-
             }
         }
     }
+
+    fun getRegenciesName(regenciesId: String)= _regencies.value?.find { it.id == regenciesId }?.name
 
     fun getDistric() {
-        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            withContext(Dispatchers.Main) {
-                val response = repository.getDistrics(regenciesId)
-                if (response.isSuccessful) {
-                    _distric.value = response.body()
-                } else {
-                    try {
-                        val gson = Gson()
-                        val error =
-                            gson.fromJson(response.errorBody()?.string(), ErrorMessage::class.java)
-                        _errorMsg.value = error.message
-                    } catch (e: IOException) {
-                        _errorMsg.value = e.message
-                    }
+        viewModelScope.launch{
+            val response = repository.getDistrics(regenciesId)
+            if (response.isSuccessful) {
+                _distric.value = response.body()
+            } else {
+                try {
+                    val gson = Gson()
+                    val error =
+                        gson.fromJson(response.errorBody()?.string(), ErrorMessage::class.java)
+                    _errorMsg.value = error.message
+                } catch (e: IOException) {
+                    _errorMsg.value = e.message
                 }
             }
         }
     }
+
+    fun getDistricName() = _distric.value?.find { it.id == districtId.toString() }?.name
 
     fun getVillages() {
-        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            withContext(Dispatchers.Main) {
-                val response = repository.getVillages(districtId)
-                if (response.isSuccessful) {
-                    _villages.value = response.body()
-                } else {
-                    try {
-                        val gson = Gson()
-                        val error =
-                            gson.fromJson(response.errorBody()?.string(), ErrorMessage::class.java)
-                        _errorMsg.value = error.message
-                    } catch (e: IOException) {
-                        _errorMsg.value = e.message
-                    }
-
+        viewModelScope.launch{
+            val response = repository.getVillages(districtId)
+            if (response.isSuccessful) {
+                _villages.value = response.body()
+            } else {
+                try {
+                    val gson = Gson()
+                    val error =
+                        gson.fromJson(response.errorBody()?.string(), ErrorMessage::class.java)
+                    _errorMsg.value = error.message
+                } catch (e: IOException) {
+                    _errorMsg.value = e.message
                 }
+
             }
         }
     }
+
+    fun getVillageName(villagesId: String) = _villages.value?.find { it.id == villagesId}?.name
 }

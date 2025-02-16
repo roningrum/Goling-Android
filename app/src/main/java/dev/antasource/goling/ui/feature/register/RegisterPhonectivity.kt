@@ -2,6 +2,7 @@ package dev.antasource.goling.ui.feature.register
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -19,9 +20,6 @@ import kotlin.getValue
 class RegisterPhonectivity : AppCompatActivity() {
     private lateinit var btnRegister : MaterialButton
     private lateinit var phoneNumberEditText : TextInputEditText
-    private var username:String = ""
-    private var password : String = ""
-    private var email : String = ""
 
     private val registrasiViewModel : RegisterViewModel by viewModels{
         val authDataSource = NetworkRemoteSource()
@@ -40,25 +38,16 @@ class RegisterPhonectivity : AppCompatActivity() {
 
         phoneNumberEditText = findViewById(R.id.phone_input_login)
 
-        val bundle : Bundle? = intent.extras
-
-        bundle?.let {
-            bundle.apply {
-                username = getString("username").toString()
-                email = getString("email").toString()
-                password = getString("password").toString()
-            }
-        }
-
         btnRegister = findViewById(R.id.register_button)
         btnRegister.text = getString(R.string.next_register_button_text)
         btnRegister.setOnClickListener{
             val phoneNumber = phoneNumberEditText.text.toString().trim()
-            registrasiViewModel.phone_number = phoneNumber
+            Log.d("Phone Number", "Number $phoneNumber")
+//            registrasiViewModel.phoneNumber = phoneNumber
+
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
             finish()
-//            registrasiViewModel.register(username, email, password, phoneNumber)
         }
 
 

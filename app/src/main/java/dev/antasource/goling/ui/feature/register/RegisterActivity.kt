@@ -2,13 +2,11 @@ package dev.antasource.goling.ui.feature.register
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.util.Patterns
 import android.view.View
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -29,23 +27,21 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
 import kotlin.getValue
 
 class RegisterActivity : AppCompatActivity() {
 
-    private lateinit var btnNextRegister : MaterialButton
+    private lateinit var btnNextRegister: MaterialButton
     private lateinit var emailInputEditText: TextInputEditText
     private lateinit var userNameInputEditText: TextInputEditText
     private lateinit var passwordInputEditText: TextInputEditText
-    private lateinit var emailInputTextLayout : TextInputLayout
+    private lateinit var emailInputTextLayout: TextInputLayout
 
-    private val registrasiViewModel : RegisterViewModel by viewModels{
+    private val registrasiViewModel: RegisterViewModel by viewModels {
         val authDataSource = NetworkRemoteSource()
         val repo = AuthenticationRepository(authDataSource)
         AuthViewModelFactory(repo)
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,15 +61,33 @@ class RegisterActivity : AppCompatActivity() {
         btnNextRegister = findViewById(R.id.register_button)
         btnNextRegister.text = "Next"
 
-        handleRegisterInput(userNameInputEditText,emailInputEditText, passwordInputEditText)
-        emailInputEditText.addTextChangedListener(checkField(userNameInputEditText, emailInputEditText, passwordInputEditText))
-        userNameInputEditText.addTextChangedListener(checkField(userNameInputEditText, emailInputEditText, passwordInputEditText))
-        passwordInputEditText.addTextChangedListener(checkField(userNameInputEditText, emailInputEditText, passwordInputEditText))
+        handleRegisterInput(userNameInputEditText, emailInputEditText, passwordInputEditText)
+        emailInputEditText.addTextChangedListener(
+            checkField(
+                userNameInputEditText,
+                emailInputEditText,
+                passwordInputEditText
+            )
+        )
+        userNameInputEditText.addTextChangedListener(
+            checkField(
+                userNameInputEditText,
+                emailInputEditText,
+                passwordInputEditText
+            )
+        )
+        passwordInputEditText.addTextChangedListener(
+            checkField(
+                userNameInputEditText,
+                emailInputEditText,
+                passwordInputEditText
+            )
+        )
 
 
-        registrasiViewModel.message.observe(this){message ->
+        registrasiViewModel.message.observe(this) { message ->
             showSuccessMessage(message)
-            CoroutineScope(Dispatchers.Main).launch{
+            CoroutineScope(Dispatchers.Main).launch {
                 delay(3000)
                 val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                 startActivity(intent)
@@ -81,15 +95,13 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
 
-        registrasiViewModel.errorMessage.observe(this){ error ->
-           showErrorMessage(error)
+        registrasiViewModel.errorMessage.observe(this) { error ->
+            showErrorMessage(error)
 
         }
 
         intent.data = null
     }
-
-
 
     private fun showSuccessMessage(message: String) {
         val rootView = findViewById<View>(android.R.id.content)
@@ -97,8 +109,7 @@ class RegisterActivity : AppCompatActivity() {
         snackbar.setBackgroundTint(ContextCompat.getColor(this, R.color.greenColor))
         snackbar.show()
     }
-
-    private fun showErrorMessage(message:String) {
+    private fun showErrorMessage(message: String) {
         val rootView = findViewById<View>(android.R.id.content)
         val snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_SHORT)
         snackbar.setBackgroundTint(ContextCompat.getColor(this, R.color.redColor))
@@ -106,19 +117,19 @@ class RegisterActivity : AppCompatActivity() {
     }
 
 
-    private fun checkField(usernameEditText: TextInputEditText, emailEditText: TextInputEditText, passwordEditText: TextInputEditText) : TextWatcher{
-        return object : TextWatcher{
+    private fun checkField(
+        usernameEditText: TextInputEditText,
+        emailEditText: TextInputEditText,
+        passwordEditText: TextInputEditText
+    ): TextWatcher {
+        return object : TextWatcher {
             override fun beforeTextChanged(
                 s: CharSequence?,
                 start: Int,
                 count: Int,
                 after: Int
             ) {
-//                checkField(usernameEditText, emailEditText, passwordEditText)
-//                btnNextRegister.isEnabled = false
-
             }
-
             override fun onTextChanged(
                 s: CharSequence?,
                 start: Int,
@@ -126,7 +137,6 @@ class RegisterActivity : AppCompatActivity() {
                 count: Int
             ) {
             }
-
             override fun afterTextChanged(s: Editable?) {
                 handleRegisterInput(usernameEditText, emailEditText, passwordEditText)
 
@@ -152,14 +162,8 @@ class RegisterActivity : AppCompatActivity() {
             if (isValidEmail(email)) {
                 // Email valid, hilangkan pesan kesalahan jika ada
                 emailInputTextLayout.isErrorEnabled = false
-
-                // Lakukan proses registrasi, bisa dihubungkan dengan ViewModel atau logika lainnya
-//                registrasiViewModel.register(username, email, password, "")
-
                 // Lanjut ke halaman berikutnya (RegisterPhonectivity)
-
-                val phoneNumber = registrasiViewModel.phone_number
-                registrasiViewModel.register(username, email, password, phoneNumber)
+                registrasiViewModel.register(username, email, password)
 
             } else {
                 // Email tidak valid, tampilkan pesan error
@@ -173,7 +177,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun isValidEmail(email: String): Boolean {
-       val pattern = Patterns.EMAIL_ADDRESS
+        val pattern = Patterns.EMAIL_ADDRESS
         return pattern.matcher(email).matches()
     }
 

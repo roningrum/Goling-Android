@@ -43,7 +43,7 @@ object OrderRequestMapper {
         // Additional Details
         partMap["glassware"] = orderRequest.additionalDetails.glassware.toPart()
         partMap["isGuarantee"] = orderRequest.additionalDetails.isGuaranteed.toPart()
-
+        partMap["orderTypeId"] = orderRequest.additionalDetails.orderTypeId.toPart()
         return partMap
     }
 }
