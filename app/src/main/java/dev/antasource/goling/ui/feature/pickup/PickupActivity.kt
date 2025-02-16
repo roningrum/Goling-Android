@@ -49,7 +49,6 @@ class PickupActivity : AppCompatActivity() {
     private lateinit var dataDestinationReceipt: DestinationReceipt
     private var path = ""
     private var itemPrice = 0
-    private var balance = 0
 
     private lateinit var packageDetails: PackageDetails
 
