@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="16dp">
 
     <!-- Timeline Indicator -->
     <LinearLayout
-        android:layout_width="40dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <!-- Circle Indicator -->
         <View
             android:id="@+id/circleIndicator"
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:background="@drawable/circle_background"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:background="@drawable/circle_background" />
 
         <!-- Line -->
         <View
             android:id="@+id/lineIndicator"
             android:layout_width="2dp"
             android:layout_height="match_parent"
-            android:background="@color/yellow"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:background="@color/yellow" />
     </LinearLayout>
 
     <!-- Timeline Content -->
@@ -42,17 +42,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/order_placed"
+            android:textColor="@color/gold"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/gold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvDateTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/_9_februari_2025_04_43pm"
-            android:textSize="14sp"
-            android:textColor="@color/grayColor"/>
+            android:textColor="@color/grayColor"
+            android:textSize="14sp" />
 
     </LinearLayout>
 </LinearLayout>

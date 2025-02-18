@@ -3,7 +3,7 @@ package dev.antasource.goling.util
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKeys
+import androidx.security.crypto.MasterKey
 import com.google.gson.Gson
 import dev.antasource.goling.data.model.country.LocationDeliver
 
@@ -11,20 +11,31 @@ object SharedPrefUtil {
 
     private const val PREF_FILE_NAME = "secure_prefs"
 
-    private val mainAliasKey by lazy {
-        val ketParameterSpec = MasterKeys.AES256_GCM_SPEC
-        MasterKeys.getOrCreate(ketParameterSpec)
-
+    private fun getMasterKey(context: Context): MasterKey {
+        return MasterKey.Builder(context)
+            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+            .build()
     }
 
     private fun getSharedPref(context: Context): SharedPreferences {
-        return EncryptedSharedPreferences.create(
-            PREF_FILE_NAME,
-            mainAliasKey,
-            context,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
+        return try {
+            EncryptedSharedPreferences.create(
+                context,
+                PREF_FILE_NAME,
+                getMasterKey(context),
+                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+            )
+        } catch (e: Exception) {
+            context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE).edit().clear().apply()
+            EncryptedSharedPreferences.create(
+                context,
+                PREF_FILE_NAME,
+                getMasterKey(context),
+                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+            )
+        }
     }
 
     fun saveAccessToken(context: Context, token: String) {
@@ -74,6 +85,7 @@ object SharedPrefUtil {
             null
         }
     }
+
     fun clearLocation(context: Context) {
         val editor = getSharedPref(context).edit()
         editor.remove("destinate_loc")
@@ -81,8 +93,10 @@ object SharedPrefUtil {
         editor.apply()
     }
 
-    fun clear(context: Context) {
-        val editor = getSharedPref(context).edit()
-        editor.clear()
+    fun clearAccessToken(context: Context) {
+        val sharedPreferences = getSharedPref(context)
+        val editor = sharedPreferences.edit()
+        editor.remove("token")
+        editor.apply()
     }
 }

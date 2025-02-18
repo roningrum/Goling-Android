@@ -43,9 +43,8 @@ class RegisterPhonectivity : AppCompatActivity() {
         btnRegister.setOnClickListener{
             val phoneNumber = phoneNumberEditText.text.toString().trim()
             Log.d("Phone Number", "Number $phoneNumber")
-//            registrasiViewModel.phoneNumber = phoneNumber
-
             val intent = Intent(this, RegisterActivity::class.java)
+            intent.putExtra("PHONE_NUMBER", phoneNumber)
             startActivity(intent)
             finish()
         }

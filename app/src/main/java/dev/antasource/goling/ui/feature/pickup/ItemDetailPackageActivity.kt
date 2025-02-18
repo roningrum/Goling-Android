@@ -9,6 +9,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -36,7 +37,7 @@ class ItemDetailPackageActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityItemDetailPackageBinding
     private lateinit var cameraActivityLauncher: ActivityResultLauncher<Intent>
-    private val pickupViewModel: PickupViewModel by viewModels(){
+    private val pickupViewModel: PickupViewModel by viewModels() {
         val data = NetworkRemoteSource()
         val repo = ShippingRepository(data)
         ShippingViewModelFactory(repo)
@@ -59,7 +60,7 @@ class ItemDetailPackageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityItemDetailPackageBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        enableEdgeToEdge()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -67,7 +68,6 @@ class ItemDetailPackageActivity : AppCompatActivity() {
         }
         showProductType()
         checkFilledForm()
-
         setupTextWatchers()
 
         cameraActivityLauncher = registerForActivityResult(
@@ -82,11 +82,11 @@ class ItemDetailPackageActivity : AppCompatActivity() {
             }
         }
 
-        binding.layoutItemDetailPackage.buttonCheckedInsurance.setOnCheckedChangeListener{ v, isChecked ->
+        binding.layoutItemDetailPackage.buttonCheckedInsurance.setOnCheckedChangeListener { v, isChecked ->
             isAssurance = isChecked
         }
 
-        binding.layoutItemDetailPackage.buttonCheckedGlassware.setOnCheckedChangeListener{ v, isChecked ->
+        binding.layoutItemDetailPackage.buttonCheckedGlassware.setOnCheckedChangeListener { v, isChecked ->
             isGlassWare = isChecked
         }
 
@@ -95,7 +95,7 @@ class ItemDetailPackageActivity : AppCompatActivity() {
             cameraActivityLauncher.launch(intent)
         }
 
-        binding.layoutItemDetailPackage.buttonSavePackageInfo.setOnClickListener{
+        binding.layoutItemDetailPackage.buttonSavePackageInfo.setOnClickListener {
             directToPickupForm()
         }
     }
@@ -128,9 +128,9 @@ class ItemDetailPackageActivity : AppCompatActivity() {
         length = if (lengthText.isBlank()) 0 else lengthText.toInt()
         height = if (heightText.isBlank()) 0 else heightText.toInt()
 
-        val isFilled = weight != 0  && width !=0 && length != 0 && height != 0
+        val isFilled = weight != 0 && width != 0 && length != 0 && height != 0
 
-        binding.layoutItemDetailPackage.buttonSavePackageInfo.apply{
+        binding.layoutItemDetailPackage.buttonSavePackageInfo.apply {
             isEnabled = isFilled
             setBackgroundColor(
                 ContextCompat.getColor(
@@ -159,27 +159,44 @@ class ItemDetailPackageActivity : AppCompatActivity() {
                     text = product.name
                     isCheckable = true
                     tag = product.id
-
-                    chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.backgroundColor))
-                    chipStrokeColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.grayColor))
+                    chipBackgroundColor = ColorStateList.valueOf(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.backgroundColor
+                        )
+                    )
+                    chipStrokeColor =
+                        ColorStateList.valueOf(ContextCompat.getColor(context, R.color.grayColor))
                     chipStrokeWidth = 1f
 
-
                     setOnClickListener {
-                        // Update status pemilihan chip
                         if (isChecked) {
-                            chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.darkBlue))
+                            chipBackgroundColor = ColorStateList.valueOf(
+                                ContextCompat.getColor(
+                                    context,
+                                    R.color.darkBlue
+                                )
+                            )
                             setTextColor(ContextCompat.getColor(context, R.color.white))
                         } else {
-                            chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.backgroundColor))
-                            chipStrokeColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.grayColor))
+                            chipBackgroundColor = ColorStateList.valueOf(
+                                ContextCompat.getColor(
+                                    context,
+                                    R.color.backgroundColor
+                                )
+                            )
+                            chipStrokeColor = ColorStateList.valueOf(
+                                ContextCompat.getColor(
+                                    context,
+                                    R.color.grayColor
+                                )
+                            )
                             chipStrokeWidth = 1f
                         }
 
                         productTypeId = tag as Int
                         productTypeName = text as String
 
-                        // Reset status chip lainnya
                         binding.layoutItemDetailPackage.chipGroup.children.forEach { child ->
                             if (child is Chip && child != this) {
                                 child.isChecked = false
@@ -196,13 +213,43 @@ class ItemDetailPackageActivity : AppCompatActivity() {
                 val othersChip = Chip(this).apply {
                     text = "Lainnya"
                     isCheckable = true
-                    chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.backgroundColor))
-                    chipStrokeColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.grayColor))
+                    chipBackgroundColor = ColorStateList.valueOf(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.backgroundColor
+                        )
+                    )
+                    chipStrokeColor =
+                        ColorStateList.valueOf(ContextCompat.getColor(context, R.color.grayColor))
                     chipStrokeWidth = 1f
                 }
 
                 othersChip.setOnClickListener {
-                    showOtherFilterDialog(remainingChips, othersChip)
+                    showOtherFilterDialog(remainingChips, othersChip){ isOtherSelected ->
+                        if(isOtherSelected){
+                            othersChip.chipBackgroundColor = ColorStateList.valueOf(
+                                ContextCompat.getColor(
+                                    this,
+                                    R.color.darkBlue
+                                )
+                            )
+                            othersChip.setTextColor(ContextCompat.getColor( this, R.color.white))
+                        } else {
+                            othersChip.chipBackgroundColor = ColorStateList.valueOf(
+                                ContextCompat.getColor(
+                                    this,
+                                    R.color.backgroundColor
+                                )
+                            )
+                            othersChip.chipStrokeColor = ColorStateList.valueOf(
+                                ContextCompat.getColor(
+                                   this,
+                                    R.color.grayColor
+                                )
+                            )
+                            othersChip.chipStrokeWidth = 1f
+                        }
+                    }
                 }
 
                 binding.layoutItemDetailPackage.chipGroup.addView(othersChip)
@@ -211,24 +258,26 @@ class ItemDetailPackageActivity : AppCompatActivity() {
         pickupViewModel.getProductType()
     }
 
-    private fun showOtherFilterDialog(types: List<ProductType>, othersChips: Chip) {
+    private fun showOtherFilterDialog(types: List<ProductType>, othersChips: Chip,  onOtherSelected: (Boolean) -> Unit ) {
         val bottomSheetDialog = BottomSheetDialog(this)
         val view = FilterOtherBottomBinding.inflate(layoutInflater)
 
-        types.forEach { product->
+        types.forEach { product ->
             val chip = Chip(this).apply {
                 text = product.name
                 isCheckable = true
-                chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.backgroundColor))
-                chipStrokeColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.grayColor))
+                chipBackgroundColor =
+                    ColorStateList.valueOf(ContextCompat.getColor(context, R.color.backgroundColor))
+                chipStrokeColor =
+                    ColorStateList.valueOf(ContextCompat.getColor(context, R.color.grayColor))
                 chipStrokeWidth = 1f
 
-                setOnClickListener{
-                    othersChips.text =product.name
+                setOnClickListener {
+                    othersChips.text = product.name
                     othersChips.isChecked = true
                     othersChips.tag = product.id
-
-                    chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.darkBlue))
+                    chipBackgroundColor =
+                        ColorStateList.valueOf(ContextCompat.getColor(context, R.color.darkBlue))
                     setTextColor(ContextCompat.getColor(context, R.color.white))
 
                     binding.layoutItemDetailPackage.chipGroup.children.forEach { child ->
@@ -240,10 +289,12 @@ class ItemDetailPackageActivity : AppCompatActivity() {
                     }
                     productTypeId = othersChips.tag as Int
                     productTypeName = othersChips.text.toString()
+                    onOtherSelected(true)
                     bottomSheetDialog.dismiss()
                 }
             }
-            view.otherChipGroup.addView(chip
+            view.otherChipGroup.addView(
+                chip
             )
         }
         bottomSheetDialog.setContentView(view.root)
@@ -252,28 +303,29 @@ class ItemDetailPackageActivity : AppCompatActivity() {
 
     private fun displayImage(uri: Uri) {
         path = uri.path.toString()
-        Log.d("Uri Paths", "Paths Foto ${uri.path}")
-        Log.d("Size File", "Size ${File(path).length()}")
-        binding.layoutItemDetailPackage.imgPhotoCamera.visibility = View.GONE // Hide the camera icon
+        binding.layoutItemDetailPackage.imgPhotoCamera.visibility =
+            View.GONE // Hide the camera icon
         binding.layoutItemDetailPackage.imgPreview.setImageURI(uri) // Set the image URI to the ImageView
-        binding.layoutItemDetailPackage.imgPreview.visibility = View.VISIBLE // Make sure the preview is visible
+        binding.layoutItemDetailPackage.imgPreview.visibility =
+            View.VISIBLE // Make sure the preview is visible
     }
 
     private fun directToPickupForm() {
-       val packageInfo = PackageDetails(
-           height = height.toFloat(),
-           width = width.toFloat(),
-           length = length.toFloat(),
-           weight = weight.toFloat(),
-           productType = productTypeId
-       )
+        val packageInfo = PackageDetails(
+            height = height.toFloat(),
+            width = width.toFloat(),
+            length = length.toFloat(),
+            weight = weight.toFloat(),
+            productType = productTypeId
+        )
         val additionalDetails = AdditionalDetails(
             glassware = isGlassWare,
             isGuaranteed = isAssurance
         )
 
         val uriPath = path
-
+        Log.d("GlassWare Value","Nilai $isGlassWare")
+        Log.d("isGuarantee Value","Nilai $isAssurance")
         val intent = Intent(this, PickupActivity::class.java)
         intent.putExtra("path", uriPath)
         intent.putExtra("productTypeName", productTypeName)
@@ -300,8 +352,6 @@ class ItemDetailPackageActivity : AppCompatActivity() {
         }
         return null
     }
-
-
 
 
 }

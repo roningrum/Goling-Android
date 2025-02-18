@@ -11,6 +11,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import dev.antasource.goling.R
 import dev.antasource.goling.data.networksource.NetworkRemoteSource
 import dev.antasource.goling.data.repositoty.TopUpRepository
@@ -20,6 +21,9 @@ import dev.antasource.goling.ui.feature.topup.adapter.ChipAmountAdapter
 import dev.antasource.goling.ui.feature.topup.viewmodel.TopupViewModel
 import dev.antasource.goling.util.SharedPrefUtil
 import dev.antasource.goling.util.Util
+import java.text.DecimalFormat
+import java.text.NumberFormat
+import java.util.Locale
 
 class TopUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTopUpBinding
@@ -36,11 +40,10 @@ class TopUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityTopUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         enableEdgeToEdge()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top+24, systemBars.right, 0)
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
@@ -63,50 +66,51 @@ class TopUpActivity : AppCompatActivity() {
 
         }
         val chipAmount = listOf("100000", "200000","300000", "350000", "400000", "500000", "1000000")
-        binding.gridAmountChip.adapter = ChipAmountAdapter(this, chipAmount) { chipText ->
-            // Ketika chip dipilih, tampilkan nominal dan aktifkan tombol
+        binding.gridAmountChip.layoutManager = GridLayoutManager(this, 2)
+        val adapter = ChipAmountAdapter(this, chipAmount) { chipText ->
             isAmountSelected = true
             val nominal = Util.formatCurrency(chipText.toInt())
             binding.amountEditText.setText(nominal)
             binding.amountEditText.setSelection(nominal.length)
         }
 
-
+        binding.gridAmountChip.adapter = adapter
         binding.amountEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Memberitahu bahwa pengguna mengetik
-                isUserTyping = true
-//                checkEnableButton()  // Periksa status tombol ketika teks berubah
-            }
+            private var isEditing = false
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Tidak perlu melakukan apa-apa di sini
-            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                try {
-                    val nominalText = s.toString().replace(",", "").toInt()
-                    if(true){
-                        binding.amountEditText.removeTextChangedListener(this)  // Hentikan TextWatcher untuk mencegah loop
-                        binding.amountEditText.setText(Util.formatCurrency(nominalText))  // Format ulang
-                        binding.amountEditText.setSelection(binding.amountEditText.text?.length ?: 0)
-                        binding.amountEditText.addTextChangedListener(this)  // Aktifkan kembali TextWatcher
-                    }
-                    topupViewModel.amount = nominalText
+                if (isEditing || s.isNullOrEmpty()) return
 
+                isEditing = true
+
+                try {
+                    val cleanText = s.toString().replace("[^\\d]".toRegex(), "") // Hanya ambil angka
+                    val nominalValue = cleanText.toIntOrNull() ?: 0
+
+                    val formattedText = NumberFormat.getInstance(
+                        Locale.getDefault()).format(nominalValue)
+
+                    if (s.toString() != formattedText) {
+                        binding.amountEditText.setText(formattedText)
+                        binding.amountEditText.setSelection(formattedText.length) // Set kursor di akhir teks
+                    }
+
+                    topupViewModel.amount = nominalValue
                 } catch (e: NumberFormatException) {
-                    // Tangani jika input tidak valid
                     Log.e("TopUpActivity", "Invalid number format", e)
                 }
-//                checkEnableButton()  // Periksa status tombol ketika input manual
+
+                isEditing = false
             }
         })
 
         binding.btnTopUpConfirm.setOnClickListener{
             topupViewModel.topUpAmountWallet()
         }
-
-
     }
 }
 

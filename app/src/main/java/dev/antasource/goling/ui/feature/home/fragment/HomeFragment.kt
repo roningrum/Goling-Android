@@ -47,7 +47,7 @@ class HomeFragment : Fragment() {
         val estimateMenu = binding.layoutHome.layoutGolingMenu.checkPostageMenu
         val pickupMenu = binding.layoutHome.layoutGolingMenu.pickupMenu
 
-        val token = SharedPrefUtil.getAccessToken(view.context).toString()
+        val token = SharedPrefUtil.getAccessToken(requireActivity()).toString()
 
         if(token.isEmpty()){
             val intent = Intent(requireActivity(), LoginActivity::class.java)

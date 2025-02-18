@@ -11,7 +11,7 @@ import com.journeyapps.barcodescanner.BarcodeEncoder
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
-import java.text.DecimalFormat
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -19,7 +19,7 @@ import java.util.TimeZone
 
 object Util {
     fun formatCurrency(amount: Int): String {
-        val formatter = DecimalFormat("#,###")
+        val formatter = NumberFormat.getNumberInstance(Locale.getDefault()) // Menggunakan locale perangkat
         return formatter.format(amount)
     }
 

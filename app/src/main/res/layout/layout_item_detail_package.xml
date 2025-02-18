@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,10 +57,11 @@
 
             <CheckBox
                 android:id="@+id/button_checked_glassware"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:buttonTint="@color/darkBlue"
+                app:buttonTint="@color/darkBlue"
+                app:buttonIconTint= "@color/white"
                 android:textAppearance="@style/Theme.GolingAndroid.InputText"
                 android:text="Mudah pecah" />
 
@@ -159,7 +160,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
                 android:fontFamily="@font/rubik_bold"
-                android:text="Ukuran Paket"
+                android:text="Foto Paket"
                 android:textSize="14sp" />
 
             <TextView
@@ -171,46 +172,50 @@
                 android:text="Foto Barang Yang akan dikirim"
                 android:textSize="12sp" />
 
-            <RelativeLayout
+            <FrameLayout
+                android:id="@+id/capture_packet_form"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/bg_form_upload_photo">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
 
-                <ImageView
-                    android:id="@+id/img_photo_camera"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/baseline_camera_alt_24"
-                    android:layout_centerInParent="true"
-                    />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="155dp"
+                    android:background="@drawable/bg_form_upload_photo">
+                    <ImageView
+                        android:id="@+id/img_photo_camera"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/baseline_camera_alt_24"
+                        android:layout_centerInParent="true"
+                        />
+                </RelativeLayout>
 
                 <ImageView
                     android:id="@+id/img_preview"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:layout_centerInParent="true"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/preview_camera"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
                     />
-
-            </RelativeLayout>
-
+            </FrameLayout>
             <CheckBox
                 android:id="@+id/button_checked_insurance"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:buttonTint="@color/darkBlue"
+                app:buttonTint="@color/darkBlue"
+                app:buttonIconTint= "@color/white"
                 android:textAppearance="@style/Theme.GolingAndroid.InputText"
                 android:text="Asuransi (opsional)" />
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_save_package_info"
                 style="@style/Widget.Material3.Button"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 app:cornerRadius="8dp"
-                android:backgroundTint="@color/darkBlue"
+                app:backgroundTint="@color/darkBlue"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:layout_marginTop="24dp"

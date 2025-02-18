@@ -42,7 +42,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        profileViewModel.token = SharedPrefUtil.getAccessToken(view.context).toString()
+        profileViewModel.token = SharedPrefUtil.getAccessToken(requireContext()).toString()
         profileViewModel.getUserProfile()
         binding.logoutButton.setOnClickListener {
             profileViewModel.logout()
@@ -62,7 +62,7 @@ class ProfileFragment : Fragment() {
                     Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                     val intent = Intent(requireActivity(), LoginActivity::class.java)
                     startActivity(intent)
-                    SharedPrefUtil.clear(view.context)
+                    SharedPrefUtil.clearAccessToken(requireContext())
                     activity?.finish()
                 }
             }

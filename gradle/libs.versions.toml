@@ -31,7 +31,7 @@ retrofit = "2.11.0"
 roomCompiler = "2.6.1"
 roomKtx = "2.6.1"
 roomRuntime = "2.6.1"
-securityCrypto = "1.0.0"
+securityCryptoVersion = "1.1.0-alpha06"
 zxingAndroidEmbeddedVersion = "4.3.0"
 
 [libraries]
@@ -42,11 +42,6 @@ androidx-camera-video = { module = "androidx.camera:camera-video", version.ref =
 androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraCoreVersion" }
 androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "cameraCoreVersion" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
-androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
-androidx-datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastorePreferences" }
-androidx-foundation = { module = "androidx.compose.foundation:foundation" }
-androidx-foundation-layout = { module = "androidx.compose.foundation:foundation-layout" }
 androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
 androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
@@ -54,7 +49,7 @@ androidx-navigation-compose = { module = "androidx.navigation:navigation-compose
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
-androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
+androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCryptoVersion" }
 androidx-ui = { module = "androidx.compose.ui:ui" }
 androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }

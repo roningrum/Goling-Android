@@ -45,10 +45,10 @@ class EstimateViewModel(private val repository: ShippingRepository) : ViewModel(
     var regenciesId = 0
     var districtId = 0
 
-    var originProvinceId = 0
+    var oriProvinceId = 0
     var originRegenciesId = 0
     var originDistrictId =0
-    var originVillageId = 0
+    var oriVillageId = 0
 
     var destinateProvinceId = 0
     var destinateRegenciesId = 0
@@ -153,10 +153,10 @@ class EstimateViewModel(private val repository: ShippingRepository) : ViewModel(
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             withContext(Dispatchers.Main) {
                 val estimateShipRequest = EstimateShipRequest(
-                    originProvinceId,
+                    oriProvinceId,
                     originRegenciesId,
                     originDistrictId,
-                    originVillageId,
+                    oriVillageId,
                     "",
                     destinateProvinceId,
                     destinateRegenciesId,

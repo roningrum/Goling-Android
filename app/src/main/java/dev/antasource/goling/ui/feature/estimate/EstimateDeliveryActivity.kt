@@ -1,32 +1,23 @@
 package dev.antasource.goling.ui.feature.estimate
 
-import android.app.ComponentCaller
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.viewModels
-import androidx.transition.Visibility
+import com.google.android.material.snackbar.Snackbar
 import dev.antasource.goling.R
-import dev.antasource.goling.data.model.country.LocationDeliver
-import dev.antasource.goling.data.model.estimate.EstimateShipRequest
 import dev.antasource.goling.data.networksource.NetworkRemoteSource
-import dev.antasource.goling.data.repositoty.HomeRepository
 import dev.antasource.goling.data.repositoty.ShippingRepository
 import dev.antasource.goling.databinding.ActivityEstimateDeliveryBinding
-import dev.antasource.goling.ui.factory.MainViewModelFactory
 import dev.antasource.goling.ui.factory.ShippingViewModelFactory
 import dev.antasource.goling.ui.feature.estimate.viewmodel.EstimateViewModel
-import dev.antasource.goling.ui.feature.home.viewmodel.HomeViewModel
-import dev.antasource.goling.ui.feature.login.LoginActivity
 import dev.antasource.goling.util.SharedPrefUtil
 import dev.antasource.goling.util.Util
 import kotlin.getValue
@@ -35,10 +26,10 @@ class EstimateDeliveryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityEstimateDeliveryBinding
 
-    var weight = 0
-    var width = 0
-    var length = 0
-    var height = 0
+    var weightText = 0
+    var widthText = 0
+    var lengthText = 0
+    var heightText = 0
 
     var originProvinceId = 0
     var originCityId = 0
@@ -63,20 +54,17 @@ class EstimateDeliveryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-
         binding = ActivityEstimateDeliveryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbarEstimateMenu)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-
+        enableEdgeToEdge()
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        setupToolbar()
 
         binding.inputOriginEditText.setOnClickListener {
             val intent = Intent(this, ChoiceLocationActivity::class.java)
@@ -89,53 +77,39 @@ class EstimateDeliveryActivity : AppCompatActivity() {
             intent.putExtra("fieldLocation", "destinate")
             startActivity(intent)
         }
-
-        binding.inputOriginEditText.setHint("Origin")
         getDataLocation()
-
         binding.buttonCheckedInsurance.setOnCheckedChangeListener { v, isChecked ->
             estimateViewModel.isGuarantee = isChecked
         }
 
+        setupButtonState()
+
         binding.buttonCheckEstimate.setOnClickListener {
+                weightText = binding.inputWeightEdit.text.toString().toInt()
+                lengthText = binding.inputLengthEdit.text.toString().toInt()
+                heightText = binding.inputHeightEdit.text.toString().toInt()
+                widthText = binding.inputWidthEdit.text.toString().toInt()
 
-            if (binding.inputWeightEdit.text.isNullOrEmpty() ||
-                binding.inputLengthEdit.text.isNullOrEmpty() ||
-                binding.inputHeightEdit.text.isNullOrEmpty() ||
-                binding.inputWidthEdit.text.isNullOrEmpty()
-            ) {
+                estimateViewModel.apply {
+                    oriProvinceId = originProvinceId
+                    originRegenciesId = originCityId
+                    originDistrictId = originDistricId
+                    oriVillageId = originVillageId
 
-                Toast.makeText(this, "Semua input harus diisi", Toast.LENGTH_SHORT).show()
+                    destinateProvinceId = destinationProvinceId
+                    destinateRegenciesId = destinationCityId
+                    destinationDistrictId = destinationDistricId
+                    destinationVillagesId = destinationVillageId
 
-            } else {
-                weight = binding.inputWeightEdit.text.toString().toInt()
-                length = binding.inputLengthEdit.text.toString().toInt()
-                height = binding.inputHeightEdit.text.toString().toInt()
-                width = binding.inputWidthEdit.text.toString().toInt()
-
-                estimateViewModel.originProvinceId = originProvinceId
-                estimateViewModel.originRegenciesId = originCityId
-                estimateViewModel.originDistrictId = originDistricId
-                estimateViewModel.originVillageId = originVillageId
-
-                estimateViewModel.destinateProvinceId = destinationProvinceId
-                estimateViewModel.destinateRegenciesId = destinationCityId
-                estimateViewModel.destinationDistrictId = destinationDistricId
-                estimateViewModel.destinationVillagesId = destinationVillageId
-
-                estimateViewModel.weight = weight
-                estimateViewModel.width = width
-                estimateViewModel.height = height
-                estimateViewModel.lenght = length
+                    weight = weightText
+                    width = widthText
+                    height = heightText
+                    lenght = lengthText
+                }
 
                 estimateViewModel.getEstimateShipping()
-
                 SharedPrefUtil.clearLocation(this)
             }
-
-            Log.d("Berat Barang", "${binding.inputWeightEdit.text.toString().toInt()}")
-        }
-
         estimateViewModel.data.observe(this) { data ->
 
             binding.cardEstimateLayout.visibility = View.VISIBLE
@@ -149,6 +123,49 @@ class EstimateDeliveryActivity : AppCompatActivity() {
             binding.totalCost.text = Util.formatCurrency(data.totalCost)
 
         }
+
+        estimateViewModel.errorMsg.observe(this){ error ->
+            showSnackbarError(error)
+        }
+    }
+
+    private fun showSnackbarError(message: String) {
+        val rootView = findViewById<View>(android.R.id.content)
+        val snackbarMsg = Snackbar.make(rootView, message, Snackbar.LENGTH_SHORT)
+        snackbarMsg.setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.redColor))
+        snackbarMsg.show()
+    }
+
+    private fun setupButtonState() {
+        val textWatcher = object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                binding.buttonCheckEstimate.isEnabled = isFormFilled()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        }
+
+        binding.inputWeightEdit.addTextChangedListener(textWatcher)
+        binding.inputLengthEdit.addTextChangedListener(textWatcher)
+        binding.inputHeightEdit.addTextChangedListener(textWatcher)
+        binding.inputWidthEdit.addTextChangedListener(textWatcher)
+
+
+        binding.inputOriginEditText.addTextChangedListener(textWatcher)
+        binding.inputDestinationEditText.addTextChangedListener(textWatcher)
+
+        // Set initial state
+        binding.buttonCheckEstimate.isEnabled = isFormFilled()
+    }
+
+    private fun isFormFilled(): Boolean {
+        return binding.inputWeightEdit.text?.isNotEmpty() == true &&
+                binding.inputLengthEdit.text?.isNotEmpty() == true &&
+                binding.inputHeightEdit.text?.isNotEmpty() == true &&
+                binding.inputWidthEdit.text?.isNotEmpty() == true &&
+                binding.inputOriginEditText.text?.isNotEmpty() == true &&
+                binding.inputDestinationEditText.text?.isNotEmpty() == true
     }
 
     private fun getDataLocation() {
@@ -190,6 +207,15 @@ class EstimateDeliveryActivity : AppCompatActivity() {
             destinationDistricId = it.districId
             destinationVillageId = it.villageId
         }
+        binding.buttonCheckEstimate.isEnabled = isFormFilled()
+    }
 
+    private fun setupToolbar() {
+        setSupportActionBar(binding.toolbarEstimateMenu)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
+        binding.toolbarEstimateMenu.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
     }
 }

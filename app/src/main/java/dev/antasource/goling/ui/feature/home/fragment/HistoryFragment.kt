@@ -39,7 +39,7 @@ class HistoryFragment : Fragment() {
 
         val listTransaction = historyBinding.layoutHistoryFragment.listHistoryShip
 
-        transactionHistoryViewModel.token = SharedPrefUtil.getAccessToken(view.context).toString()
+        transactionHistoryViewModel.token = SharedPrefUtil.getAccessToken(requireContext()).toString()
         transactionHistoryViewModel.getHistoryOrder()
 
         transactionHistoryViewModel.historyOrderList.observe(requireActivity()){ orderTransaction->

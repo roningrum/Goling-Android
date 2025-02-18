@@ -60,15 +60,16 @@ class PickupActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        enableEdgeToEdge()
         pickupBinding = ActivityPickupBinding.inflate(layoutInflater)
         setContentView(pickupBinding.root)
+
+        enableEdgeToEdge()
         ViewCompat.setOnApplyWindowInsetsListener(pickupBinding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         setupToolbar()
         setupFormNavigation()
         handleData()

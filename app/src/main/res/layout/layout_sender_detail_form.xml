@@ -24,8 +24,11 @@
             android:id="@+id/input_sender_origin_edit_text"
             style="@style/Theme.GolingAndroid.InputText"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:focusable="false"
+            android:minLines="2"
+            android:maxLines="5"
+            android:inputType="textMultiLine"
             android:focusableInTouchMode="false"
             android:hint="Lokasi Pengirim"
             android:padding="0dp" />
@@ -36,8 +39,9 @@
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        app:boxBackgroundColor="@color/white"
         app:hintEnabled="false"
+        app:helperText="alamat lengkap beserta kelurahan, kecamatan, kode pos)"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,10 +52,13 @@
             android:id="@+id/input_sender_address_edit_text"
             style="@style/Theme.GolingAndroid.InputText"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:maxLines="2"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
             android:hint="Alamat Pengirim"
-            android:padding="0dp" />
+            android:minLines="2"
+            android:maxLines="5"
+            android:gravity="top"
+            android:padding="8dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -84,8 +91,9 @@
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        app:boxBackgroundColor="@color/white"
         app:hintEnabled="false"
+        app:helperText="Pastikan nomor pengguna aktif"
         android:layout_marginTop="16dp"
         app:hintTextAppearance="@style/Theme.GolingAndroid.TextInputLayout"
         app:layout_constraintEnd_toEndOf="parent"

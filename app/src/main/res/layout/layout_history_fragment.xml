@@ -23,54 +23,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <LinearLayout
-                android:id="@+id/layout_filter"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="8dp"
-                android:weightSum="2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_search_bar"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                    app:hintEnabled="false"
-                    app:boxStrokeColor="@android:color/transparent"
-                    app:boxStrokeWidth="0dp"
-                    android:layout_weight="1.95">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:background="@android:color/transparent"
-                        android:inputType="textFilter"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/rubik_regular"
-                        android:drawableStart="@drawable/ic_search"
-                        android:hint="@string/masukkan_resi"/>
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <com.google.android.material.button.MaterialButton
-                    style="@style/Widget.Material3.Button.IconButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.05"
-                    android:padding="4dp"
-                    android:layout_marginHorizontal="8dp"
-                    app:icon="@drawable/ic_filter"
-                    app:iconTint="@color/darkBlue"
-                    app:iconSize="24dp"/>
-
-            </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list_history_ship"
                 android:layout_width="match_parent"
@@ -79,9 +31,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout_filter"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>

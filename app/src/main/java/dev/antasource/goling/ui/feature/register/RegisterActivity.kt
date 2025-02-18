@@ -59,7 +59,10 @@ class RegisterActivity : AppCompatActivity() {
         passwordInputEditText = findViewById(R.id.password_input_register)
 
         btnNextRegister = findViewById(R.id.register_button)
-        btnNextRegister.text = "Next"
+        btnNextRegister.text = "Selesai"
+
+
+        registrasiViewModel.phoneNumber = intent.getStringExtra("PHONE_NUMBER")!!
 
         handleRegisterInput(userNameInputEditText, emailInputEditText, passwordInputEditText)
         emailInputEditText.addTextChangedListener(
@@ -97,7 +100,6 @@ class RegisterActivity : AppCompatActivity() {
 
         registrasiViewModel.errorMessage.observe(this) { error ->
             showErrorMessage(error)
-
         }
 
         intent.data = null
@@ -139,9 +141,7 @@ class RegisterActivity : AppCompatActivity() {
             }
             override fun afterTextChanged(s: Editable?) {
                 handleRegisterInput(usernameEditText, emailEditText, passwordEditText)
-
             }
-
         }
     }
 

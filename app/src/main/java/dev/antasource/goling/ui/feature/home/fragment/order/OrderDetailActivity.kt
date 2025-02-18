@@ -92,15 +92,4 @@ class OrderDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun getScreenWidth(): Int {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val windowMetrics: WindowMetrics = windowManager.currentWindowMetrics
-            windowMetrics.bounds.width()
-        } else {
-            val displayMetrics = DisplayMetrics()
-            @Suppress("DEPRECATION")
-            windowManager.defaultDisplay.getMetrics(displayMetrics)
-            displayMetrics.widthPixels
-        }
-    }
 }

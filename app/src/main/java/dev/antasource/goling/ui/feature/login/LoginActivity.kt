@@ -48,7 +48,6 @@ class LoginActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         usernameAuthentication = findViewById(R.id.username_input_login)
         passAuthentication = findViewById(R.id.password_input_login)
         btnLogin = findViewById(R.id.button_login)
@@ -64,11 +63,8 @@ class LoginActivity : AppCompatActivity() {
 
         handleLoginButton(usernameAuthentication, passAuthentication)
 
-        SharedPrefUtil.clear(this)
-
         loginViewModel.accessToken.observe(this){ response ->
             CoroutineScope(Dispatchers.Main).launch{
-                delay(3000)
                 response?.let {
                     SharedPrefUtil.saveAccessToken(this@LoginActivity, response)
                     val intent = Intent(this@LoginActivity, HomeActivity::class.java)
@@ -106,16 +102,13 @@ class LoginActivity : AppCompatActivity() {
                 count: Int,
                 after: Int
             ) {
-
             }
-
             override fun onTextChanged(
                 s: CharSequence?,
                 start: Int,
                 before: Int,
                 count: Int
             ) {
-
             }
 
             override fun afterTextChanged(s: Editable?) {

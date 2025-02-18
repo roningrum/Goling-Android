@@ -4,39 +4,41 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import dev.antasource.goling.databinding.ItemChipAmountBinding
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.chip.Chip
+import dev.antasource.goling.R
+import dev.antasource.goling.util.Util.formatCurrency
 
-class ChipAmountAdapter(private val context: Context, private val chips: List<String>,  private val onChipClick: (String) -> Unit) : BaseAdapter() {
-
-    override fun getCount(): Int = chips.size
-
-    override fun getItem(position: Int): Any = chips[position]
-
-    override fun getItemId(position: Int): Long = position.toLong()
-
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val binding: ItemChipAmountBinding
-        if (convertView == null) {
-            // Inflate the view using ViewBinding
-            val inflater = LayoutInflater.from(context)
-            binding = ItemChipAmountBinding.inflate(inflater, parent, false)
-            // Set the tag to store the binding for future use
-            binding.root.tag = binding
-        } else {
-            // Retrieve the binding from the convertView tag
-            binding = convertView.tag as ItemChipAmountBinding
-        }
-
-        // Set the chip text using ViewBinding
-        binding.chipChoice1.text = buildString {
-        append("Rp. ")
-        append(chips[position])
+class ChipAmountAdapter(
+    private val context: Context,
+    private val chips: List<String>,
+    private val onChipClick: (String) -> Unit
+) : RecyclerView.Adapter<ChipAmountAdapter.ChipViewHolder>() {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ChipViewHolder {
+        val view = LayoutInflater.from(context).inflate(R.layout.item_chip_amount, parent, false)
+        return ChipViewHolder(view)
     }
-        binding.chipChoice1.setOnClickListener{
-            onChipClick(chips[position])
-        }
 
-        return binding.root
+    override fun onBindViewHolder(
+        holder: ChipViewHolder,
+        position: Int
+    ) {
+        val chipText = chips[position]
+        holder.chip.text = buildString {
+            append("Rp.")
+            append(formatCurrency(chipText.toInt()))
+        }
+        holder.chip.setOnClickListener {
+            onChipClick(chipText)
+        }
+    }
+
+    override fun getItemCount(): Int = chips.size
+
+    inner class ChipViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val chip: Chip = itemView.findViewById(R.id.chip_choice_1)
     }
 }

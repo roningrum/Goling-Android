@@ -17,406 +17,432 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Check Estimate Rate"
+        app:title="Cek Estimasi"
         app:titleCentered="true"
         app:titleTextAppearance="@style/Theme.GolingAndroid.Toolbar" />
 
-    <RelativeLayout
-        android:id="@+id/layout_estimate_form"
+    <ScrollView
+        android:id="@+id/scroll_item"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/graySecondary"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar_estimate_menu">
 
-        <LinearLayout
-            android:id="@+id/layout_package_detail_form"
+        <RelativeLayout
+            android:id="@+id/layout_estimate_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:background="@color/graySecondary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_estimate_menu">
 
             <LinearLayout
+                android:id="@+id/layout_package_detail_form"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="12dp"
-                android:paddingVertical="12dp">
+                android:orientation="vertical">
 
-                <RelativeLayout
-                    android:id="@+id/layout_destination_estimate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingVertical="12dp">
 
-                    <ImageView
-                        android:id="@+id/icon_origin_location"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:contentDescription="@string/icon_origin_estimate"
-                        android:src="@drawable/ic_origin_location" />
+                    <RelativeLayout
+                        android:id="@+id/layout_destination_estimate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/icon_origin_location"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="@string/icon_origin_estimate"
+                            android:src="@drawable/ic_origin_location" />
+
+                        <View
+                            android:id="@+id/space_between"
+                            android:layout_width="2dp"
+                            android:layout_height="48dp"
+                            android:layout_below="@id/icon_origin_location"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/line_drawable" />
+
+                        <ImageView
+                            android:id="@+id/icon_destination_location"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_below="@id/space_between"
+                            android:contentDescription="@string/icon_origin_estimate"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_destination_location" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginEnd="16dp">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/input_origin_layout"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="@color/white"
+                            app:hintEnabled="false"
+                            app:hintTextAppearance="@style/Theme.GolingAndroid.TextInputLayout">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/input_origin_edit_text"
+                                style="@style/Theme.GolingAndroid.InputText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:focusable="false"
+                                android:hint="Asal"
+                                android:focusableInTouchMode="false"
+                                android:inputType="textMultiLine"
+                                android:maxLines="5"
+                                android:minLines="2"
+                                android:padding="0dp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/input_destination_layout"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/input_origin_layout"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="@color/white"
+                            app:hintEnabled="false"
+                            app:hintTextAppearance="@style/Theme.GolingAndroid.TextInputLayout">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/input_destination_edit_text"
+                                style="@style/Theme.GolingAndroid.InputText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:hint="Tujuan"
+                                android:inputType="textMultiLine"
+                                android:maxLines="5"
+                                android:minLines="2"
+                                android:padding="0dp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/title_weight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/rubik_semibold"
+                        android:text="Berat Barang"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/subtitle_weight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/rubik_regular"
+                        android:text="Minimal berat 10kg"
+                        android:textColor="@color/secondaryColor"
+                        android:textSize="12sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/input_weight_layout"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@color/white"
+                        app:hintEnabled="false"
+                        app:hintTextAppearance="@style/Theme.GolingAndroid.TextInputLayout">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/input_weight_edit"
+                            style="@style/Theme.GolingAndroid.InputText"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:hint="Berat Barang(Kg)"
+                            android:padding="0dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/title_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/rubik_semibold"
+                        android:text="Ukuran Paket"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/subtitle_package"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/rubik_regular"
+                        android:text="Masukkan ukuran paket"
+                        android:textColor="@color/secondaryColor"
+                        android:textSize="12sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/input_size_layout"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            app:hintEnabled="false"
+                            app:hintTextAppearance="@style/Theme.GolingAndroid.TextInputLayout">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/input_length_edit"
+                                style="@style/Theme.GolingAndroid.InputText"
+                                android:layout_width="match_parent"
+                                android:layout_height="48dp"
+                                android:hint="Panjang (cm)"
+                                android:inputType="number"
+                                android:maxLines="1"
+                                android:padding="0dp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/input_width_layout"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            app:hintEnabled="false"
+                            app:hintTextAppearance="@style/Theme.GolingAndroid.TextInputLayout">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/input_width_edit"
+                                style="@style/Theme.GolingAndroid.InputText"
+                                android:layout_width="match_parent"
+                                android:layout_height="48dp"
+                                android:hint="Lebar(cm)"
+                                android:inputType="number"
+                                android:maxLines="1"
+                                android:padding="0dp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/input_height_layout"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            app:hintEnabled="false"
+                            app:hintTextAppearance="@style/Theme.GolingAndroid.TextInputLayout">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/input_height_edit"
+                                style="@style/Theme.GolingAndroid.InputText"
+                                android:layout_width="match_parent"
+                                android:layout_height="48dp"
+                                android:hint="Tinggi(cm)"
+                                android:inputType="number"
+                                android:maxLines="1"
+                                android:padding="0dp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/insurance_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/button_checked_insurance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_checked_insurance"
+                        android:textAppearance="@style/Theme.GolingAndroid.InputText"
+                        app:buttonIconTint="@color/white"
+                        app:buttonTint="@color/darkBlue" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_estimate_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_package_detail_form"
+                android:layout_marginHorizontal="8dp"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/white"
+                app:strokeColor="@color/grayBorder"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:id="@+id/layout_estimate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/estimate_title"
+                        android:textAppearance="@style/Theme.GolingAndroid.AppSubtitle"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/shipment_rate_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/shipment_fee_title" />
+
+                        <TextView
+                            android:id="@+id/shipment_cost"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/sample_shipment_fee"
+                            android:textAlignment="textEnd"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/insurance_rate_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/insurance_rate_title" />
+
+                        <TextView
+                            android:id="@+id/insurance_cost"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/sample_insurance_rate"
+                            android:textAlignment="textEnd"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
 
                     <View
-                        android:id="@+id/space_between"
-                        android:layout_width="2dp"
-                        android:layout_height="56dp"
-                        android:layout_below="@id/icon_origin_location"
-                        android:layout_centerInParent="true"
-                        android:background="@drawable/line_drawable" />
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/graySecondary" />
 
-                    <ImageView
-                        android:id="@+id/icon_destination_location"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:scaleType="centerCrop"
-                        android:layout_below="@id/space_between"
-                        android:contentDescription="@string/icon_origin_estimate"
-                        android:src="@drawable/ic_destination_location" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginEnd="16dp">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/input_origin_layout"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    <LinearLayout
+                        android:id="@+id/total_ship_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="@color/white"
-                        app:hintEnabled="false"
-                        app:hintTextAppearance="@style/Theme.GolingAndroid.TextInputLayout">
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/input_origin_edit_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="48dp"
-                            android:hint="Origin"
-                            style="@style/Theme.GolingAndroid.InputText"
-                            android:focusableInTouchMode="false"
-                            android:focusable="false"
-                            android:padding="0dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/total_shipping_title" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/input_destination_layout"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/input_origin_layout"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="@color/white"
-                        app:hintEnabled="false"
-                        app:hintTextAppearance="@style/Theme.GolingAndroid.TextInputLayout">
+                        <TextView
+                            android:id="@+id/total_cost"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/sample_total"
+                            android:textAlignment="textEnd"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/input_destination_edit_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="48dp"
-                            android:hint="Destination"
-                            style="@style/Theme.GolingAndroid.InputText"
-                            android:focusableInTouchMode="false"
-                            android:focusable="false"
-                            android:padding="0dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
 
-                </RelativeLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-            </LinearLayout>
-
-            <LinearLayout
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_check_estimate"
+                style="@style/Widget.Material3.Button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
+                android:layout_below="@id/card_estimate_layout"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="8dp"
-                android:orientation="vertical">
+                android:layout_marginTop="24dp"
+                android:backgroundTint="@color/darkBlue"
+                android:text="Check Estimate"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:cornerRadius="8dp" />
+        </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/title_weight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/rubik_semibold"
-                    android:textSize="16sp"
-                    android:text="Weight"
-                    />
-                <TextView
-                    android:id="@+id/subtitle_weight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/rubik_regular"
-                    android:textSize="12sp"
-                    android:textColor="@color/secondaryColor"
-                    android:text="Minimal weight 10kg"
-                    />
+    </ScrollView>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/input_weight_layout"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:background="@color/white"
-                    app:hintEnabled="false"
-                    app:hintTextAppearance="@style/Theme.GolingAndroid.TextInputLayout">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/input_weight_edit"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:hint="Item Weight(Kg)"
-                        style="@style/Theme.GolingAndroid.InputText"
-                        android:padding="0dp" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="8dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/title_size"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/rubik_semibold"
-                    android:textSize="16sp"
-                    android:text="Package Size"
-                    />
-
-                <TextView
-                    android:id="@+id/subtitle_package"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/rubik_regular"
-                    android:textSize="12sp"
-                    android:textColor="@color/secondaryColor"
-                    android:text="Please input your size"
-                    />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/input_size_layout"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_weight="1"
-                        android:background="@color/white"
-                        app:hintEnabled="false"
-                        app:hintTextAppearance="@style/Theme.GolingAndroid.TextInputLayout">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/input_length_edit"
-                            android:layout_width="match_parent"
-                            android:layout_height="48dp"
-                            android:hint="Lenght(cm)"
-                            style="@style/Theme.GolingAndroid.InputText"
-                            android:padding="0dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/input_width_layout"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_weight="1"
-                        android:background="@color/white"
-                        app:hintEnabled="false"
-                        app:hintTextAppearance="@style/Theme.GolingAndroid.TextInputLayout">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/input_width_edit"
-                            android:layout_width="match_parent"
-                            android:layout_height="48dp"
-                            android:hint="Width(cm)"
-                            style="@style/Theme.GolingAndroid.InputText"
-                            android:padding="0dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/input_height_layout"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_weight="1"
-                        android:background="@color/white"
-                        app:hintEnabled="false"
-                        app:hintTextAppearance="@style/Theme.GolingAndroid.TextInputLayout">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/input_height_edit"
-                            android:layout_width="match_parent"
-                            android:layout_height="48dp"
-                            android:hint="Height(cm)"
-                            style="@style/Theme.GolingAndroid.InputText"
-                            android:padding="0dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/insurance_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
-
-                <CheckBox
-                    android:id="@+id/button_checked_insurance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:buttonTint="@color/white"
-                    android:textAppearance="@style/Theme.GolingAndroid.InputText"
-                    android:text="@string/label_checked_insurance"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_estimate_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/white"
-            app:strokeColor="@color/grayBorder"
-            android:visibility="gone"
-            android:layout_marginHorizontal="8dp"
-            android:layout_below="@id/layout_package_detail_form"
-            app:strokeWidth="1dp">
-            <LinearLayout
-                android:id="@+id/layout_estimate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/Theme.GolingAndroid.AppSubtitle"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:text="@string/estimate_title"/>
-
-                <LinearLayout
-                    android:id="@+id/shipment_rate_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/shipment_fee_title"/>
-
-                    <TextView
-                        android:id="@+id/shipment_cost"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textAlignment="textEnd"
-                        android:textStyle="bold"
-                        android:textSize="14sp"
-                        android:text="@string/sample_shipment_fee"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/insurance_rate_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/insurance_rate_title"/>
-
-                    <TextView
-                        android:id="@+id/insurance_cost"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textAlignment="textEnd"
-                        android:textStyle="bold"
-                        android:textSize="14sp"
-                        android:text="@string/sample_insurance_rate"/>
-
-                </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@color/graySecondary"/>
-
-                <LinearLayout
-                    android:id="@+id/total_ship_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/total_shipping_title"/>
-
-                    <TextView
-                        android:id="@+id/total_cost"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textAlignment="textEnd"
-                        android:textStyle="bold"
-                        android:textSize="14sp"
-                        android:text="@string/sample_total"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_check_estimate"
-            style="@style/Widget.Material3.Button"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            app:cornerRadius="8dp"
-            android:backgroundTint="@color/darkBlue"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:layout_marginTop="24dp"
-            android:layout_marginHorizontal="16dp"
-            android:text="Check Estimate"
-            android:layout_below="@id/card_estimate_layout"/>
-    </RelativeLayout>
 
 
 

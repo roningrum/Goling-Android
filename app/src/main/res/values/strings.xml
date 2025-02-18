@@ -61,11 +61,12 @@
     <string name="shipment_fee_title">Shipment Fee</string>
     <string name="insurance_rate_title">Insurance Rate</string>
     <string name="total_shipping_title">Total Shipping</string>
-    <string name="label_checked_insurance">Include Insurance Delivery</string>
+    <string name="label_checked_insurance">Termasuk Asuransi</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="detail_pengirim">Detail Pengirim</string>
     <string name="_9_februari_2025_04_43pm">9 Februari 2025 04:43PM</string>
     <string name="order_placed">Order Placed</string>
     <string name="selasa_2_februari_2025">Selasa, 2 Februari 2025</string>
     <string name="barcodeimage">barcodeImage</string>
+    <string name="preview_camera">Preview Camera</string>
 </resources>
