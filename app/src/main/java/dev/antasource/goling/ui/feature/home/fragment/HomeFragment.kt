@@ -5,8 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.google.android.material.snackbar.Snackbar
 import dev.antasource.goling.data.networksource.NetworkRemoteSource
 import dev.antasource.goling.data.repositoty.HomeRepository
 import dev.antasource.goling.databinding.FragmentHomeBinding
@@ -22,7 +25,6 @@ import dev.antasource.goling.ui.feature.login.LoginActivity
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-
     private var isBalanceVisible = false
 
     private val homeViewModel by viewModels<HomeViewModel>() {
@@ -86,11 +88,14 @@ class HomeFragment : Fragment() {
             nameUser.text = data.users.username
         }
         homeViewModel.errorMsg.observe(requireActivity()) { error ->
-            binding.layoutHome.layoutHomeWallet.amountNominalTxt.text = Util.formatCurrency(0)
-            if(error.contains("Expired")){
+            if(error.contains("expired")){
+                SharedPrefUtil.clearAccessToken(requireContext())
+                Toast.makeText(requireContext(), "Sesi berakhir", Toast.LENGTH_SHORT).show()
                 val intent = Intent(requireActivity(), LoginActivity::class.java)
                 startActivity(intent)
                 activity?.finish()
+            }else{
+                binding.layoutHome.layoutHomeWallet.amountNominalTxt.text = Util.formatCurrency(0)
             }
 
         }
@@ -110,3 +115,4 @@ class HomeFragment : Fragment() {
         }
     }
 }
+

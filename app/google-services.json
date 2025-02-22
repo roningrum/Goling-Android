@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "259716862423",
+    "project_id": "goling-b1388",
+    "storage_bucket": "goling-b1388.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:259716862423:android:67ca8c3dd2163f87bcbb92",
+        "android_client_info": {
+          "package_name": "dev.antasource.goling"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "259716862423-9r8p0keotsokskf2em9mr08j7b475d31.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSvi5DjvaNou6JdrgwC0mXzxfbRsjlMJs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "259716862423-9r8p0keotsokskf2em9mr08j7b475d31.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

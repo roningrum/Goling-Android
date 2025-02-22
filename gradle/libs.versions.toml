@@ -8,6 +8,7 @@ compressorVersion = "3.0.1"
 converterGson = "2.11.0"
 coreSplashscreen = "1.0.1"
 datastorePreferences = "1.1.2"
+firebaseBomVersion = "33.9.0"
 fragmentKtx = "1.8.6"
 kotlin = "2.1.0"
 coreKtx = "1.15.0"
@@ -55,6 +56,10 @@ androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }
 compressor = { module = "id.zelory:compressor", version.ref = "compressorVersion" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBomVersion" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+firebase-inappmessaging-display = { module = "com.google.firebase:firebase-inappmessaging-display" }
 google-accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPagerVersion" }
 google-accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

@@ -45,6 +45,13 @@ object SharedPrefUtil {
         editor.apply()
     }
 
+    fun saveSessionLogin(context: Context, isLogin: Boolean){
+        val sharedPreferences = getSharedPref(context)
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("is_login", isLogin)
+        editor.apply()
+    }
+
     fun saveOriginDataPrefs(context: Context, locationDeliver: LocationDeliver) {
         val sharedPreferences = getSharedPref(context)
         val editor = sharedPreferences.edit()
@@ -64,6 +71,7 @@ object SharedPrefUtil {
     }
 
     fun getAccessToken(context: Context) = getSharedPref(context).getString("token", "tokenku")
+    fun getSessionLogin(context: Context) = getSharedPref(context).getBoolean("is_login", false)
     fun getLastOriginLocation(context: Context): LocationDeliver? {
         val sharedPreferences = getSharedPref(context)
         val gson = Gson()
@@ -97,6 +105,8 @@ object SharedPrefUtil {
         val sharedPreferences = getSharedPref(context)
         val editor = sharedPreferences.edit()
         editor.remove("token")
+        editor.remove("is_login")
         editor.apply()
     }
+
 }

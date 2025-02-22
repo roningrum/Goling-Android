@@ -1,9 +1,14 @@
 package dev.antasource.goling.data.networksource
 
 import android.util.Log
+import com.google.gson.Gson
+import dev.antasource.goling.data.model.ErrorMessage
 import dev.antasource.goling.data.model.ForgotPassRequest
+import dev.antasource.goling.data.model.ForgotPassResponse
 import dev.antasource.goling.data.model.LoginRequest
+import dev.antasource.goling.data.model.LoginResponse
 import dev.antasource.goling.data.model.RegisterRequest
+import dev.antasource.goling.data.model.RegisterResponse
 import dev.antasource.goling.data.model.TopUpRequest
 import dev.antasource.goling.data.model.estimate.EstimateShipRequest
 import dev.antasource.goling.data.model.history.OrdersResponse
@@ -12,12 +17,60 @@ import dev.antasource.goling.data.model.pickup.request.OrderRequestMapper.toPart
 import dev.antasource.goling.data.model.pickup.response.OrderDetailResponse
 import dev.antasource.goling.data.model.pickup.response.OrderResponse
 import dev.antasource.goling.data.networksource.NetworkUtil.apiService
+import kotlinx.coroutines.flow.Flow
+import okio.IOException
 import retrofit2.Response
 
-class NetworkRemoteSource() {
-    suspend fun getLoginResponse(login: LoginRequest) = apiService.loginService(login)
-    suspend fun getRegisterResponse(register: RegisterRequest) = apiService.registerService(register)
-    suspend fun resetPassResponse(forgotPassRequest: ForgotPassRequest) = apiService.resetPassword(forgotPassRequest)
+class NetworkRemoteSource{
+    suspend fun postLogin(login: LoginRequest): ApiResult<LoginResponse> {
+       val response = apiService.loginService(login)
+        if(response.isSuccessful){
+            val data = response.body()
+            return ApiResult.Success(data)
+        } else{
+            try {
+                val gson = Gson()
+                val error = gson.fromJson(response.errorBody()?.string(), ErrorMessage::class.java)
+                return ApiResult.Error(error.message)
+            } catch (e: IOException) {
+                return ApiResult.Error("${e.message}")
+            }
+            return ApiResult.Error("Unknown Error")
+        }
+    }
+
+    suspend fun postRegisterUser(register: RegisterRequest) : ApiResult<RegisterResponse>{
+        val response = apiService.registerService(register)
+        if(response.isSuccessful){
+            val data = response.body()
+            return ApiResult.Success(data)
+        } else{
+            try {
+                val gson = Gson()
+                val error = gson.fromJson(response.errorBody()?.string(), ErrorMessage::class.java)
+                return ApiResult.Error(error.message)
+            } catch (e: IOException) {
+                return ApiResult.Error("${e.message}")
+            }
+            return ApiResult.Error("Unknown Error")
+        }
+    }
+    suspend fun postResetPassword(forgotPassRequest: ForgotPassRequest) : ApiResult<ForgotPassResponse>{
+        val response = apiService.resetPassword(forgotPassRequest)
+        if(response.isSuccessful){
+            val data = response.body()
+            return ApiResult.Success(data)
+        } else{
+            try {
+                val gson = Gson()
+                val error = gson.fromJson(response.errorBody()?.string(), ErrorMessage::class.java)
+                return ApiResult.Error(error.message)
+            } catch (e: IOException) {
+                return ApiResult.Error("${e.message}")
+            }
+            return ApiResult.Error("Unknown Error")
+        }
+    }
     suspend fun getUser(token: String)= apiService.getUser("Bearer $token")
     suspend fun topUpWallet(token: String, topUpRequest: TopUpRequest) = apiService.topUpWallet("Bearer $token", topUpRequest)
     suspend fun getBalance(token: String) = apiService.balance("Bearer $token")

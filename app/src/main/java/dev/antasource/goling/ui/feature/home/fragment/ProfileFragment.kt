@@ -53,8 +53,6 @@ class ProfileFragment : Fragment() {
             binding.txtEmailProfile.text = user.users.email
 
         }
-
-
         profileViewModel.message.observe(requireActivity()) { message ->
             CoroutineScope(Dispatchers.Main).launch {
                 delay(3000)

@@ -47,11 +47,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_title_app">
 
-        <include layout="@layout/layout_ui_register_form" />
+        <include
+            android:id="@+id/layout_ui_register_form"
+            layout="@layout/layout_ui_register_form" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/layout_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" >
+
+        <include
+            android:id="@+id/layout_ui_progress"
+            android:visibility="gone"
+            layout="@layout/layout_loading_progress_bar"/>
 
     </FrameLayout>
 
     <include
+        android:id="@+id/layout_ui_button_register"
         layout="@layout/ui_button_register_goling"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

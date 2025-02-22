@@ -1,81 +1,43 @@
 package dev.antasource.goling.ui.feature.login.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.gson.Gson
-import dev.antasource.goling.data.model.ErrorMessage
-import dev.antasource.goling.data.model.ForgotPassRequest
+import androidx.lifecycle.viewModelScope
+import dev.antasource.goling.data.model.ForgotPassResponse
 import dev.antasource.goling.data.model.LoginRequest
+import dev.antasource.goling.data.model.LoginResponse
+import dev.antasource.goling.data.networksource.ApiResult
 import dev.antasource.goling.data.repositoty.AuthenticationRepository
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import okio.IOException
 
 class LoginViewModel(private val loginRepo: AuthenticationRepository) : ViewModel() {
-    private val _accessToken = MutableLiveData<String>()
-    val accessToken: LiveData<String> = _accessToken
 
-    private val _errorMsg = MutableLiveData<String>()
-    val errorMsg: LiveData<String> = _errorMsg
+    private val _loginState = MutableStateFlow<ApiResult<LoginResponse>>(ApiResult.Loading)
+    val loginState: StateFlow<ApiResult<LoginResponse>> = _loginState
 
-    private val _message = MutableLiveData<String>()
-    val message: LiveData<String> = _message
+    private val _resetState = MutableStateFlow<ApiResult<ForgotPassResponse>>(ApiResult.Loading)
+    val resetState: StateFlow<ApiResult<ForgotPassResponse>> = _resetState
 
-    var job: Job? = null
-    val exceptionHandler = CoroutineExceptionHandler { _, throwable -> }
-
-    fun login(username: String, pass: String) {
-        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            val response =
-                loginRepo.loginProcess(LoginRequest(username = username, password = pass))
-            withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-                    _accessToken.value = response.body()?.token
-                    _message.value = response.body()?.message
-                } else {
-                    try {
-                        val gson = Gson()
-                        val error =
-                            gson.fromJson(response.errorBody()?.string(), ErrorMessage::class.java)
-                        _errorMsg.value = error.message
-                    } catch (e: IOException) {
-                        _errorMsg.value = e.message
-                    }
-                }
-
-            }
+    fun loginUser(username: String, pass: String){
+        viewModelScope.launch{
+            loginRepo.login(LoginRequest(
+                username = username,
+                password = pass
+            )).onStart { _loginState.value = ApiResult.Loading }
+                .catch { e -> _loginState.value = ApiResult.Error(e.message ?: "Unexpected Error")  }
+                .collect{ result -> _loginState.value = result}
         }
     }
 
     fun resetPass(email: String) {
-        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            withContext(Dispatchers.Main) {
-                val response = loginRepo.resetPass(ForgotPassRequest(email))
-                if (response.isSuccessful) {
-                    _message.value = response.body()?.message
-                } else {
-                    try {
-                        val gson = Gson()
-                        val error =
-                            gson.fromJson(response.errorBody()?.string(), ErrorMessage::class.java)
-                        _errorMsg.value = error.message
-                    } catch (e: IOException) {
-                        _errorMsg.value = e.message
-                    }
-                }
-            }
+        viewModelScope.launch{
+            loginRepo.resetPassword(email = email)
+                .onStart { _resetState.value = ApiResult.Loading }
+                .catch { e -> _resetState.value = ApiResult.Error(e.message ?: "Unexpected Error") }
+                .collect{ result -> _resetState.value = result}
         }
     }
-
-
-    override fun onCleared() {
-        super.onCleared()
-        job?.cancel()
-    }
-
 }

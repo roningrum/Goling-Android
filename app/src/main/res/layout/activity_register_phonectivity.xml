@@ -55,6 +55,9 @@
         android:layout_height="wrap_content"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:hint="@string/phone_input_field"
+        app:errorEnabled="true"
+        app:errorTextColor="@color/redColor"
+        app:boxStrokeErrorColor="@color/redColor"
         android:layout_marginTop="24dp"
         app:boxCornerRadiusBottomEnd="8dp"
         app:boxCornerRadiusBottomStart="8dp"
@@ -74,6 +77,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <include
+        android:id="@+id/layout_ui_register_button_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
        layout="@layout/ui_button_register_goling"

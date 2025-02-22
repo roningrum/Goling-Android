@@ -3,6 +3,9 @@ plugins {
     alias(libs.plugins.kotlin.android)
     kotlin("kapt")
     id("kotlin-parcelize")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
+
 //    alias("kotlin-kapt")
 }
 
@@ -83,6 +86,15 @@ dependencies {
 
     //compressor
     implementation (libs.compressor)
+
+    //Firebase
+    //Crashlytics
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.analytics)
+
+    //FCM
+    implementation(libs.firebase.inappmessaging.display)
 
 
     testImplementation(libs.junit)

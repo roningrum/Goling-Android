@@ -1,8 +1,11 @@
 package dev.antasource.goling.ui.feature.home
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import android.window.OnBackInvokedDispatcher
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -21,10 +24,13 @@ import dev.antasource.goling.ui.feature.home.fragment.HomeFragment
 import dev.antasource.goling.ui.feature.home.fragment.NotificationFragment
 import dev.antasource.goling.ui.feature.home.fragment.ProfileFragment
 import dev.antasource.goling.ui.feature.scan.ScanBarcodeActivity
+import dev.antasource.goling.util.SharedPrefUtil
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var bottomNav: BottomNavigationView
     private lateinit var scannerButton: FloatingActionButton
+
+    private var isLogin = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +49,9 @@ class HomeActivity : AppCompatActivity() {
         scannerButton.setOnClickListener {
             launchScreen()
         }
+
+        isLogin = SharedPrefUtil.getSessionLogin(this)
+
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home -> {
@@ -68,6 +77,29 @@ class HomeActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        if(isLogin){
+            if (Build.VERSION.SDK_INT >= 33) {
+                onBackInvokedDispatcher.registerOnBackInvokedCallback(
+                    OnBackInvokedDispatcher.PRIORITY_DEFAULT
+                ) {
+
+                    finish()
+                }
+            } else {
+                onBackPressedDispatcher.addCallback(
+                    this,
+                    object : OnBackPressedCallback(true) {
+                        override fun handleOnBackPressed() {
+                            finish()
+                        }
+                    })
+            }
+        }
+    }
+
+    override fun getOnBackInvokedDispatcher(): OnBackInvokedDispatcher {
+        return super.getOnBackInvokedDispatcher()
     }
 
     private fun showTransactionMessage() {
