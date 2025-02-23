@@ -15,18 +15,16 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
-import com.google.protobuf.Api
 import dev.antasource.goling.R
 import dev.antasource.goling.data.networksource.ApiResult
 import dev.antasource.goling.data.networksource.NetworkRemoteSource
-import dev.antasource.goling.data.repositoty.AuthenticationRepository
+import dev.antasource.goling.data.repositoty.auth.AuthenticationRepository
 import dev.antasource.goling.databinding.ActivityForgotPassLoginBinding
 import dev.antasource.goling.ui.factory.AuthViewModelFactory
 import dev.antasource.goling.ui.feature.login.viewmodel.LoginViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlin.getValue
-import kotlin.math.log
 
 class ForgotPassLoginActivity : AppCompatActivity() {
     private lateinit var btnResetEmail: MaterialButton

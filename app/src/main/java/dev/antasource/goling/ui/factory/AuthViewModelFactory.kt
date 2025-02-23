@@ -2,7 +2,7 @@ package dev.antasource.goling.ui.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import dev.antasource.goling.data.repositoty.AuthenticationRepository
+import dev.antasource.goling.data.repositoty.auth.AuthenticationRepository
 import dev.antasource.goling.ui.feature.home.viewmodel.ProfileViewModel
 import dev.antasource.goling.ui.feature.login.viewmodel.LoginViewModel
 import dev.antasource.goling.ui.feature.register.viewmodel.RegisterViewModel

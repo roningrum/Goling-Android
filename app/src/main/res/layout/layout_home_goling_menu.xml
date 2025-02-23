@@ -96,13 +96,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <RelativeLayout
                     android:id="@+id/goLing_cash_menu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="16dp">
+                    android:padding="8dp">
 
                     <ImageView
                         android:id="@+id/goling_cash_icon"
@@ -116,7 +117,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="6dp"
                         android:layout_below="@id/goling_cash_icon"
                         style="@style/Theme.GolingAndroid.AppMenu"
                         android:text="@string/bpdcash_menu"/>
@@ -126,7 +127,7 @@
                     android:id="@+id/check_postage_menu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="16dp">
+                    android:padding="8dp">
 
                     <ImageView
                         android:id="@+id/check_postage_icon"
@@ -140,17 +141,44 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="6dp"
                         android:layout_below="@id/check_postage_icon"
                         style="@style/Theme.GolingAndroid.AppMenu"
                         android:text="@string/check_postage_menu"/>
 
                 </RelativeLayout>
+
+                <RelativeLayout
+                android:id="@+id/peta_hub_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/peta_hub_icon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:contentDescription="@string/goling_cs_menu"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/ic_peta_drop_off"/>
+                <TextView
+                    android:id="@+id/peta_hub_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="6dp"
+                    android:layout_below="@id/peta_hub_icon"
+                    style="@style/Theme.GolingAndroid.AppMenu"
+                    android:text="Peta Hub"/>
+
+            </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/customer_service_menu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="16dp">
+                    android:padding="8dp">
 
                     <ImageView
                         android:id="@+id/customer_service_icon"
@@ -165,7 +193,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
                         android:textAlignment="center"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="6dp"
                         android:layout_below="@id/customer_service_icon"
                         style="@style/Theme.GolingAndroid.AppMenu"
                         android:text="@string/goling_cs_menu"/>

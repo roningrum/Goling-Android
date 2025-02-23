@@ -16,7 +16,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -34,14 +33,13 @@ import dev.antasource.goling.R
 import dev.antasource.goling.data.model.location.LocationRequest
 import dev.antasource.goling.data.networksource.ApiResult
 import dev.antasource.goling.data.networksource.NetworkRemoteSource
-import dev.antasource.goling.data.repositoty.HomeRepository
+import dev.antasource.goling.data.repositoty.HomeRepositoryRepository
 import dev.antasource.goling.ui.factory.MainViewModelFactory
 import dev.antasource.goling.ui.feature.home.fragment.HistoryFragment
 import dev.antasource.goling.ui.feature.home.fragment.HomeFragment
 import dev.antasource.goling.ui.feature.home.fragment.NotificationFragment
 import dev.antasource.goling.ui.feature.home.fragment.ProfileFragment
 import dev.antasource.goling.ui.feature.home.viewmodel.HomeViewModel
-import dev.antasource.goling.ui.feature.login.LoginActivity
 import dev.antasource.goling.ui.feature.scan.ScanBarcodeActivity
 import dev.antasource.goling.util.SharedPrefUtil
 import dev.antasource.goling.util.permission.PermissionUtil
@@ -57,7 +55,7 @@ class HomeActivity : AppCompatActivity() {
 
     private val homeViewModel by viewModels<HomeViewModel> {
         val dataSource = NetworkRemoteSource()
-        val repo = HomeRepository(dataSource)
+        val repo = HomeRepositoryRepository(dataSource)
         MainViewModelFactory(repo)
     }
 
@@ -171,7 +169,7 @@ class HomeActivity : AppCompatActivity() {
                 Log.e("Location", "Failed to retrieve location", exception)
             }
         lifecycleScope.launch{
-            homeViewModel.locationUpdateResponse.collectLatest { state ->
+            homeViewModel.locationUpdateResponse.collect { state ->
                 when(state){
                     is ApiResult.Loading -> {}
                     is ApiResult.Success -> {
@@ -183,39 +181,22 @@ class HomeActivity : AppCompatActivity() {
         }
 
     }
-
-
-    /**
-     * Mengarahkan pengguna ke halaman pengaturan aplikasi agar bisa mengubah permission secara manual.
-     */
     private fun openAppSettings() {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
             data = Uri.fromParts("package", packageName, null)
         }
         startActivity(intent)
     }
-
-    /**
-     * Tampilkan pesan transaksi jika ada pesan yang diteruskan melalui Intent.
-     */
     private fun showTransactionMessage() {
         intent.getStringExtra("TRANSACTION_MESSAGE")?.let { message ->
             showSnackbarSuccess(message)
         }
     }
-
-    /**
-     * Load dan tampilkan fragment yang diberikan.
-     */
     private fun loadFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.view_fragment, fragment)
             .commit()
     }
-
-    /**
-     * Meluncurkan aktivitas pemindaian barcode.
-     */
     private fun launchScreen() {
         val options = ScanOptions().apply {
             setOrientationLocked(false)
@@ -227,20 +208,12 @@ class HomeActivity : AppCompatActivity() {
         }
         barcodeLauncher.launch(options)
     }
-
-    /**
-     * Menampilkan snackbar sukses dengan pesan yang diberikan.
-     */
     private fun showSnackbarSuccess(message: String) {
         val rootView = findViewById<View>(android.R.id.content)
         Snackbar.make(rootView, message, Snackbar.LENGTH_SHORT)
             .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.greenColor))
             .show()
     }
-
-    /**
-     * Launcher untuk aktivitas pemindaian barcode.
-     */
     private val barcodeLauncher = registerForActivityResult(ScanContract()) { result: ScanIntentResult ->
         result.contents?.let { scannedResult ->
             Toast.makeText(this, "Scan Result: $scannedResult", Toast.LENGTH_SHORT).show()

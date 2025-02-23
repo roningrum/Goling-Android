@@ -19,7 +19,7 @@ import com.google.android.material.textfield.TextInputEditText
 import dev.antasource.goling.R
 import dev.antasource.goling.data.networksource.ApiResult
 import dev.antasource.goling.data.networksource.NetworkRemoteSource
-import dev.antasource.goling.data.repositoty.AuthenticationRepository
+import dev.antasource.goling.data.repositoty.auth.AuthenticationRepository
 import dev.antasource.goling.databinding.ActivityLoginBinding
 import dev.antasource.goling.ui.factory.AuthViewModelFactory
 import dev.antasource.goling.ui.feature.home.HomeActivity

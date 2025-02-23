@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import dev.antasource.goling.R
+import dev.antasource.goling.data.networksource.ApiResult
 import dev.antasource.goling.data.networksource.NetworkRemoteSource
-import dev.antasource.goling.data.repositoty.HomeRepository
+import dev.antasource.goling.data.repositoty.HomeRepositoryRepository
 import dev.antasource.goling.databinding.FragmentHomeBinding
 import dev.antasource.goling.ui.factory.MainViewModelFactory
 import dev.antasource.goling.ui.feature.estimate.EstimateDeliveryActivity
@@ -18,15 +20,17 @@ import dev.antasource.goling.ui.feature.home.viewmodel.HomeViewModel
 import dev.antasource.goling.ui.feature.login.LoginActivity
 import dev.antasource.goling.ui.feature.pickup.PickupActivity
 import dev.antasource.goling.ui.feature.topup.TopUpActivity
+import dev.antasource.goling.util.ConnectivityManagerUtil.isNetworkAvailable
 import dev.antasource.goling.util.SharedPrefUtil
 import dev.antasource.goling.util.Util
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private var isBalanceVisible = false
     private val homeViewModel by viewModels<HomeViewModel>() {
         val data = NetworkRemoteSource()
-        val repo = HomeRepository(data)
+        val repo = HomeRepositoryRepository(data)
         MainViewModelFactory(repo)
     }
 
@@ -54,30 +58,23 @@ class HomeFragment : Fragment() {
             activity?.finish()
         }
 
-        homeViewModel.getUser(token)
-        homeViewModel.getBalance(token)
+        if(isNetworkAvailable(requireActivity())){
+            homeViewModel.getUser(token)
+            homeViewModel.getBalance(token)
+        } else{
+            Toast.makeText(requireContext(), "Tidak ada koneksi Internet", Toast.LENGTH_SHORT).show()
+            val intent = Intent(requireActivity(), LoginActivity::class.java)
+            startActivity(intent)
+            activity?.finish()
+        }
+
 
         binding.layoutHome.layoutHomeWallet.amountNominalTxt.text = "*******"
         binding.layoutHome.layoutHomeWallet.visibleAmountBtn.setImageResource(R.drawable.ic_visibility_off)
 
         binding.layoutHome.layoutHomeWallet.visibleAmountBtn.setOnClickListener {
-            if (isBalanceVisible) {
-                binding.layoutHome.layoutHomeWallet.amountNominalTxt.text = "*******"
-                binding.layoutHome.layoutHomeWallet.visibleAmountBtn.setImageResource(R.drawable.ic_visibility_off)
-            } else {
-                homeViewModel.balance.observe(requireActivity()) { balance ->
-                    if (balance.balance != 0) {
-                        binding.layoutHome.layoutHomeWallet.amountNominalTxt.text =
-                            Util.formatCurrency(balance.balance)
-                    } else {
-                        binding.layoutHome.layoutHomeWallet.amountNominalTxt.text =
-                            Util.formatCurrency(0)
+            showBalanceProfile(isBalanceVisible)
 
-                    }
-
-                }
-                binding.layoutHome.layoutHomeWallet.visibleAmountBtn.setImageResource(R.drawable.ic_visibility)
-            }
             isBalanceVisible = !isBalanceVisible;
         }
 
@@ -93,6 +90,10 @@ class HomeFragment : Fragment() {
                 activity?.finish()
             } else {
                 binding.layoutHome.layoutHomeWallet.amountNominalTxt.text = Util.formatCurrency(0)
+                Toast.makeText(requireContext(), "Terjadi Kesalahan", Toast.LENGTH_SHORT).show()
+                val intent = Intent(requireActivity(), LoginActivity::class.java)
+                startActivity(intent)
+                activity?.finish()
             }
 
         }
@@ -112,8 +113,38 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun showBalanceProfile(isBalanceVisible: Boolean) {
+        lifecycleScope.launch {
+            homeViewModel.balance.collect { state ->
+                when (state) {
+                    is ApiResult.Loading -> {
+                        if (isBalanceVisible) {
+                            binding.layoutHome.layoutHomeWallet.amountNominalTxt.text = "*******"
+                            binding.layoutHome.layoutHomeWallet.visibleAmountBtn.setImageResource(R.drawable.ic_visibility_off)
+                        }
+                    }
+
+                    is ApiResult.Success -> {
+                        val data = state.data
+                        data?.let {
+                            if (data.balance == 0) {
+                                binding.layoutHome.layoutHomeWallet.amountNominalTxt.text =Util.formatCurrency(0)
+                            } else {
+                                binding.layoutHome.layoutHomeWallet.amountNominalTxt.text =  Util.formatCurrency(data.balance)
+                            }
+                        }
+                    }
+                    is ApiResult.Error ->{
+                        binding.layoutHome.layoutHomeWallet.amountNominalTxt.text = Util.formatCurrency(0)
+                    }
+                }
+            }
+        }
+    }
 
 
 }
+
+
 
 

@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "259716862423-mf4dkb1n90vmhe6bm7p57k4h4ga2ckhp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.antasource.goling",
+            "certificate_hash": "460d5a000f2aa99e94fe37737969957d8f884640"
+          }
+        },
+        {
           "client_id": "259716862423-9r8p0keotsokskf2em9mr08j7b475d31.apps.googleusercontent.com",
           "client_type": 3
         }

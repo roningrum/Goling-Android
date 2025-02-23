@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.util.Patterns
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -21,7 +20,7 @@ import com.google.android.material.textfield.TextInputLayout
 import dev.antasource.goling.R
 import dev.antasource.goling.data.networksource.ApiResult
 import dev.antasource.goling.data.networksource.NetworkRemoteSource
-import dev.antasource.goling.data.repositoty.AuthenticationRepository
+import dev.antasource.goling.data.repositoty.auth.AuthenticationRepository
 import dev.antasource.goling.databinding.ActivityRegisterBinding
 import dev.antasource.goling.ui.factory.AuthViewModelFactory
 import dev.antasource.goling.ui.feature.login.LoginActivity

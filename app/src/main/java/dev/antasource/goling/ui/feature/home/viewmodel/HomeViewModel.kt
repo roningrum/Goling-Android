@@ -5,14 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
-import com.google.protobuf.Api
 import dev.antasource.goling.data.model.ErrorMessage
 import dev.antasource.goling.data.model.UserResponse
 import dev.antasource.goling.data.model.location.LocationRequest
 import dev.antasource.goling.data.model.location.LocationUpdateResponse
 import dev.antasource.goling.data.model.topup.Balance
 import dev.antasource.goling.data.networksource.ApiResult
-import dev.antasource.goling.data.repositoty.HomeRepository
+import dev.antasource.goling.data.repositoty.HomeRepositoryRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,12 +24,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okio.IOException
 
-class HomeViewModel(private val homeRepository: HomeRepository): ViewModel() {
+class HomeViewModel(private val homeRepository: HomeRepositoryRepository): ViewModel() {
     private val _userResponse = MutableLiveData<UserResponse>()
     val userResponse: LiveData<UserResponse> = _userResponse
 
-    private val _balance = MutableLiveData<Balance>()
-    val balance : LiveData<Balance> = _balance
+    private val _balance = MutableStateFlow<ApiResult<Balance>>(ApiResult.Loading)
+    val balance : StateFlow<ApiResult<Balance>> = _balance
 
     private val _locationUpdateResponse = MutableStateFlow<ApiResult<LocationUpdateResponse>>(
         ApiResult.Loading)
@@ -77,19 +76,10 @@ class HomeViewModel(private val homeRepository: HomeRepository): ViewModel() {
 
     fun getBalance(token: String){
         viewModelScope.launch{
-            val response = homeRepository.getBalance(token)
-            if(response.isSuccessful){
-                _balance.value = response.body()
-            }else{
-                try {
-                    val gson = Gson()
-                    val error =
-                        gson.fromJson(response.errorBody()?.string(), ErrorMessage::class.java)
-                    _errorMsg.value = error.message
-                } catch (e: IOException) {
-                    _errorMsg.value = e.message
-                }
-            }
+            homeRepository.getWalletBallance(token)
+                .onStart{_balance.value = ApiResult.Loading }
+                .catch { _balance.value = ApiResult.Error(it.message ?: "") }
+                .collect{ data -> _balance.value = data}
         }
     }
 

@@ -144,19 +144,19 @@ class PickupViewModel(private val repository: ShippingRepository): ViewModel() {
 
     fun getBallance(){
         viewModelScope.launch{
-            val response = repository.getBalance(token)
-            if(response.isSuccessful){
-                _balance.value = response.body()
-            }else{
-                try {
-                    val gson = Gson()
-                    val error =
-                        gson.fromJson(response.errorBody()?.string(), ErrorMessage::class.java)
-                    _errorMsg.value = error.message
-                } catch (e: IOException) {
-                    _errorMsg.value = e.message
-                }
-            }
+//            val response = repository.getBalance(token)
+//            if(response.isSuccessful){
+//                _balance.value = response.body()
+//            }else{
+//                try {
+//                    val gson = Gson()
+//                    val error =
+//                        gson.fromJson(response.errorBody()?.string(), ErrorMessage::class.java)
+//                    _errorMsg.value = error.message
+//                } catch (e: IOException) {
+//                    _errorMsg.value = e.message
+//                }
+//            }
         }
     }
 

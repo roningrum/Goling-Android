@@ -6,7 +6,7 @@ import dev.antasource.goling.data.model.ForgotPassResponse
 import dev.antasource.goling.data.model.LoginRequest
 import dev.antasource.goling.data.model.LoginResponse
 import dev.antasource.goling.data.networksource.ApiResult
-import dev.antasource.goling.data.repositoty.AuthenticationRepository
+import dev.antasource.goling.data.repositoty.auth.AuthenticationRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch

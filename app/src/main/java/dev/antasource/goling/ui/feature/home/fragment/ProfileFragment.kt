@@ -8,12 +8,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import dev.antasource.goling.data.networksource.ApiResult
 import dev.antasource.goling.data.networksource.NetworkRemoteSource
-import dev.antasource.goling.data.repositoty.AuthenticationRepository
+import dev.antasource.goling.data.repositoty.auth.AuthenticationRepository
 import dev.antasource.goling.databinding.FragmentProfileBinding
 import dev.antasource.goling.ui.factory.AuthViewModelFactory
 import dev.antasource.goling.ui.feature.home.viewmodel.ProfileViewModel
 import dev.antasource.goling.ui.feature.login.LoginActivity
+import dev.antasource.goling.util.ConnectivityManagerUtil.isNetworkAvailable
 import dev.antasource.goling.util.SharedPrefUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -43,7 +46,15 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         profileViewModel.token = SharedPrefUtil.getAccessToken(requireContext()).toString()
-        profileViewModel.getUserProfile()
+
+        if(isNetworkAvailable(requireActivity())){
+            profileViewModel.getUserProfile()
+        }else{
+            Toast.makeText(requireContext(), "Tidak ada koneksi Internet", Toast.LENGTH_SHORT).show()
+            val intent = Intent(requireActivity(), LoginActivity::class.java)
+            startActivity(intent)
+            activity?.finish()
+        }
         binding.logoutButton.setOnClickListener {
             profileViewModel.logout()
         }
@@ -53,18 +64,29 @@ class ProfileFragment : Fragment() {
             binding.txtEmailProfile.text = user.users.email
 
         }
-        profileViewModel.message.observe(requireActivity()) { message ->
-            CoroutineScope(Dispatchers.Main).launch {
-                delay(3000)
-                message?.let {
-                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                    val intent = Intent(requireActivity(), LoginActivity::class.java)
-                    startActivity(intent)
-                    SharedPrefUtil.clearAccessToken(requireContext())
-                    activity?.finish()
+        lifecycleScope.launch{
+            profileViewModel.logoutResponse.collect{ state ->
+                when(state){
+                    is ApiResult.Loading -> {}
+                    is ApiResult.Success ->{
+                        delay(3000)
+                        state.data?.message.let {
+                            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                            val intent = Intent(requireActivity(), LoginActivity::class.java)
+                            startActivity(intent)
+                            SharedPrefUtil.clearAccessToken(requireContext())
+                            activity?.finish()
+                        }
+                    }
+                    is ApiResult.Error -> {
+                        Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                        val intent = Intent(requireActivity(), LoginActivity::class.java)
+                        startActivity(intent)
+                        SharedPrefUtil.clearAccessToken(requireContext())
+                        activity?.finish()
+                    }
                 }
             }
         }
-
     }
 }
