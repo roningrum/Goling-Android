@@ -96,6 +96,9 @@ dependencies {
     //FCM
     implementation(libs.firebase.inappmessaging.display)
 
+    implementation (libs.play.services.location)
+
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

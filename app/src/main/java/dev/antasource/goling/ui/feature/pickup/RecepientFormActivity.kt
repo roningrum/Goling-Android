@@ -138,5 +138,6 @@ class RecepientFormActivity : AppCompatActivity() {
         val intent = Intent(this, PickupActivity::class.java)
         intent.putExtra("destination", recepientDestination)
         startActivity(intent)
+        finish()
     }
 }

@@ -1,5 +1,6 @@
 package dev.antasource.goling.ui.feature.register
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -23,7 +24,9 @@ import dev.antasource.goling.data.networksource.NetworkRemoteSource
 import dev.antasource.goling.data.repositoty.AuthenticationRepository
 import dev.antasource.goling.databinding.ActivityRegisterBinding
 import dev.antasource.goling.ui.factory.AuthViewModelFactory
+import dev.antasource.goling.ui.feature.login.LoginActivity
 import dev.antasource.goling.ui.feature.register.viewmodel.RegisterViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlin.getValue
@@ -114,6 +117,8 @@ class RegisterActivity : AppCompatActivity() {
                         val data = state.data
                         data?.let { it ->
                             showSuccessMessage(it.message)
+                            delay(2000)
+                            redirectToLogin()
                         }
                     }
                     is ApiResult.Error -> {
@@ -123,6 +128,12 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun redirectToLogin(){
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
 

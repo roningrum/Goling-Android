@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -51,6 +52,7 @@ class PickupActivity : AppCompatActivity() {
     private var itemPrice = 0
 
     private lateinit var packageDetails: PackageDetails
+    private lateinit var additionalDetail: AdditionalDetails
 
     private val pickupViewModel by viewModels<PickupViewModel>() {
         val data = NetworkRemoteSource()
@@ -82,6 +84,15 @@ class PickupActivity : AppCompatActivity() {
             finish()
         }
 
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val intent = Intent(this@PickupActivity, HomeActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                finish()
+            }
+        })
+
     }
 
     private fun handleData() {
@@ -89,6 +100,8 @@ class PickupActivity : AppCompatActivity() {
         val dataPenerima: DestinationReceipt? = intent.parcelabe("destination")
         val pathImage = intent.getStringExtra("path")
         val packageInfo: PackageDetails? = intent.parcelabe("packageInfo")
+        val additionalDetails: AdditionalDetails? = intent.parcelabe("additionalInfo")
+
         pathImage?.let {
             path = it
         }
@@ -122,6 +135,10 @@ class PickupActivity : AppCompatActivity() {
 
            checkData()
 
+        }
+
+        additionalDetails?.let {
+            additionalDetail = additionalDetails
         }
 
         pickupViewModel.sender.observe(this) {
@@ -165,7 +182,7 @@ class PickupActivity : AppCompatActivity() {
             length = packageDetails.length.toInt(),
             weight = packageDetails.weight.toInt(),
             productType = producTypeName.toString(),
-            isGuaranteed = false
+            isGuaranteed = additionalDetail.isGuaranteed
         )
         pickupViewModel.getEstimatePrice(estimateShipRequest)
 
@@ -186,7 +203,7 @@ class PickupActivity : AppCompatActivity() {
             pickupBinding.layoutPickupForm.summaryAmount.visibility = VISIBLE
             pickupBinding.layoutPickupForm.txtEstimationSend.text = response.deliveryTime
             pickupBinding.layoutPickupForm.txtIncludeAssuranceSend.text = "${response.insuranceRate}"
-            pickupBinding.layoutPickupForm.txtTotalAmountSend.text = "${response.itemPrice}"
+            pickupBinding.layoutPickupForm.txtTotalAmountSend.text = "${response.totalCost}"
 
             itemPrice = response.itemPrice
 
@@ -233,10 +250,7 @@ class PickupActivity : AppCompatActivity() {
                 originSender = dataOriginSender,
                 destinationReceipt = dataDestinationReceipt,
                 packageDetails = packageDetails,
-                additionalDetails = AdditionalDetails(
-                    glassware = false,
-                    isGuaranteed = false
-                ),
+                additionalDetails = additionalDetail,
                 multipartImage = MultipartBody.Part.createFormData("photo", afterResized.name, requestFile)
             ))
         } else{
@@ -249,7 +263,10 @@ class PickupActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
         pickupBinding.materialToolbar.setNavigationOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
+            val intent = Intent(this@PickupActivity, HomeActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            finish()
         }
     }
 

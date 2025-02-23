@@ -19,6 +19,8 @@ import dev.antasource.goling.data.model.country.Villages
 import dev.antasource.goling.data.model.estimate.EstimateShipRequest
 import dev.antasource.goling.data.model.estimate.EstimateShipResponse
 import dev.antasource.goling.data.model.history.OrdersResponse
+import dev.antasource.goling.data.model.location.LocationRequest
+import dev.antasource.goling.data.model.location.LocationUpdateResponse
 import dev.antasource.goling.data.model.pickup.response.Order
 import dev.antasource.goling.data.model.pickup.response.OrderDetailResponse
 import dev.antasource.goling.data.model.pickup.response.OrderResponse
@@ -81,6 +83,10 @@ interface ApiService {
 
     @GET("wilayah/{districtId}/villages")
     suspend fun getVillage(@Path("districtId") districtId: Int): Response<List<Villages>>
+
+    // Send Location
+    @POST("user/location")
+    suspend fun postLocationUpdate( @Header("Authorization") token: String, @Body locationRequest: LocationRequest): Response<LocationUpdateResponse>
 
     //estimate
     @POST("shipping/estimate-shipping")

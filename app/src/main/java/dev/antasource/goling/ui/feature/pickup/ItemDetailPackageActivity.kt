@@ -332,6 +332,7 @@ class ItemDetailPackageActivity : AppCompatActivity() {
         intent.putExtra("packageInfo", packageInfo)
         intent.putExtra("additionalInfo", additionalDetails)
         startActivity(intent)
+        finish()
     }
 
     private fun saveImageToExternalStorage(imageUri: Uri): String? {

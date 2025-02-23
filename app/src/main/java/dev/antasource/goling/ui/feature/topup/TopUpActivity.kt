@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -27,7 +29,6 @@ import java.util.Locale
 
 class TopUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTopUpBinding
-    private var isUserTyping = true
     private var isAmountSelected = false
 
     private val topupViewModel by viewModels<TopupViewModel>(){
@@ -46,6 +47,8 @@ class TopUpActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        binding.btnTopUpConfirm.visibility = GONE
 
         setSupportActionBar(binding.materialToolbar)
         supportActionBar?.apply {
@@ -83,16 +86,20 @@ class TopUpActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                if (isEditing || s.isNullOrEmpty()) return
+                if (isEditing || s.isNullOrEmpty()) binding.btnTopUpConfirm.visibility = GONE
 
                 isEditing = true
-
                 try {
                     val cleanText = s.toString().replace("[^\\d]".toRegex(), "") // Hanya ambil angka
                     val nominalValue = cleanText.toIntOrNull() ?: 0
 
                     val formattedText = NumberFormat.getInstance(
                         Locale.getDefault()).format(nominalValue)
+
+                    if(nominalValue != 0 && nominalValue > 1000)
+                        binding.btnTopUpConfirm.visibility = VISIBLE
+                    else
+                        binding.btnTopUpConfirm.visibility = GONE
 
                     if (s.toString() != formattedText) {
                         binding.amountEditText.setText(formattedText)

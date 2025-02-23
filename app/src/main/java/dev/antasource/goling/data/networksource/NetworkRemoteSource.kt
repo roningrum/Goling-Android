@@ -12,12 +12,13 @@ import dev.antasource.goling.data.model.RegisterResponse
 import dev.antasource.goling.data.model.TopUpRequest
 import dev.antasource.goling.data.model.estimate.EstimateShipRequest
 import dev.antasource.goling.data.model.history.OrdersResponse
+import dev.antasource.goling.data.model.location.LocationRequest
+import dev.antasource.goling.data.model.location.LocationUpdateResponse
 import dev.antasource.goling.data.model.pickup.request.OrderRequest
 import dev.antasource.goling.data.model.pickup.request.OrderRequestMapper.toPartMap
 import dev.antasource.goling.data.model.pickup.response.OrderDetailResponse
 import dev.antasource.goling.data.model.pickup.response.OrderResponse
 import dev.antasource.goling.data.networksource.NetworkUtil.apiService
-import kotlinx.coroutines.flow.Flow
 import okio.IOException
 import retrofit2.Response
 
@@ -77,10 +78,33 @@ class NetworkRemoteSource{
     suspend fun verifyPayment(token:String, transactionId: String) = apiService.verifyPayment("Bearer $token",
        transactionId)
     suspend fun logout(token: String) = apiService.logout("Bearer $token ")
+
+
     suspend fun getRegion() = apiService.getRegion()
     suspend fun getRegencies(provinceId: Int) = apiService.getCity(provinceId)
     suspend fun getDistrics(cityId: Int) = apiService.getDistrict(cityId)
     suspend fun getVillages(districtId: Int) = apiService.getVillage(districtId)
+
+    suspend fun postLocationUpdate(token: String, locationRequest: LocationRequest): ApiResult<LocationUpdateResponse>{
+        val response = apiService.postLocationUpdate(
+            token = "Bearer $token",
+            locationRequest = locationRequest
+        )
+        if(response.isSuccessful){
+            val data = response.body()
+            return ApiResult.Success(data)
+        }else{
+            try {
+                val gson = Gson()
+                val error = gson.fromJson(response.errorBody()?.string(), ErrorMessage::class.java)
+                return ApiResult.Error(error.message)
+            } catch (e: IOException) {
+                return ApiResult.Error("${e.message}")
+            }
+            return ApiResult.Error("Unknown Error")
+        }
+    }
+
     suspend fun getEstimateShipping(estimateShipRequest: EstimateShipRequest) = apiService.getEstimateShipping(estimateShipRequest)
 
     suspend fun getProductType() = apiService.getProductTypes()

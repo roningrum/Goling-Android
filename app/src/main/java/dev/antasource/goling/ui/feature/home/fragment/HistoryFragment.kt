@@ -3,6 +3,8 @@ package dev.antasource.goling.ui.feature.home.fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,6 +15,7 @@ import dev.antasource.goling.ui.factory.ShippingViewModelFactory
 import dev.antasource.goling.ui.feature.home.adapter.TransactionListAdapter
 import dev.antasource.goling.ui.feature.home.viewmodel.TransactionViewModel
 import dev.antasource.goling.util.SharedPrefUtil
+import org.checkerframework.checker.index.qual.GTENegativeOne
 import kotlin.getValue
 
 class HistoryFragment : Fragment() {
@@ -38,16 +41,27 @@ class HistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val listTransaction = historyBinding.layoutHistoryFragment.listHistoryShip
+        val emptyListView = historyBinding.layoutHistoryFragment.layoutEmptyOrder
 
         transactionHistoryViewModel.token = SharedPrefUtil.getAccessToken(requireContext()).toString()
         transactionHistoryViewModel.getHistoryOrder()
 
         transactionHistoryViewModel.historyOrderList.observe(requireActivity()){ orderTransaction->
-            val adapter = TransactionListAdapter(
-                context = requireActivity(),
-                listTransaction = orderTransaction
-            )
-            listTransaction.adapter = adapter
+            if(orderTransaction.isNotEmpty()){
+                emptyListView.root.visibility = GONE
+                val adapter = TransactionListAdapter(
+                    context = requireActivity(),
+                    listTransaction = orderTransaction
+                )
+                listTransaction.adapter = adapter
+            } else{
+                emptyListView.root.visibility = VISIBLE
+                listTransaction.visibility = GONE
+            }
+        }
+        transactionHistoryViewModel.errorMsg.observe(requireActivity()){
+            emptyListView.root.visibility = VISIBLE
+            listTransaction.visibility = GONE
         }
     }
 }

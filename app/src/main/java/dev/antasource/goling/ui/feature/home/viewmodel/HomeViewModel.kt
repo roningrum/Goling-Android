@@ -5,14 +5,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
+import com.google.protobuf.Api
 import dev.antasource.goling.data.model.ErrorMessage
 import dev.antasource.goling.data.model.UserResponse
+import dev.antasource.goling.data.model.location.LocationRequest
+import dev.antasource.goling.data.model.location.LocationUpdateResponse
 import dev.antasource.goling.data.model.topup.Balance
+import dev.antasource.goling.data.networksource.ApiResult
 import dev.antasource.goling.data.repositoty.HomeRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okio.IOException
@@ -23,6 +31,10 @@ class HomeViewModel(private val homeRepository: HomeRepository): ViewModel() {
 
     private val _balance = MutableLiveData<Balance>()
     val balance : LiveData<Balance> = _balance
+
+    private val _locationUpdateResponse = MutableStateFlow<ApiResult<LocationUpdateResponse>>(
+        ApiResult.Loading)
+    val locationUpdateResponse : StateFlow<ApiResult<LocationUpdateResponse>> = _locationUpdateResponse
 
     private val _errorMsg = MutableLiveData<String>()
     val errorMsg: LiveData<String> = _errorMsg
@@ -51,6 +63,15 @@ class HomeViewModel(private val homeRepository: HomeRepository): ViewModel() {
                 }
 
             }
+        }
+    }
+
+    fun updateLocation(location: LocationRequest){
+        viewModelScope.launch{
+          homeRepository.postLocation(token, location)
+              .onStart { _locationUpdateResponse.value = ApiResult.Loading }
+              .catch { _locationUpdateResponse.value = ApiResult.Error(it.message ?: "") }
+              .collect{ data -> _locationUpdateResponse.value = data }
         }
     }
 

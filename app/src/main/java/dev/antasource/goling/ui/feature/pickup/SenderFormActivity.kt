@@ -134,6 +134,7 @@ class SenderFormActivity : AppCompatActivity() {
         val intent = Intent(this, PickupActivity::class.java)
         intent.putExtra("originSender", originSender)
         startActivity(intent)
+        finish()
     }
 }
 

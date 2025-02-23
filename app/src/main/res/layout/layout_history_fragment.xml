@@ -23,6 +23,10 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <include
+                android:id="@+id/layout_empty_order"
+                layout="@layout/layout_empty_list"
+                android:visibility="gone"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list_history_ship"
                 android:layout_width="match_parent"

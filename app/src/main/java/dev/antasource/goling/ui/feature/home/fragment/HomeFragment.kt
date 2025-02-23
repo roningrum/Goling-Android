@@ -6,27 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.google.android.material.snackbar.Snackbar
+import dev.antasource.goling.R
 import dev.antasource.goling.data.networksource.NetworkRemoteSource
 import dev.antasource.goling.data.repositoty.HomeRepository
 import dev.antasource.goling.databinding.FragmentHomeBinding
 import dev.antasource.goling.ui.factory.MainViewModelFactory
 import dev.antasource.goling.ui.feature.estimate.EstimateDeliveryActivity
 import dev.antasource.goling.ui.feature.home.viewmodel.HomeViewModel
+import dev.antasource.goling.ui.feature.login.LoginActivity
 import dev.antasource.goling.ui.feature.pickup.PickupActivity
 import dev.antasource.goling.ui.feature.topup.TopUpActivity
 import dev.antasource.goling.util.SharedPrefUtil
 import dev.antasource.goling.util.Util
-import dev.antasource.goling.R
-import dev.antasource.goling.ui.feature.login.LoginActivity
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private var isBalanceVisible = false
-
     private val homeViewModel by viewModels<HomeViewModel>() {
         val data = NetworkRemoteSource()
         val repo = HomeRepository(data)
@@ -51,7 +48,7 @@ class HomeFragment : Fragment() {
 
         val token = SharedPrefUtil.getAccessToken(requireActivity()).toString()
 
-        if(token.isEmpty()){
+        if (token.isEmpty()) {
             val intent = Intent(requireActivity(), LoginActivity::class.java)
             startActivity(intent)
             activity?.finish()
@@ -88,13 +85,13 @@ class HomeFragment : Fragment() {
             nameUser.text = data.users.username
         }
         homeViewModel.errorMsg.observe(requireActivity()) { error ->
-            if(error.contains("expired")){
+            if (error.contains("expired")) {
                 SharedPrefUtil.clearAccessToken(requireContext())
                 Toast.makeText(requireContext(), "Sesi berakhir", Toast.LENGTH_SHORT).show()
                 val intent = Intent(requireActivity(), LoginActivity::class.java)
                 startActivity(intent)
                 activity?.finish()
-            }else{
+            } else {
                 binding.layoutHome.layoutHomeWallet.amountNominalTxt.text = Util.formatCurrency(0)
             }
 
@@ -114,5 +111,9 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
     }
+
+
+
 }
+
 
